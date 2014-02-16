@@ -4,7 +4,7 @@ void setupTimerInt() {
 }
 
 void setupSerial() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.setTimeout(15);
 }
 
@@ -19,4 +19,12 @@ void setupPinModes() {
 void setupUltraSonicInt() {
   attachInterrupt(ULTRA_RIGHT_ECHO_INT, rightEchoInt, CHANGE);
   attachInterrupt(ULTRA_LEFT_ECHO_INT, leftEchoInt, CHANGE);
+}
+
+void messageInit(uint8_t side) {
+  int i = 0;
+  message[side][i++] = 0xAA; 
+  message[side][i++] = 0xAA; 
+  message[side][i++] = side; 
+  message[side][i++] = (DATA_SIZE - DATA_0); 
 }
