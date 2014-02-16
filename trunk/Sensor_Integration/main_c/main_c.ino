@@ -12,6 +12,8 @@ void setup() {
   setupSerial();
   setupPinModes();
   setupUltraSonicInt();
+  messageInit(RIGHT);
+  messageInit(LEFT);
 }
 
 void loop() {
@@ -19,36 +21,36 @@ void loop() {
     cycle();
     iFlags.pit = 0;      
   } 
-  
-  if (iFlags.uartRx == 1 ) {
-    iFlags.uartRx = 0;
-    processMessage_Matt();
-  }
-  
+  //if (iFlags.uartRx == 1 ) {
+  //  iFlags.uartRx = 0;
+  //  processMessage_Matt();
+  //}
   if (iFlags.ultraR == 1) {
     iFlags.ultraR = 0;
-    rUltraDistance = rUltraTime/148.0;
-    Serial.print("UltraSonic Distance (inches): "); 
-    Serial.print(rUltraDistance);
-    Serial.write('\n');
+    updateMessageBuf(RIGHT);
+    iFlags.sendR = 1;
+  }
+  if (iFlags.ultraL == 1) {
+    iFlags.ultraL = 0;
+    updateMessageBuf(LEFT);
+    iFlags.sendL = 1;
   }
 }
 
 void cycle() {
   cycleStartTime = millis();
-  
+
   heartbeat();
   
-  if((icount % 50) == 10)
-   trigEchoRight();
+  if (iFlags.sendR && (icount & 0x01))
+    transmitMessage(RIGHT);
+  else if (iFlags.sendL && !(icount & 0x01))
+    transmitMessage(LEFT);  
   
-  getIRDistanace();
-  if ((icount % 50)== 0){
-    printDistance();
+  trigEcho((icount & 0x01));
   
-    printCycleTime();
-  }
- 
+//  getIRDistanace();
+
   icount++;
 }
 
@@ -70,5 +72,4 @@ void PIT() {
   }  
   iFlags.pit = 1;
 }
-
 

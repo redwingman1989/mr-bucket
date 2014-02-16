@@ -38,15 +38,15 @@ void processMessage_Matt() {
       break;
     }
     i++;
-    if (i == MAX_LEN)
+    if (i == MESSAGE_LEN)
       break;
   }
   
-  if (i == MAX_LEN) {
+  if (i == MESSAGE_LEN) {
    // Serial.print("Time Lapsed: ");
    // Serial.print((millis()-startTime),DEC);
    // Serial.println("ms");
-    if (calcCRC(serialBuf, MAX_LEN) == 0) {
+    if (calcCRC(serialBuf, MESSAGE_LEN) == 0) {
    //   Serial.println("Valid Packet");
    //   Serial.write(serialBuf, MAX_LEN);
    //   Serial.write('\n');
