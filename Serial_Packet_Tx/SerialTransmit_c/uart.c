@@ -1,4 +1,4 @@
-#include "uart.h"
+//#include "uart.h"
 
 #define MAX_LEN (21)
 #define DATA_LEN (16)
