@@ -1,6 +1,13 @@
 void setupTimerInt() {
-  Timer1.initialize(20000);
+  Timer1.initialize(2000);
   Timer1.attachInterrupt(PIT);
+}
+
+void setupRobot(robot * bot) {
+  bot->Ultra_LeverArm[RIGHT] = ULTRA_RIGHT_LEVER_ARM;
+  bot->Ultra_LeverArm[LEFT]  = ULTRA_LEFT_LEVER_ARM;
+  bot->IR_LeverArm[RIGHT]    = ULTRA_RIGHT_LEVER_ARM;
+  bot->IR_LeverArm[LEFT]     = ULTRA_LEFT_LEVER_ARM;
 }
 
 void setupSerial() {
@@ -21,10 +28,8 @@ void setupUltraSonicInt() {
   attachInterrupt(ULTRA_LEFT_ECHO_INT, leftEchoInt, CHANGE);
 }
 
-void messageInit(uint8_t side) {
+void messageInit(void) {
   int i = 0;
-  message[side][i++] = 0xAA; 
-  message[side][i++] = 0xAA; 
-  message[side][i++] = side; 
-  message[side][i++] = (DATA_SIZE - DATA_0); 
+  message[i++] = 0xAA; 
+  message[i++] = 0xAA; 
 }
