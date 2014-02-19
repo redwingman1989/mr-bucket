@@ -14,80 +14,121 @@
 #define DATA_LEN_ARR_LOC    (4)
 #define CRC_ARR_LOC         (TOT_PKT_LEN - 1)
 
+enum pkIds {
+  LEFT_IR,
+  RIGHT_IR,
+  LEFT_ULTRASONIC,
+  RIGHT_ULTRASONIC,
+  COLOR_SENSOR,
+  NUM_PKT_IDS
+};
 
 typedef struct packet {
-  const unsigned int sync1   = SYNC_CHAR;
-  const unsigned int sync2   = SYNC_CHAR;
-  unsigned int pktId;
-  const unsigned int dataLen = LEN_DATA;
-  char    data[LEN_DATA];
-  unsigned int crc;
+  const unsigned int sync1;
+  const unsigned int sync2;
+  unsigned int       pktId;
+  const unsigned int dataLen;
+  char               data[LEN_DATA];
+  unsigned int       crc;
 } 
 packet_t;
 
 packet_t * irLSenPkt;
-packet_t * irRSenPkt;
-packet_t * ultSonLSenPkt;
-packet_t * ultSonRSenPkt;
+irLSenPkt.sync1   = SYNC_CHAR;
+irLSenPkt.sync2   = SYNC_CHAR;
+irLSenPkt.pktId   = LEFT_IR;
+irLSenPkt.dataLen = LEN_DATA;
 
-enum {
-  SENSR_IR_01,
-  NUM_PKT_IDS
-};
+packet_t * irRSenPkt;
+irRSenPkt.sync1   = SYNC_CHAR;
+irRSenPkt.sync2   = SYNC_CHAR;
+irRSenPkt.pktId   = RIGHT_IR;
+irRSenPkt.dataLen = LEN_DATA;
+
+packet_t * ultSonLSenPkt;
+ultSonLSenPkt.sync1   = SYNC_CHAR;
+ultSonLSenPkt.sync2   = SYNC_CHAR;
+ultSonLSenPkt.pktId   = LEFT_ULTRASONIC;
+ultSonLSenPkt.dataLen = LEN_DATA;
+
+packet_t * ultSonRSenPkt;
+ultSonRSenPkt.sync1   = SYNC_CHAR;
+ultSonRSenPkt.sync2   = SYNC_CHAR;
+ultSonRSenPkt.pktId   = RIGHT_ULLTRASONIC;
+ultSonRSenPkt.dataLen = LEN_DATA;
+
+packet_t * colorSenPkt;
+colorSenPkt.sync1   = SYNC_CHAR;
+colorSenPkt.sync2   = SYNC_CHAR;
+colorSenPkt.pktId   = COLOR_SENSOR;
+colorSenPkt.dataLen = LEN_DATA;
+
+
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   crcInit();
-  /* Initialize packet: MIGHT NOT BE NEEDED IF STRUCT DEFINITION CAN SET CONST UINTs */
-  //initPackets();
 }
 
 void loop() {
+  /* While there is data to read */
   while(Serial.available()) {
+    /* Read in one char and see if it is a value to trigger a message */
     char reading = Serial.read();
+    /* If the char is 'o' send a packet with a good CRC */
     if (reading == 'o') {
       execSendPacket();
     }
+    /* If the tchar is 'x' send a packet with a bad CRC */
     else if (reading == 'x') {
       execSendBadPacket();
     }
   }
 }
 
-/*
-void initPackets() {
-  irLSenPkt->sync1 = irRSenPkt->sync1 = ultSonLSenPkt->sync1 = ultSonRSenPkt->sync1 =
-  irLSenPkt->sync2 = irRSenPkt->sync2 = ultSonLSenPkt->sync2 = ultSonRSenPkt->sync2 = SYNC_CHAR;
-  irLSenPkt->dataLen = irRSenPkt->dataLen = ultSonLSenPkt->dataLen = ultSonRSenPkt->dataLen = LEN_DATA;
-}
-*/
-
 void execSendPacket() {
-
-  char pktArr[TOT_PKT_LEN];
+  packet_t * packetToSend = NULL;
+  
+  while(Serial.available()) {
+    char reading = Serial.read();
+    switch (reading) {
+      case '0':
+        packetToSend = irLSenPkt;
+        break;
+        
+      case '1':
+        packetToSend = irRSenPkt;
+        break;
+        
+      case '2':
+        packetToSend = ultSonLSenPkt;
+        break;
+        
+      case '3':
+        packetToSend = ultSonRSenPkt;
+        break;
+        
+      case '4':
+        packetToSent = colorSenPkt;
+        break;
+        
+      default:
+        Serial.println("Error reading packet specifier.\n");
+        break;
+    }    
+  }
 
   /*Build a packet */
-  buildPacket(pktArr);
+  buildPacket(packetToSend);
 
   /*Send packet out serial port */
-  for (int i = 0; i < TOT_PKT_LEN; i++) {
-    Serial.write(pktArr[i]);
+  for (int i = 0; i < sizeof(packet_t); i++) {
+    Serial.write((unsigned char)pktArr[i]);
   }
 }
 
 void buildPacket(char * pktArr) {
 
-  //char msgData[LEN_DATA];
-
-  //sprintf(msgData, "I am BATMAN!!!!\0");
-  /* 
-   pkt->sync1 = SYNC_CHAR;
-   pkt->sync2 = SYNC_CHAR;
-   pkt->pktId = HI_MATT;
-   pkt->dataLen = LEN_DATA;
-   pkt->data    = msgData;
-   pkt->crc     = calcCRC(msgData, LEN_DATA);
-   */
   pktArr[SYNC_CHAR_1_ARR_LOC] = SYNC_CHAR;
   pktArr[SYNC_CHAR_2_ARR_LOC] = SYNC_CHAR;
   pktArr[PKT_ID_ARR_LOC] = SENSR_IR_01;
@@ -114,21 +155,6 @@ void execSendBadPacket() {
 
 void buildBadPacket(char * pktArr) {
 
-  //char msgData[LEN_DATA];
-
-  //sprintf(msgData, "Hi Matt!\0");
-  /* 
-   pkt->sync1 = SYNC_CHAR;
-   pkt->sync2 = SYNC_CHAR;
-   pkt->pktId = HI_MATT;
-   pkt->dataLen = LEN_DATA;
-   pkt->data    = msgData;
-   pkt->crc     = calcCRC(msgData, LEN_DATA);
-   */
-  pktArr[SYNC_CHAR_1_ARR_LOC] = SYNC_CHAR;
-  pktArr[SYNC_CHAR_2_ARR_LOC] = SYNC_CHAR;
-  pktArr[PKT_ID_ARR_LOC] = SENSR_IR_01;
-  pktArr[DATA_LEN_ARR_LOC] = LEN_DATA;
   sprintf(pktArr+4, "I am BATMAN!!!!\0");
   uint8_t crc = calcCRC((uint8_t *) pktArr, (int)(TOT_PKT_LEN-1));
   pktArr[CRC_ARR_LOC] = crc+1;
