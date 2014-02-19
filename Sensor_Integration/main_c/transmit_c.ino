@@ -1,12 +1,10 @@
 
-void updateMessageBuf(uint8_t side) {
-  int * temp;
-  temp = (int *)&message[side][DATA_0];
-  *temp = (int)(UltraTime[side]/14.8);
-  
-  message[side][CRC_IDX] = calcCRC(message[side],CRC_IDX);
+void packetizeMessage(void) {
+   message[DATA_0] = Robot.Ultra_X[RIGHT];
+   message[DATA_1] = Robot.Ultra_X[LEFT]; 
 }
 
-void transmitMessage(uint8_t side) {
-   Serial.write(message[side], MESSAGE_LEN);
+
+void transmitMessage(void) {
+   Serial.write(message, MESSAGE_LEN);
 }

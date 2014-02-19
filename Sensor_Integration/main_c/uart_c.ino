@@ -21,19 +21,6 @@ void processMessage_Matt() {
       if (serialBuf[i] != 0xAA)
           i = 0;     
       break;
-    case MESSAGE_ID:
-      break;
-    case DATA_LEN:
-      /*
-      message_length = (int)serialBuf[DATA_LEN];
-      if (message_length > (Rx_BUFFER_SIZE - SIZE_MESSAGE_PADDING))
-        message_length = 0;
-      */
-      //#if DEBUG
-      //sprintf(outStr,"Message Length: %d",message_length);
-      //Serial.println(outStr);
-      //#endif
-      break;
     default:
       break;
     }
