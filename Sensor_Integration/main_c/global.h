@@ -3,12 +3,6 @@
 
 // PIN Definitions
 #define LED_PIN               (13)
-#define IR_RIGHT_PIN          (A0)
-#define IR_LEFT_PIN           (A1)
-#define ANALOG_IN_SPARE       (A2)
-#define RGB_RED_PIN           (A3)
-#define RGB_GREEN_PIN         (A4)
-#define RGB_BLUE_PIN          (A5)
 #define ULTRA_ECHO_RPIN       (2)
 #define ULTRA_ECHO_LPIN       (3)
 #define ULTRA_TRIG_RPIN       (4)
@@ -56,6 +50,10 @@ enum message {
   DATA_0 = SIZE_OF_MESSAGE_HEADER,  // X - Coordinate
   DATA_1,                           // Left X-Coordinate
   DATA_2,                           // Right X-Coordinate
+  DATA_3,
+  DATA_4,
+  DATA_5,
+  DATA_6,
   DATA_SIZE,
   CRC_IDX = DATA_SIZE,
   MESSAGE_LEN
@@ -82,8 +80,8 @@ struct robot {
   uint8_t xCoordinate;  // xCoordinate blended to be sent
   uint8_t zone;                         // current zone
   uint8_t dir;                          // direction of movement
-  uint8_t estSpeed;                   // estinmated speed in divisions/second
-  uint8_t ballCollor;                // ball color
+  uint8_t estSpeed;                     // estinmated speed in divisions/second
+  uint8_t ballCollor;                   // ball color
 }myRobot;
 
 robot Robot;
@@ -96,12 +94,31 @@ course Course;
 
 uint8_t message[MESSAGE_LEN];
 
+enum colors {
+  WHITE,
+  BLUE,
+  ORANGE,
+  NUM_COLORS
+};
+
+struct ball {
+  int redValue;
+  int greenValue;
+  int blueValue;
+  uint8_t color;
+};
+
+ball loadedBall;
+
 unsigned long UltraTime[NUM_SIDES];
 int UltraDistance[NUM_SIDES];
-unsigned long cycleStartTime;
-unsigned long icount;
+unsigned long loopStartTime;
+unsigned long icount;    // 50Hz/cycle counter
+unsigned long acount;    // 500Hz/Analog counter
 
 char outStr[100];
 uint8_t serialBuf[Rx_BUFFER_SIZE];
+uint8_t loopTime;
+uint8_t maxLoopTime;
 
 #endif
