@@ -3,6 +3,7 @@
 #include "global.h"
 #include "crc.h"
 #include "irprox.h"
+#include "atod.h"
 
 /* Preprocessor Debug indiactor. change to 1 for debug build */
 #define DEBUG 0
@@ -28,14 +29,23 @@ void setup() {
   dirven functions.
 ********************************************************************/
 void loop() {
+  loopStartTime = millis();
   /* Execute cycle() at 50Hz */
   if (iFlags.pit_50Hz == 1) {  
+    /* execute main cycle */
     cycle();
+    /* update icount */
+    icount++;
+    /* reset flag */
     iFlags.pit_50Hz = 0;      
   } 
   /* Execute readAD() at 500Hz */
   if (iFlags.pit_500Hz == 1) {
-    readAD();
+    /* Get Analog Radings */
+    readAD(acount % NUM_ANALOGS);
+    /* update acount */
+    acount++;
+    /* reset flag */
     iFlags.pit_500Hz = 0;
   }
   /* Excuted upon recording of right ultrasonic sensor echo */
@@ -50,6 +60,9 @@ void loop() {
     updateUltrasonic(LEFT);
     iFlags.sendL = 1;
   }
+  loopTime = (millis() - loopStartTime);
+  if (loopTime > maxLoopTime)
+    maxLoopTime = loopTime;
 }
 
 /****************************************************************
@@ -64,7 +77,7 @@ void loop() {
    - Initiating packet transmission
 ****************************************************************/
 void cycle() {
-  cycleStartTime = millis();
+  
   /* Pulse Heatbeat LED on PIN 13 */
   heartbeat();  
   
@@ -87,9 +100,6 @@ void cycle() {
   
   /* Transmit Packet */
   transmitMessage();
-
-  /* update icount */
-  icount++;
 }
 
 /************************************************************ 
@@ -100,16 +110,6 @@ void heartbeat() {
   // Toggle Board LED at 2 Hz
   if (!(icount % 25))
     digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1); 
-}
-
-/*************************************************************
- Function: printCycleTime()
- Description: Used for debugging purposes. Write cycle time 
-  to the serial terminal.
-*************************************************************/
-void printCycleTime() {
-  sprintf(outStr, "cycle time: %lu ms", (millis() - cycleStartTime));
-  Serial.println(outStr); 
 }
 
 /****************************************************************
@@ -155,34 +155,41 @@ void updateRobot(robot * bot) {
       break;
     /* ZONE_1 (95 < X <= 115), Listen to Both Ultrasonics */
     case ZONE_1:
-      /* If Ball Detected on Left, record X coordinate */
-      if (bot->Ultra_X[LEFT] + Course.stuckBall[LEFT] < 100) {
-        Course.stuckBall[LEFT] = bot->xCoordinate - bot->Ultra_X[LEFT];
-        bot->Ultra_X[LEFT] += Course.stuckBall[LEFT];
-      }
-      /* else, clear stuckball on left */
-      else
-        Course.stuckBall[LEFT] = 0;
-      /* Ball Detectd on Right, record X coordinate */
-      if (bot->Ultra_X[RIGHT] - Course.stuckBall[RIGHT] > 110) {
-        Course.stuckBall[RIGHT] = 189 - bot->Ultra_X[RIGHT] + bot->xCoordinate;
-        bot->Ultra_X[RIGHT] -= (189 - Course.stuckBall[RIGHT]);
-      }
-      else
-        Course.stuckBall[RIGHT] = 0;
-        
-      if(bot->xCoordinate < 105) {
-        if (Course.stuckBall[LEFT] && !Course.stuckBall[RIGHT])
-          bot->xCoordinate = bot->Ultra_X[RIGHT];
-        else
-          bot->xCoordinate = bot->Ultra_X[LEFT];
-      }
-      else {
-        if (Course.stuckBall[RIGHT] && !Course.stuckBall[LEFT])
-          bot->xCoordinate = bot->Ultra_X[LEFT];
-        else
-          bot->xCoordinate = bot->Ultra_X[RIGHT];
-      }
+    
+    if(bot->xCoordinate < 105) {
+      bot->xCoordinate = bot->Ultra_X[LEFT];
+    }
+    else {
+      bot->xCoordinate = bot->Ultra_X[RIGHT];
+    }
+//      /* If Ball Detected on Left, record X coordinate */
+//      if (bot->Ultra_X[LEFT] + Course.stuckBall[LEFT] < 100) {
+//        Course.stuckBall[LEFT] = bot->xCoordinate - bot->Ultra_X[LEFT];
+//        bot->Ultra_X[LEFT] += Course.stuckBall[LEFT];
+//      }
+//      /* else, clear stuckball on left */
+//      else
+//        Course.stuckBall[LEFT] = 0;
+//      /* Ball Detectd on Right, record X coordinate */
+//      if (bot->Ultra_X[RIGHT] - Course.stuckBall[RIGHT] > 110) {
+//        Course.stuckBall[RIGHT] = 189 - bot->Ultra_X[RIGHT] + bot->xCoordinate;
+//        bot->Ultra_X[RIGHT] -= (189 - Course.stuckBall[RIGHT]);
+//      }
+//      else
+//        Course.stuckBall[RIGHT] = 0;
+//        
+//      if(bot->xCoordinate < 105) {
+//        if (Course.stuckBall[LEFT] && !Course.stuckBall[RIGHT])
+//          bot->xCoordinate = bot->Ultra_X[RIGHT];
+//        else
+//          bot->xCoordinate = bot->Ultra_X[LEFT];
+//      }
+//      else {
+//        if (Course.stuckBall[RIGHT] && !Course.stuckBall[LEFT])
+//          bot->xCoordinate = bot->Ultra_X[LEFT];
+//        else
+//          bot->xCoordinate = bot->Ultra_X[RIGHT];
+//      }
       
       break;
     /* ZONE_2 (115 < X <= 189), Linsten to Right IR Primary */
