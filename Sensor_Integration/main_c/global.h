@@ -23,6 +23,7 @@
 
 #define Rx_BUFFER_SIZE (MESSAGE_LEN)
 #define FILTER         (5)
+#define CYCLES_PER_SEC (50)
 
 /**********************************************************
  Interrupt Flag Structure and Declaration 
@@ -53,8 +54,8 @@ enum message {
   SYNC_CHAR_2,                      // SYNC_CAHR_2 == 0xAA
   SIZE_OF_MESSAGE_HEADER,
   DATA_0 = SIZE_OF_MESSAGE_HEADER,  // X - Coordinate
-  DATA_1,                           // Ball Color/Presence
-  DATA_2,                           // Front IR Sensor
+  DATA_1,                           // Left X-Coordinate
+  DATA_2,                           // Right X-Coordinate
   DATA_SIZE,
   CRC_IDX = DATA_SIZE,
   MESSAGE_LEN
@@ -67,24 +68,31 @@ enum side {
 };
 
 enum Zones {
-  ZONE_0,   // 0 - 30 inches      (0 < X <= 60)
-  ZONE_1,   // 30.5 - 64 inches   (60 < X <= 129)
-  ZONE_2,   // 64.5 - 94.5 inches (129 < X <= 189)
+  ZONE_0,   // (0 < X <= 95)
+  ZONE_1,   // (95 < X <= 115)
+  ZONE_2,   // (115 < X <= 189)
 };
 
 struct robot {
-  uint8_t Ultra_LeverArm[NUM_SIDES]; // Lever Arm Offset from Ultrasonics to CL
-  uint8_t IR_LeverArm[NUM_SIDES];    // Lever Arm Offset from IRs to CL
-  uint8_t Ultra_X[NUM_SIDES];  // X coordinate indicated by ultrasonics
-  uint8_t IR_X[NUM_SIDES];     // X coordinate indicated by IRs
-  uint8_t xCoordinate;   // xCoordinate blended to be sent
-  uint8_t zone;          // current zone
-  uint8_t dir;           // direction of movement
-  uint8_t estSpeed;      // estinmated speed in divisions/second
-  uint8_t ballCollor;    // ball color
+  uint8_t Ultra_LeverArm[NUM_SIDES];    // Lever Arm Offset from Ultrasonics to CL
+  uint8_t IR_LeverArm[NUM_SIDES];       // Lever Arm Offset from IRs to CL
+  uint8_t Ultra_X[NUM_SIDES];           // X coordinate indicated by ultrasonics
+  uint8_t IR_X[NUM_SIDES];              // X coordinate indicated by IRs
+  uint8_t Blended_X[NUM_SIDES];         // X coordinate blended from same side sensors
+  uint8_t xCoordinate;  // xCoordinate blended to be sent
+  uint8_t zone;                         // current zone
+  uint8_t dir;                          // direction of movement
+  uint8_t estSpeed;                   // estinmated speed in divisions/second
+  uint8_t ballCollor;                // ball color
 }myRobot;
 
 robot Robot;
+
+struct course {
+  uint8_t stuckBall[NUM_SIDES];
+};
+
+course Course;
 
 uint8_t message[MESSAGE_LEN];
 
