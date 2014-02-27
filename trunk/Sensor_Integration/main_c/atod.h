@@ -11,4 +11,8 @@ enum analogSignals {
   NUM_ANALOGS
 };
 
+#define RED_SCALER     (1)
+#define GREEN_SCALER   (1.25)
+#define BLUE_SCALER    (1.75)
+
 #endif
