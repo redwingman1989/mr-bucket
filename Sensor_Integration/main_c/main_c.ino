@@ -5,12 +5,12 @@
 #include "irprox.h"
 #include "atod.h"
 
-/* Preprocessor Debug indiactor. change to 1 for debug build */
+/* Preprocessor Debug indicator. change to 1 for debug build */
 #define DEBUG 0
 
 /*******************************************************************
  Function: void setup(void)
- Description: Ardiuno main function for initialization code.
+ Description: Arduino main function for initialization code.
 *******************************************************************/
 void setup() { 
   crcInit();
@@ -71,24 +71,24 @@ void loop() {
  at 50Hz including:
    - Pulsing of Ultrasonics at alternating 25Hz
    - Blending Ultrasonic with IR Sensor
-   - Formating Sensor data into X coordinate
-   - Determine Ball Color/Precense
+   - Formatting Sensor data into X coordinate
+   - Determine Ball Color/Presence
    - Packetizing Data for transmission
    - Initiating packet transmission
 ****************************************************************/
 void cycle() {
   
-  /* Pulse Heatbeat LED on PIN 13 */
+  /* Pulse Heartbeat LED on PIN 13 */
   heartbeat();  
   
   /* Alternating 25Hz Tasks */
   if (iFlags.pit_25Hz) {
     iFlags.pit_25Hz = 0;
-    /* Triger Left Ultrasonic */
+    /* Trigger Left Ultrasonic */
     trigEcho(LEFT);
   }
   else {
-    /* Triger Right Ultrasonic */
+    /* Trigger Right Ultrasonic */
     trigEcho(RIGHT);
   }
   
@@ -113,8 +113,8 @@ void heartbeat() {
 }
 
 /****************************************************************
- Funtion: void PIT(void)
- Description: Fuction called at expiration of the periodic timer
+ Function: void PIT(void)
+ Description: Function called at expiration of the periodic timer
  at 500Hz (every 2ms). This function sets the flags associated
  with periodic tasks to be executed form loop() and cycle().
 *****************************************************************/
@@ -170,7 +170,7 @@ void updateRobot(robot * bot) {
 //      /* else, clear stuckball on left */
 //      else
 //        Course.stuckBall[LEFT] = 0;
-//      /* Ball Detectd on Right, record X coordinate */
+//      /* Ball Detected on Right, record X coordinate */
 //      if (bot->Ultra_X[RIGHT] - Course.stuckBall[RIGHT] > 110) {
 //        Course.stuckBall[RIGHT] = 189 - bot->Ultra_X[RIGHT] + bot->xCoordinate;
 //        bot->Ultra_X[RIGHT] -= (189 - Course.stuckBall[RIGHT]);
@@ -192,7 +192,7 @@ void updateRobot(robot * bot) {
 //      }
       
       break;
-    /* ZONE_2 (115 < X <= 189), Linsten to Right IR Primary */
+    /* ZONE_2 (115 < X <= 189), Listen to Right Ultra Primary */
     case ZONE_2:
       bot->xCoordinate = bot->Ultra_X[RIGHT];
       break;
