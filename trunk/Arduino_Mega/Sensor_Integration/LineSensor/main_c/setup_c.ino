@@ -21,7 +21,7 @@ void setupTimer1Int() {
                                                            [20 kHz]
 *******************************************************************/
 void setupTimer3Int() {
-  Timer3.initialize(50);
+  Timer3.initialize(100);
 }
 
 /*******************************************************************
@@ -41,4 +41,8 @@ void setupSerial() {
 void setupLineSensor() {
   pinMode(ALL_LN_SEN_LED_ENABLE_PIN, OUTPUT);
   digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, HIGH); 
+}
+
+void setupPinModes() {
+  pinMode(LED_PIN, OUTPUT);
 }
