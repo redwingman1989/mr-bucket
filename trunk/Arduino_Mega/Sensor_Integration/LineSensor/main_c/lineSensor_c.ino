@@ -1,3 +1,7 @@
+#include "lineSensor.h"
+
+
+
 unsigned long startCapChargeTime = 0;
 
 /****************************************************************
@@ -9,7 +13,7 @@ unsigned long startCapChargeTime = 0;
 ****************************************************************/
 void lineSensorExec() {
   /* Turn on IR Emitters to Charge Capacitors */
-  digitalWrite(FRONT_LN_SEN_LED_ENABLE_PIN, HIGH);
+  digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, HIGH);
   
   /* Make the Digital I/O Pin an Output */
   pinMode(FRONT_LN_SEN_SENSOR_1_PIN, OUTPUT);
@@ -20,6 +24,9 @@ void lineSensorExec() {
   /* Delay 10 microseconds to charge the capacitors. As the delay is only
    *   10 microseconds, we can afford to hold the processor for that long. */
   delayMicroseconds(10);  // ***** Need to verify this won't affect other Interrupts!!!! ****** //
+  
+  /* Turn off IR Emitters */
+  digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, LOW);
   
   /* Make the Digital I/O pin an Input */
   pinMode(FRONT_LN_SEN_SENSOR_1_PIN, INPUT);
@@ -39,10 +46,10 @@ void lineSensorExec() {
                 Timer. This function gets readings of the capacitor
                 discharge times and based on a threshold value, sets
                 whether or not a specific sensor on the line sensor
-                array sees White or Black.
+                array sees White (No Line) or Black (Line).
                 
                 Sensor Check prioritization:
-                
+                  *** [FRONT] then [RIGHT] then [LEFT] then [REAR]: ***
                 1) If the line hasn't been detected on the rear sensor,
                      check the front sensor.
                 2) If the line hasn't been detected on the left sensor,
@@ -53,8 +60,8 @@ void lineSensorExec() {
                      check the rear sensor.
                 
                 Discharge Times on surfaces (Function of Distance to line):
-                White = ~ 100 microseconds 
-                Black = 2000 microseconds
+                White = ~100 microseconds 
+                Black = 2000+ microseconds
 ****************************************************************/
 void pollLineSensor() {
   unsigned long capDischargeTime = 0; // Temp Location to store Cap Discharge Time
@@ -77,7 +84,7 @@ void pollLineSensor() {
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
         capDischargeTime = millis() - startCapChargeTime;
-        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE {
+        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           frontLineSensorDischargeTimes[i - FRONT_LN_SEN_SENSOR_1_PIN] = BLACK;
           
@@ -110,7 +117,7 @@ void pollLineSensor() {
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
         capDischargeTime = millis() - startCapChargeTime;
-        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE {
+        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           rightLineSensorDischargeTimes[i - RIGHT_LN_SEN_SENSOR_1_PIN] = BLACK;
           
@@ -143,7 +150,7 @@ void pollLineSensor() {
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
         capDischargeTime = millis() - startCapChargeTime;
-        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE {
+        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           leftLineSensorDischargeTimes[i - LEFT_LN_SEN_SENSOR_1_PIN] = BLACK;
           
@@ -176,7 +183,7 @@ void pollLineSensor() {
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
         capDischargeTime = millis() - startCapChargeTime;
-        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE {
+        if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           leftLineSensorDischargeTimes[i - LEFT_LN_SEN_SENSOR_1_PIN] = BLACK;
           

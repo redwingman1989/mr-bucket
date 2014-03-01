@@ -3,7 +3,7 @@
 #include <TimerThree.h>
 #include "global.h"
 
-/* Preprocessor Debug indicator. change to 1 for debug build */
+/* Preprocessor Debug indicator. Change to 1 for debug build */
 #define DEBUG 1
 
 unsigned char runLoopFlag = 1;
@@ -41,68 +41,13 @@ void loop() {
     /* Reset the 100Hz Flag */
     iFlags.pit_100Hz = 0;
   }
-  
-  if (runLoopFlag) {
-    /* Local Variables */
-    timeDelta = micros() - time;
-    
-    Serial.println(timeDelta);
-    
-    /* Reset the global run flag */
-    runLoopFlag = 0;
-    
-    /* Charge the pin high */
-    digitalWrite(LED_ON_PIN, HIGH);
-    
-    /* Make the Digital I/O Pin an Output */
-    pinMode(SENSOR_1_PIN, OUTPUT);
-  
-    /* Set the Digital Out High */
-    digitalWrite(SENSOR_1_PIN, HIGH);
-  
-    /* Delay for 20 microseconds */
-    delayMicroseconds(20);
-    
-    /* Set Digital Pin Low */
-    //digitalWrite(SENSOR_1_PIN, LOW);
-  
-    /* Make the Digital I/O pin an Input */
-    pinMode(SENSOR_1_PIN, INPUT);
-  
-    /* Attach the Interrupt to the Falling signal on Int. 5 pin */
-    attachInterrupt(5, LineSensorISR, FALLING);
-  
-    /* Start Timer */
-    time = micros();
-  
-    
-    /* Enable Interrupts */
-    //interrupts();
-  }
-}
-
-
-void LineSensorISR () {
-  /* Local variables */
-  
-  
-  /* Calculate the time */
-
-  
-   detachInterrupt(5);
-   //digitalWrite(LED_ON_PIN, LOW);
-  /* Disable Interrupts */
- // noInterrupts();
-  
-  /* Reset the global run loop flag */
-  runLoopFlag = 1;
 }
 
 
 /****************************************************************
  Function: void cycle(void)
- Description: Called from loop() at 50Hz. handles periodic tasks
- at 50Hz including:
+ Description: Called from loop() at 100Hz. Handles periodic tasks
+ at 100Hz including:
    - Calling the Line Sensor's Exec Function
 ****************************************************************/
 void cycle() {
@@ -115,6 +60,17 @@ void cycle() {
 }
 
 
+/************************************************************ 
+ Function: heartbeat()
+ Description: I'm not explaining this.
+************************************************************/
+void heartbeat() {
+  // Toggle Board LED at 4 Hz
+  if (!(icount % 25))
+    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1); 
+}
+
+
 /****************************************************************
  Function: void PIT(void)
  Description: Function called at expiration of the periodic timer
@@ -124,16 +80,16 @@ void cycle() {
 void PIT() {
   static unsigned int scaler = 0;
   /* ******* ADJUST THIS ******* */
-  if (iFlags.pit_50Hz) {
+  if (iFlags.pit_100Hz) {
     sprintf(outStr, "cycle overrun");
     Serial.println(outStr); 
   }
   iFlags.pit_100Hz = 1;
-  if(++scaler % 10 == 0) {
-    iFlags.pit_50Hz = 1;
-    if(scaler == 20) {
-      iFlags.pit_25Hz = 1;
-      scaler = 0; 
-    }
-  }
+  //if(++scaler % 10 == 0) {
+   // iFlags.pit_50Hz = 1;
+    //if(scaler == 20) {
+     // iFlags.pit_25Hz = 1;
+      //scaler = 0; 
+   // }
+  //}
 }
