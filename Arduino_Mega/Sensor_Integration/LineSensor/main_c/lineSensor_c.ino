@@ -1,4 +1,4 @@
-#include "lineSensor.h"
+//#include "lineSensor.h"
 
 
 
@@ -12,6 +12,15 @@ unsigned long startCapChargeTime = 0;
    3) Enables the Polling Interrupt (Runs at 50 microseconds)
 ****************************************************************/
 void lineSensorExec() {
+  unsigned char loopIterator = 0;
+  /* Reset the timeArrays */
+  for (loopIterator = 0; loopIterator < NUM_LINE_SENSOR_SENSORS; loopIterator++) {
+    frontLineSensorDischargeTimes[loopIterator] = INDETERMINATE;
+    rightLineSensorDischargeTimes[loopIterator] = INDETERMINATE;
+    rearLineSensorDischargeTimes[loopIterator] = INDETERMINATE;
+    leftLineSensorDischargeTimes[loopIterator] = INDETERMINATE;
+  }
+  
   /* Turn on IR Emitters to Charge Capacitors */
   digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, HIGH);
   
@@ -198,6 +207,5 @@ void pollLineSensor() {
       }
     }
   }
-
 }
 
