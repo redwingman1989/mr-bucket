@@ -18,6 +18,7 @@ void setup() {
   setupTimer1Int();
   setupTimer3Int();
   setupLineSensor();
+  setupPinModes();
 }
 
 
@@ -75,7 +76,7 @@ void cycle() {
 ************************************************************/
 void heartbeat() {
   // Toggle Board LED at 4 Hz
-  if (!(icount % 25))
+  if (!(icount % 50))
     digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1); 
 }
 

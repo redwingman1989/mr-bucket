@@ -41,7 +41,7 @@ void lineSensorExec() {
   pinMode(FRONT_LN_SEN_SENSOR_1_PIN, INPUT);
   
   /* Mark the Start time that the caps were charged */
-  startCapChargeTime = millis();
+  startCapChargeTime = micros();
   
   /* Enable the polling interrupt */
   Timer3.attachInterrupt(pollLineSensor);
@@ -92,7 +92,7 @@ void pollLineSensor() {
       /* Check to see if the Pin is low. Mark the time it took to discharge
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
-        capDischargeTime = millis() - startCapChargeTime;
+        capDischargeTime = micros() - startCapChargeTime;
         if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           frontLineSensorDischargeTimes[i - FRONT_LN_SEN_SENSOR_1_PIN] = BLACK;
@@ -125,7 +125,7 @@ void pollLineSensor() {
       /* Check to see if the Pin is low. Mark the time it took to discharge
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
-        capDischargeTime = millis() - startCapChargeTime;
+        capDischargeTime = micros() - startCapChargeTime;
         if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           rightLineSensorDischargeTimes[i - RIGHT_LN_SEN_SENSOR_1_PIN] = BLACK;
@@ -158,7 +158,7 @@ void pollLineSensor() {
       /* Check to see if the Pin is low. Mark the time it took to discharge
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
-        capDischargeTime = millis() - startCapChargeTime;
+        capDischargeTime = micros() - startCapChargeTime;
         if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           leftLineSensorDischargeTimes[i - LEFT_LN_SEN_SENSOR_1_PIN] = BLACK;
@@ -191,7 +191,7 @@ void pollLineSensor() {
       /* Check to see if the Pin is low. Mark the time it took to discharge
        *   the capacitor if the pin is low. */
       if (digitalRead(i) == LOW) {
-        capDischargeTime = millis() - startCapChargeTime;
+        capDischargeTime = micros() - startCapChargeTime;
         if (capDischargeTime >= BLACK_LINE_MICROSEC_THRESHOLD_VALUE) {
           /* Flag the sensor that has the black line */
           leftLineSensorDischargeTimes[i - LEFT_LN_SEN_SENSOR_1_PIN] = BLACK;
@@ -207,5 +207,8 @@ void pollLineSensor() {
       }
     }
   }
+  
+  if (lineUnderSensor.allSensors != 0)
+    Timer3.detachInterrupt();
 }
 
