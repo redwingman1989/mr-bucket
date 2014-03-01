@@ -39,6 +39,6 @@ void setupSerial() {
                 Digital I/O to an output. Set the LED Enable pin High.
 *******************************************************************/
 void setupLineSensor() {
-  pinMode(LN_SEN_LED_ENABLE_PIN, OUTPUT);
-  digitalWrite(LN_SEN_LED_ENABLE_PIN, HIGH); 
+  pinMode(ALL_LN_SEN_LED_ENABLE_PIN, OUTPUT);
+  digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, HIGH); 
 }

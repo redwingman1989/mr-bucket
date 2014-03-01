@@ -16,7 +16,7 @@ unsigned char leftLineSensorDischargeTimes[NUM_LINE_SENSOR_SENSORS];
 enum lineID {
   INDETERMINATE,
   WHITE,
-  BLACK
+  BLACK,
   NUM_LINE_IDS
 };
 

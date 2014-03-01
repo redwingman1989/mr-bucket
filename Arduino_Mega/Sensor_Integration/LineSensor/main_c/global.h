@@ -10,7 +10,7 @@
 #define ULTRA_TRIG_RPIN             (4)
 #define ULTRA_TRIG_LPIN             (5)
 #define LED_PIN                     (13)
-#define FRONT_LN_SEN_LED_ENABLE_PIN (14)
+#define ALL_LN_SEN_LED_ENABLE_PIN   (14)
 #define FRONT_LN_SEN_SENSOR_1_PIN   (22)
 #define RIGHT_LN_SEN_SENSOR_1_PIN   (30)
 #define REAR_LN_SEN_SENSOR_1_PIN    (28)
@@ -19,7 +19,7 @@
 #define MAGNMTR_I2C_SCL_PIN         (21)
 
 #define TRUE  (1)
-#define FLASE (0)
+#define FALSE (0)
 
 #define Rx_BUFFER_SIZE (MESSAGE_LEN)
 #define FILTER         (5)
@@ -77,10 +77,6 @@ struct interruptFlagStruct {
 /**************************** Global Variables *******************************/
 
 interruptFlagStruct iFlags;
-
-robot Robot;                  // Global Instance of robot
-course Course;                // Global Instance of course
-ball loadedBall;              // Global Instance of ball
 
 uint8_t message[MESSAGE_LEN];
 
