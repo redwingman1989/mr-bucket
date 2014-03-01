@@ -2,13 +2,12 @@
 #include <TimerOne.h>
 #include <TimerThree.h>
 #include "global.h"
-
-/* Preprocessor Debug indicator. Change to 1 for debug build */
-#define DEBUG 1
+#include "lineSensor.h"
 
 unsigned char runLoopFlag = 1;
 unsigned long time = 0;
 unsigned long timeDelta = 0;
+unsigned char dbgLoopIterator = 0;
 
 /*******************************************************************
  Function: void setup(void)
@@ -41,6 +40,16 @@ void loop() {
     /* Reset the 100Hz Flag */
     iFlags.pit_100Hz = 0;
   }
+  
+  /* Debug printout for Line Sensor Readings */
+  if (DEBUG == 1 && ((icount % 20) == 0)) {
+    for (dbgLoopIterator = 0; dbgLoopIterator < NUM_LINE_SENSOR_SENSORS; dbgLoopIterator++) {
+      if (frontLineSensorDischargeTimes[dbgLoopIterator] == BLACK) {
+        Serial.println(dbgLoopIterator);
+      }
+    }
+  }
+  
 }
 
 
@@ -78,12 +87,12 @@ void heartbeat() {
  with periodic tasks to be executed form loop() and cycle().
 *****************************************************************/
 void PIT() {
-  static unsigned int scaler = 0;
+  //static unsigned int scaler = 0;
   /* ******* ADJUST THIS ******* */
-  if (iFlags.pit_100Hz) {
-    sprintf(outStr, "cycle overrun");
-    Serial.println(outStr); 
-  }
+  //if (iFlags.pit_100Hz) {
+    //sprintf(outStr, "cycle overrun");
+    //Serial.println(outStr); 
+  //}
   iFlags.pit_100Hz = 1;
   //if(++scaler % 10 == 0) {
    // iFlags.pit_50Hz = 1;

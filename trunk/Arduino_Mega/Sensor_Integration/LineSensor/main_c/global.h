@@ -1,6 +1,9 @@
 #ifndef _GLOBAL_H
 #define _GLOBAL_H
 
+/* Preprocessor Debug indicator. Change to 1 for debug build */
+#define DEBUG 1
+
 /* PIN Definitions */
 #define IR_1_PIN                    (A0)
 #define ULTRA_RIGHT_ECHO_INT        (0)

@@ -6,7 +6,7 @@
 #define LEFT_LINE_SENSOR_PIN_OFFSET  (LEFT_LN_SEN_SENSOR_1_PIN)
 #define BLACK_LINE_MICROSEC_THRESHOLD_VALUE (900)
 
-/* Line Sensor Array */
+/* Line Sensor Global(s) */
 unsigned char frontLineSensorDischargeTimes[NUM_LINE_SENSOR_SENSORS];
 unsigned char rightLineSensorDischargeTimes[NUM_LINE_SENSOR_SENSORS];
 unsigned char rearLineSensorDischargeTimes[NUM_LINE_SENSOR_SENSORS];
