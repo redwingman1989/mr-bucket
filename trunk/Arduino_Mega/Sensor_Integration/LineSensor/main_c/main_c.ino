@@ -32,32 +32,32 @@ void loop() {
   /* Log the Arduino Loop starting time in milliseconds */
   loopStartTime = millis();
   
-  /* Execute cycle() at 100Hz */
-  if (iFlags.pit_100Hz == 1) {
+  /* Execute cycle() at 50Hz */
+  if (iFlags.pit_50Hz == 1) {
     /* Execute Main Cycle */
     cycle();
     /* Update the Cycle Count */
     icount++;
-    /* Reset the 100Hz Flag */
-    iFlags.pit_100Hz = 0;
+    /* Reset the 50Hz Flag */
+    iFlags.pit_50Hz = 0;
   }
   
-  /* Debug printout for Line Sensor Readings */
-  if (DEBUG == 1 && ((icount % 20) == 0)) {
-    for (dbgLoopIterator = 0; dbgLoopIterator < NUM_LINE_SENSOR_SENSORS; dbgLoopIterator++) {
-      if (frontLineSensorDischargeTimes[dbgLoopIterator] == BLACK) {
-        Serial.println(dbgLoopIterator);
-      }
-    }
-  }
-  
+//  /* Debug Light Array Code */
+//  for (dbgLoopIterator = 0; dbgLoopIterator < NUM_LINE_SENSOR_SENSORS; dbgLoopIterator++) {
+//    if (frontLineSensorDischargeTimes[dbgLoopIterator] == BLACK) {
+//      digitalWrite(dbgLoopIterator + DBG_LIGHT_ARR_START_PIN, LOW);
+//    }
+//    else {//if (frontLineSensorDischargeTimes[dbgLoopIterator] == WHITE)
+//      digitalWrite(dbgLoopIterator + DBG_LIGHT_ARR_START_PIN, HIGH);
+//    }
+//  }
 }
 
 
 /****************************************************************
  Function: void cycle(void)
- Description: Called from loop() at 100Hz. Handles periodic tasks
- at 100Hz including:
+ Description: Called from loop() at 50Hz. Handles periodic tasks
+ at 50Hz including:
    - Calling the Line Sensor's Exec Function
 ****************************************************************/
 void cycle() {
@@ -76,7 +76,7 @@ void cycle() {
 ************************************************************/
 void heartbeat() {
   // Toggle Board LED at 4 Hz
-  if (!(icount % 50))
+  if (!(icount % 25))
     digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1); 
 }
 
@@ -84,7 +84,7 @@ void heartbeat() {
 /****************************************************************
  Function: void PIT(void)
  Description: Function called at expiration of the periodic timer
- at 100 Hz (every 10ms). This function sets the flags associated
+ at 50Hz (every 20ms). This function sets the flags associated
  with periodic tasks to be executed form loop() and cycle().
 *****************************************************************/
 void PIT() {
@@ -94,7 +94,7 @@ void PIT() {
     //sprintf(outStr, "cycle overrun");
     //Serial.println(outStr); 
   //}
-  iFlags.pit_100Hz = 1;
+  iFlags.pit_50Hz = 1;
   //if(++scaler % 10 == 0) {
    // iFlags.pit_50Hz = 1;
     //if(scaler == 20) {
