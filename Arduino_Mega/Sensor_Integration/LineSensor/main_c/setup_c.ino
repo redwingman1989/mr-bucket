@@ -1,12 +1,12 @@
 /*******************************************************************
  Function: void setupTimer1Int(void)
  Description: Initializes the main PIT Interrupt Timer. The Timer
-                expires after 10,000 microseconds (10 milliseconds).
+                expires after 20,000 microseconds (20 milliseconds).
                 When the timer expires the PIT fuction is called as
-                the ISR.                                   [100 Hz]
+                the ISR.                                   [50 Hz]
 *******************************************************************/
 void setupTimer1Int() {
-  Timer1.initialize(10000);
+  Timer1.initialize(20000);
   Timer1.attachInterrupt(PIT);
 }
 
@@ -17,11 +17,14 @@ void setupTimer1Int() {
                 during code execution. It will only be enabled after
                 the capacitors have been charged. After the line is
                 found the polling interrupt is disabled. The Timer
-                expires after 50 microseconds (0.05 milliseconds).
-                                                           [20 kHz]
+                expires after 1000 microseconds (0.001 milliseconds).
+                                                           [1000 Hz]
 *******************************************************************/
 void setupTimer3Int() {
-  Timer3.initialize(100);
+  Timer3.initialize(1000);
+  Timer3.attachInterrupt(pollLineSensor);
+  Timer3.stop();
+  
 }
 
 /*******************************************************************
@@ -30,7 +33,7 @@ void setupTimer3Int() {
                 initialized to 9600 baud.
 *******************************************************************/
 void setupSerial() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 /*******************************************************************
@@ -43,6 +46,20 @@ void setupLineSensor() {
   digitalWrite(ALL_LN_SEN_LED_ENABLE_PIN, HIGH); 
 }
 
+
+/*******************************************************************
+ Function: void setupPinModes(void)
+ Description: Initializes Arduino Mega Digital I/O pins.
+*******************************************************************/
 void setupPinModes() {
   pinMode(LED_PIN, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 1, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 2, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 3, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 4, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 5, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 6, OUTPUT);
+  pinMode(DBG_LIGHT_ARR_START_PIN + 7, OUTPUT);
 }

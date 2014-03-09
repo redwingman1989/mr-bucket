@@ -4,7 +4,8 @@
 #define RIGHT_LINE_SENSOR_PIN_OFFSET (RIGHT_LN_SEN_SENSOR_1_PIN)
 #define REAR_LINE_SENSOR_PIN_OFFSET  (REAR_LN_SEN_SENSOR_1_PIN)
 #define LEFT_LINE_SENSOR_PIN_OFFSET  (LEFT_LN_SEN_SENSOR_1_PIN)
-#define BLACK_LINE_MICROSEC_THRESHOLD_VALUE (900)
+#define BLACK_LINE_MICROSEC_THRESHOLD (10000)
+#define NUM_LINE_SEN_SAMPLES         (12)
 
 /* Line Sensor Global(s) */
 unsigned char frontLineSensorDischargeTimes[NUM_LINE_SENSOR_SENSORS];
@@ -39,3 +40,5 @@ struct lineUnderSensorStruct {
 
 /* Global Variables */
 lineUnderSensorStruct lineUnderSensor;
+
+int numberOfPolls;

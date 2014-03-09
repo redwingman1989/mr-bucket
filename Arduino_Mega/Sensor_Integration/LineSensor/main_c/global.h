@@ -15,9 +15,23 @@
 #define LED_PIN                     (13)
 #define ALL_LN_SEN_LED_ENABLE_PIN   (14)
 #define FRONT_LN_SEN_SENSOR_1_PIN   (22)
+#define FRONT_LN_SEN_SENSOR_2_PIN   (23)
+#define FRONT_LN_SEN_SENSOR_3_PIN   (24)
+#define FRONT_LN_SEN_SENSOR_4_PIN   (25)
+#define FRONT_LN_SEN_SENSOR_5_PIN   (26)
+#define FRONT_LN_SEN_SENSOR_6_PIN   (27)
+#define FRONT_LN_SEN_SENSOR_7_PIN   (28)
+#define FRONT_LN_SEN_SENSOR_8_PIN   (29)
 #define RIGHT_LN_SEN_SENSOR_1_PIN   (30)
 #define REAR_LN_SEN_SENSOR_1_PIN    (28)
 #define LEFT_LN_SEN_SENSOR_1_PIN    (46)
+
+
+/* RED LED */
+#define RED_LED (4)
+/* Line Sensor Test Light Array */
+#define DBG_LIGHT_ARR_START_PIN     (5)
+
 #define MAGNMTR_I2C_SDA_PIN         (20)
 #define MAGNMTR_I2C_SCL_PIN         (21)
 
@@ -64,7 +78,7 @@ enum side {
 struct interruptFlagStruct {
   union {
     struct {
-      unsigned char pit_100Hz  :1;
+      unsigned char pit_50Hz  :1;
       unsigned char spare0     :1;
       unsigned char spare1     :1;
       unsigned char spare2     :1;
