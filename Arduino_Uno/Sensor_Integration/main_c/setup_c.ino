@@ -28,8 +28,19 @@ void setupUltraSonicInt() {
   attachInterrupt(ULTRA_LEFT_ECHO_INT, leftEchoInt, CHANGE);
 }
 
+void setupMagnetometer() {
+  Wire.begin();
+  magData.cfg_A.data_rate   = DR_15_HZ;
+  magData.cfg_A.avg         = SA_1;
+  magData.cfg_B.gain        = G_1_3_GA;
+  magData.mode.mode_sel     = MM_CMM;
+  
+}
+
 void messageInit(void) {
   int i = 0;
   message[i++] = 0xAA; 
   message[i++] = 0xAA; 
 }
+
+
