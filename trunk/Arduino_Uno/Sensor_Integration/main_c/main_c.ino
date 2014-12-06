@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <TimerOne.h>
+#include <Wire.h>
 #include "global.h"
 #include "crc.h"
 #include "irprox.h"
 #include "atod.h"
+#include "mag.h"
 
 /* Preprocessor Debug indicator. change to 1 for debug build */
 #define DEBUG 0
@@ -12,13 +14,15 @@
  Function: void setup(void)
  Description: Arduino main function for initialization code.
 *******************************************************************/
-void setup() { 
+void setup() {
+  delay(50); 
   crcInit();
   setupRobot(&Robot);
   setupTimerInt();
   setupSerial();
   setupPinModes();
   setupUltraSonicInt();
+  setupMagnetometer();
   messageInit();
 }
 

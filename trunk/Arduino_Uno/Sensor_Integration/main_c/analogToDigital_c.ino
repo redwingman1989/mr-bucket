@@ -1,12 +1,6 @@
 void readAD(uint8_t analogSignal) {
   
   switch (analogSignal) {
-    case ANALOG_LEFT_IR:
-      break;
-    case ANALOG_RIGHT_IR:
-      break;
-    case ANALOG_SPARE:
-      break;
     case ANALOG_RED:
       loadedBall.redValue = analogRead(ANALOG_RED);
       loadedBall.redValue *= RED_SCALER;
