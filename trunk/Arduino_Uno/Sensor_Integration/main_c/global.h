@@ -36,6 +36,10 @@ enum message {
   DATA_4,
   DATA_5,
   DATA_6,
+  DATA_7,
+  DATA_8,
+  DATA_9,
+  DATA_10,
   DATA_SIZE,
   CRC_IDX = DATA_SIZE,
   MESSAGE_LEN
@@ -100,6 +104,7 @@ struct robot {
   uint8_t dir;                        // direction of movement
   uint8_t estSpeed;                   // estimated speed in divisions/second
   uint8_t ballCollor;                 // ball color
+  uint16_t heading;                   // heading from 0-359
 }myRobot;
 
 /* Course Structure Relevant to Arduino UNO */

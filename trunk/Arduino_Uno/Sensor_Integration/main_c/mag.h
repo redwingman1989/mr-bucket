@@ -1,19 +1,30 @@
 #ifndef _MAG_H
 #define _MAG_H
 
-#define MAG_ADDR (0x1E)
+#define MAG_ADDR       (0x1E)
+#define MAG_DATA_SIZE  (0x06)
+
+/* Macro Definitions */
+#define SENDBYTE(ADDR, REG, DATA) do{ \
+  Wire.beginTransmission(ADDR); \
+  Wire.write(REG); \
+  Wire.write(DATA); \
+  Wire.endTransmission(); \
+} while(0);
 
 /* Magnetometer Register Ennumeration */
 enum magReg {
   MR_CFG_REG_A,  //Configuration Register A (R/W)
   MR_CFG_REG_B,  //Configuration Register B (R/W)
   MR_MODE_REG,   //Mode Registetr (R/W)
-  MR_X_MSB_REG,  //Data Out X MSB (R)
-  MR_X_LSB_REG,  //Data Out X LSB (R)
-  MR_Z_MSB_REG,  //Data Out Z MSB (R)
-  MR_Z_LSB_REG,  //Data Out Z LSB (R)
-  MR_Y_MSB_REG,  //Data Out Y MSB (R)
-  MR_Y_LSB_REG,  //Data Out Y LSB (R)
+  MR_DATA_START_REG,  //Start of X,Y,Z Output
+  MR_X_LSB_REG = MR_DATA_START_REG,  //Data Out X LSB (R) Compensating Endinaness
+  MR_X_MSB_REG,  //Data Out X MSB (R) Compensating Endinaness
+  MR_Z_LSB_REG,  //Data Out Z LSB (R) Compensating Endinaness
+  MR_Z_MSB_REG,  //Data Out Z MSB (R) Compensating Endinaness
+  MR_Y_LSB_REG,  //Data Out Y LSB (R) Compensating Endinaness
+  MR_Y_MSB_REG,  //Data Out Y MSB (R) Compensating Endinaness
+  MR_DATA_END_REG = MR_Y_MSB_REG, //End of X,Y,Z Output
   MR_STATUS_REG, //Status Register (R)
   MR_ID_REG_A,   //Identification Register A (R)
   MR_ID_REG_B,   //Identification Register B (R)
