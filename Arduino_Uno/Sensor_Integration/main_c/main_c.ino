@@ -144,6 +144,8 @@ void PIT() {
 ****************************************************************/
 void updateRobot(robot * bot) {  
   
+  bot->heading = getHeading();
+  
   if(bot->xCoordinate < 95)
     bot->zone = ZONE_0; //LEFT
   else if(bot->xCoordinate > 115)
