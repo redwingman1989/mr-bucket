@@ -1,8 +1,28 @@
 
 uint16_t getHeading() {
-  static uint16_t sHeading;
+  uint16_t sHeading;
+  double result;
+  double x, y;
   
   getMagData();
+  
+  x = (double)magData.data_x;
+  y = (double)magData.data_y;
+  
+  if(y > 0) 
+    result = 90 - (atan(x/y) * (180/PI));
+  else if(y < 0) 
+    result = 270 - (atan(x/y) * (180/PI));
+  else {
+    if (x < 0)
+      result = 180;
+    else
+      result = 0;
+  };
+  
+  result *= 100;
+  
+  sHeading = (uint16_t) result;
   
   return sHeading;
 }

@@ -30,9 +30,9 @@ void setupUltraSonicInt() {
 
 void setupMagnetometer() {
   Wire.begin();
-  magData.cfg_A.data_rate   = DR_15_HZ;
-  magData.cfg_A.avg         = SA_1;
-  magData.cfg_B.gain        = G_1_3_GA;
+  magData.cfg_A.data_rate   = DR_75_HZ;
+  magData.cfg_A.avg         = SA_8;
+  magData.cfg_B.gain        = G_0_88_GA;
   magData.mode.mode_sel     = MM_CMM;
   SENDBYTE(MAG_ADDR, MR_CFG_REG_A, magBuffer[MR_CFG_REG_A]);
   SENDBYTE(MAG_ADDR, MR_CFG_REG_B, magBuffer[MR_CFG_REG_B]);
