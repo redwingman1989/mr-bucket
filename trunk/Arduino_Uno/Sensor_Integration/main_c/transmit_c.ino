@@ -1,15 +1,15 @@
 
 void packetizeMessage(void) {
    message[DATA_0]  = 0x00; //Robot.xCoordinate;
-   message[DATA_1]  = 0x00; //Robot.Ultra_X[LEFT];
-   message[DATA_2]  = 0x00; //Robot.Ultra_X[RIGHT]; 
-   message[DATA_3]  = 0x00; //(uint8_t)loadedBall.redValue;
-   message[DATA_4]  = magBuffer[MR_; //(uint8_t)loadedBall.greenValue;
-   message[DATA_5]  = 0x00; //(uint8_t)loadedBall.blueValue;
-   message[DATA_6]  = magData.data_y >> 8;
-   message[DATA_7]  = magData.data_y;
-   message[DATA_8]  = magData.data_x >> 8;
-   message[DATA_9]  = magData.data_x;
+   message[DATA_1]  = UltraTime[RIGHT]/148;
+   message[DATA_2]  = UltraTime[LEFT]/148; 
+   message[DATA_3]  = 0x00;
+   message[DATA_4]  = 0x00;
+   message[DATA_5]  = (uint8_t)loadedBall.redValue;
+   message[DATA_6]  = (uint8_t)loadedBall.greenValue;
+   message[DATA_7]  = (uint8_t)loadedBall.blueValue;
+   message[DATA_8]  = Robot.heading >> 8; //Heading MSB
+   message[DATA_9]  = Robot.heading;      //Heading LSB
    message[DATA_10] = maxLoopTime;
 }
 

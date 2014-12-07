@@ -6,6 +6,7 @@
 #include "irprox.h"
 #include "atod.h"
 #include "mag.h"
+#include <math.h>
 
 /* Preprocessor Debug indicator. change to 1 for debug build */
 #define DEBUG 0
@@ -104,6 +105,7 @@ void cycle() {
   
   /* Transmit Packet */
   transmitMessage();
+  //Serial.println(Robot.heading, DEC);
 }
 
 /************************************************************ 
