@@ -1,5 +1,6 @@
 
 void packetizeMessage(void) {
+  
    message[DATA_0]  = 0x00; //Robot.xCoordinate;
    message[DATA_1]  = UltraTime[RIGHT]/148;
    message[DATA_2]  = UltraTime[LEFT]/148; 
@@ -11,9 +12,11 @@ void packetizeMessage(void) {
    message[DATA_8]  = Robot.heading >> 8; //Heading MSB
    message[DATA_9]  = Robot.heading;      //Heading LSB
    message[DATA_10] = maxLoopTime;
+   
+   message[CRC_IDX] = calcCRC(message, DATA_SIZE);
 }
 
 
 void transmitMessage(void) {
-   Serial.write(message, MESSAGE_LEN);
+  Serial.write(message, MESSAGE_LEN);  
 }

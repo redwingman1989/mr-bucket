@@ -3,6 +3,7 @@
 
 #define MAG_ADDR       (0x1E)
 #define MAG_DATA_SIZE  (0x06)
+#define MAG_FILTER_SIZE (5)
 
 /* Macro Definitions */
 #define SENDBYTE(ADDR, REG, DATA) do{ \
