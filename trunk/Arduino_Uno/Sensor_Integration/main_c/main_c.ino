@@ -105,7 +105,7 @@ void cycle() {
   
   /* Transmit Packet */
   transmitMessage();
-  //Serial.println(Robot.heading, DEC);
+  
 }
 
 /************************************************************ 
@@ -126,12 +126,14 @@ void heartbeat() {
 *****************************************************************/
 void PIT() {
   static unsigned int scaler = 0;
-  if (iFlags.pit_50Hz) {
-    sprintf(outStr, "cycle overrun");
-    Serial.println(outStr); 
-  }
+
   iFlags.pit_500Hz = 1;
+  
   if(++scaler % 10 == 0) {
+    if (iFlags.pit_50Hz) {
+      sprintf(outStr, "cycle overrun");
+      Serial.println(outStr); 
+    }
     iFlags.pit_50Hz = 1;
     if(scaler == 20) {
       iFlags.pit_25Hz = 1;

@@ -1,8 +1,12 @@
 
+
+
 uint16_t getHeading() {
+  static double filter[MAG_FILTER_SIZE];
+  static unsigned int index;
+  static uint16_t prev_sHeading;
   uint16_t sHeading;
-  double result;
-  double x, y;
+  double result, x, y;
   
   getMagData();
   
@@ -10,18 +14,28 @@ uint16_t getHeading() {
   y = (double)magData.data_y;
   
   if(y > 0) 
-    result = 90 - (atan(x/y) * (180/PI));
+    filter[index] = 90 - (atan(x/y) * (180/PI));
   else if(y < 0) 
-    result = 270 - (atan(x/y) * (180/PI));
+    filter[index] = 270 - (atan(x/y) * (180/PI));
   else {
     if (x < 0)
-      result = 180;
+      filter[index] = 180;
     else
-      result = 0;
+      filter[index] = 0;
   };
   
-  result *= 100;
+  index++;
+  if(index == MAG_FILTER_SIZE)
+    index = 0;
   
+  for(int i = 0; i < MAG_FILTER_SIZE; i++) {
+    result += filter[i];
+  };
+  
+  result /= MAG_FILTER_SIZE;
+  
+  //result *= 100;
+    
   sHeading = (uint16_t) result;
   
   return sHeading;
