@@ -112,7 +112,7 @@ void Sabertooth::sendBaudCommand(baudrate_t baud)
 void Sabertooth::updateMotor1(char speed)
 {
   if (speed < 0) {
-    this->speed1 = 255 + speed;
+    this->speed1 = abs(speed);
     this->direction1 = DD_BACK;
   }
   else {
@@ -124,7 +124,7 @@ void Sabertooth::updateMotor1(char speed)
 void Sabertooth::updateMotor2(char speed)
 {
   if (speed < 0) {
-    this->speed2 = 255 + speed;
+    this->speed2 = abs(speed);
     this->direction2 = DD_BACK;
   }
   else {
@@ -136,7 +136,7 @@ void Sabertooth::updateMotor2(char speed)
 void Sabertooth::updateBothMotors(char speed1, char speed2)
 {
   if (speed1 < 0) {
-    this->speed1 = 255 + speed1;
+    this->speed1 = abs(speed1);
     this->direction1 = DD_BACK;
   }
   else {
@@ -145,7 +145,7 @@ void Sabertooth::updateBothMotors(char speed1, char speed2)
   }
 
   if (speed2 < 0) {
-    this->speed2 = 255 + speed2;
+    this->speed2 = abs(speed2);
     this->direction2 = DD_BACK;
   }
   else {
