@@ -1,8 +1,8 @@
 #include "lineSensor.h"
 
 void lineSensorExec() {
-  startCapChargeTime = 0; // Reset the cap charge times
-  memset(frontLineSensorDischargeTimes, 0, NUM_LINE_SENSOR_SENSORS * sizeof(unsigned long)); // reset discharge time
+//  startCapChargeTime = 0; // Reset the cap charge times
+//  memset(frontLineSensorDischargeTimes, 0, NUM_LINE_SENSOR_SENSORS * sizeof(unsigned long)); // reset discharge time
   
   // Drive Sensor Line High
 //  digitalWrite(FRONT_LN_SEN_SENSOR_1_PIN, HIGH);
@@ -27,14 +27,14 @@ void lineSensorExec() {
     DDRC = DDRC & B00000000;
     
   // Mark the time of the start of charging the caps
-  startCapChargeTime = micros();
+//  startCapChargeTime = micros();
   
   //delayMicroseconds(150);
   
 //  pollLineSensor();
   
   // Start the Interrupt Timer that will poll the Line Sensor
-  Timer3.start();
+//  Timer3.start();
 }
 
 
@@ -55,13 +55,13 @@ void pollLineSensor() {
       /* If the capacitor discharged, PORT C input channel will be 0. Mark the amount of time that it took. 
        *   If the time value is 0 after leaving this ISR, the Line Sensor's Sensor is over a dark or black
        *   surface. */
-      frontLineSensorDischargeTimes[sensorNumOnLineSensor] = micros() - startCapChargeTime;
+//      frontLineSensorDischargeTimes[sensorNumOnLineSensor] = micros() - startCapChargeTime;
     } /* If (PINC...) */
   } /* For loop */
   
   if (DEBUG_BUILD == TRUE) {
     printOutLineSenData = TRUE;
-    portA = PINC;
+//    portA = PINC;
   } /* if(Debug) */
   
   //Timer3.stop();

@@ -4,15 +4,13 @@
 /* Preprocessor Debug indicator. Change to 1 for debug build */
 #define DEBUG_BUILD                 (1)
 
-/* Setup Macro Values (used in Setup loop) */
-// Serial Port
-#define SERIAL_BAUD_RATE            (115200)
 // Programmable Interrupt Timer
 #define PIT_PERIOD_IN_MICROSECS     (20000)
 #define LINE_SENSOR_POLL_PERIOD     (200) // This should be a calibrated value!
 
-
-
+/* Setup Macro Values (used in Setup loop) */
+// Serial Port
+#define SERIAL_BAUD_RATE            (115200)
 /* PIN Definitions */
 // Board LED
 #define LED_PIN                     (13)
@@ -60,7 +58,7 @@ unsigned long acount;         // 500Hz/Analog counter
 unsigned char printOutLineSenData;
 
 
-uint8_t loopTime;
-uint8_t maxLoopTime;
+unsigned char loopTime;
+unsigned char maxLoopTime;
 
 #endif
