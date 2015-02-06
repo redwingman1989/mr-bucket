@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <TimerOne.h>
-#include <TimerThree.h>
+//#include <TimerThree.h>
 #include "global.h"
 #include "linesensor.h"
 
@@ -11,7 +11,7 @@
 void setup() {
   setupSerial(SERIAL_BAUD_RATE);
   setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
-  setupTimer3Int(LINE_SENSOR_POLL_PERIOD);
+//  setupTimer3Int(LINE_SENSOR_POLL_PERIOD);
   setupLineSensor();
   setupPinModes();
 }
@@ -41,24 +41,24 @@ void loop() {
     
     /* Perform Debug Print Outs */
     /* Print Out Line Sensor Data */
-    if (printOutLineSenData) {
-      Serial.println(portA);
-      for (i = 0; i < NUM_LINE_SENSOR_SENSORS; i++) {
-        Serial.print("[");
-        Serial.print(i);
-        Serial.print("]: ");
-        if(frontLineSensorDischargeTimes[i] == 0) {
-          Serial.println("Black");
-        }
-        else {
-          Serial.println(frontLineSensorDischargeTimes[i]);
-        }
-        if (i == NUM_LINE_SENSOR_SENSORS-1) {
-          Serial.println();
-        } /* if */
-      } /* for */
-
-    } /* if (printOutLineSenData) */
+//    if (printOutLineSenData) {
+//      Serial.println(portA);
+//      for (i = 0; i < NUM_LINE_SENSOR_SENSORS; i++) {
+//        Serial.print("[");
+//        Serial.print(i);
+//        Serial.print("]: ");
+//        if(frontLineSensorDischargeTimes[i] == 0) {
+//          Serial.println("Black");
+//        }
+//        else {
+//          Serial.println(frontLineSensorDischargeTimes[i]);
+//        }
+//        if (i == NUM_LINE_SENSOR_SENSORS-1) {
+//          Serial.println();
+//        } /* if */
+//      } /* for */
+//
+//    } /* if (printOutLineSenData) */
   } /* if (PIT Flag) */
 }
 
@@ -74,7 +74,7 @@ void cycle() {
   heartbeat(); 
   
   /* Begin checking for the line */
-  lineSensorExec();
+//  lineSensorExec();
 }
 
 

@@ -24,9 +24,9 @@ void setupTimer1Int(unsigned long periodInMicroSecs) {
                 macro, located in global.h
 *******************************************************************/
 void setupTimer3Int(unsigned long periodInMicroSecs) {
-  Timer3.initialize(periodInMicroSecs);
-  Timer3.attachInterrupt(pollLineSensor);
-  Timer3.stop();
+//  Timer3.initialize(periodInMicroSecs);
+//  Timer3.attachInterrupt(pollLineSensor);
+//  Timer3.stop();
   
 }
 
