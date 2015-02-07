@@ -1,9 +1,5 @@
 #include <Arduino.h>
-#include "Sabertooth.h"
 #include "MotorController.h"
-
-#define MOTORBAUD false
-
 
 MotorController myController;
 
