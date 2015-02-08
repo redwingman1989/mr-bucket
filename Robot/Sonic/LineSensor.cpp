@@ -1,7 +1,7 @@
 /* Line Sensor Class */
 #include <Arduino.h>
 #include "LineSensor.h"
-#include "global.h"
+//#include "global.h"
 
 
 /*************************************************************
@@ -42,16 +42,16 @@ startCapChargeTime(0)
 void LineSensor::beginCheck()
 {
       /* Drive Sensor Line High */
-      port = 0xff;
+      this->port |= 0xff;
 
       /* Make the port an output */
-      configRegister = 0xff;
+      this->configRegister |= 0xff;
 
       /* Charge the lines for 10 us */
       delayMicroseconds(10);
 
       /* Make the port an input */
-      DDRA = 0;
+      this->configRegister &= 0;
 }
 
 
@@ -69,6 +69,6 @@ void LineSensor::getReading()
   /* Figure out which PORT this sensor is configured for
    *   and return the value of the PORT to the Line Sensor
    *   object's sensorReadings data member */
-    this->sensorReadings.allReadings = port;
+    this->sensorReadings.allReadings = PINA;
 
 }
