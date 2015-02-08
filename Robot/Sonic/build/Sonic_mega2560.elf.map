@@ -1,0 +1,1496 @@
+Archive member included because of file (symbol)
+
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                              build\Sonic.o (Serial)
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o (main)
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o) (__cxa_pure_virtual)
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o) (Print::write(unsigned char const*, unsigned int))
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                              build\Sonic.o (delay)
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                              build\Sonic.o (pinMode)
+E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (String::operator[](unsigned int) const)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__subsf3)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o) (__addsf3x)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__ltsf2)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__divsf3)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o) (__divsf3x)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__fixsfsi)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__fixunssfsi)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__floatunsisf)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o) (__fp_cmp)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_inf)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_nan)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_pscA)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_pscB)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o) (__fp_round)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_split3)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o) (__fp_zero)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__gtsf2)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__mulsf3)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o) (__mulsf3x)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__unordsf2)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o) (__mulsi3)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o) (__udivmodsi4)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o (exit)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o) (__do_clear_bss)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o) (__do_global_ctors)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o) (__tablejump__)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o) (malloc)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (realloc)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (atol)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (isspace)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (tolower)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (toupper)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memcpy.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (memcpy)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (memmove)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strchr.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strchr)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcmp.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strcmp)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcpy.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strcpy)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncmp.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strncmp)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncpy.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strncpy)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrchr.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strrchr)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strstr.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (strstr)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (itoa)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (ltoa)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(mulsi10.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o) (__mulsi_const_10)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (ultoa)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o) (utoa)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o) (__ctype_isfalse)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrev.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o) (strrev)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o) (__udivmodhi4)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o) (__prologue_saves__)
+c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o) (__epilogue_restores__)
+
+Allocating common symbols
+Common symbol       size              file
+
+__brkval            0x2               c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__flp               0x2               c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+
+Discarded input sections
+
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+ .text          0x00000000        0x0 build\Sonic.o
+ .bss           0x00000000        0x0 build\Sonic.o
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text._ZN14HardwareSerialC2EP11ring_bufferS1_PVhS3_S3_S3_S3_S3_hhhhh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text._ZN14HardwareSerialC1EP11ring_bufferS1_PVhS3_S3_S3_S3_S3_hhhhh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text._ZN14HardwareSerial5beginEmh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text._ZN14HardwareSerial3endEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text._ZN14HardwareSerialcvbEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .rodata._ZTV6Stream
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text.__cxa_guard_acquire
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text.__cxa_guard_release
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text.__cxa_guard_abort
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text.__cxa_pure_virtual
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text._ZdaPv   0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text._ZdlPv   0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text._Znaj    0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text._Znwj    0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEPK19__FlashStringHelper
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printERK9Printable
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEPK19__FlashStringHelper
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnERK9Printable
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5writeEPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printERK6String
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnERK6String
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print11printNumberEmh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEmi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEmi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEji
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEji
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEhi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEhi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEli
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEli
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEii
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEii
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print10printFloatEdh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print5printEdi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text._ZN5Print7printlnEdi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .rodata._ZTV5Print
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ .text.millis   0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ .text.delayMicroseconds
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+ .text.digitalRead
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+ .text          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .data          0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .bss           0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String6charAtEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String9setCharAtEjc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringixEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6StringixEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String7replaceEcc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String5toIntEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String4trimEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String11toUpperCaseEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String11toLowerCaseEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String16equalsIgnoreCaseERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfERKS_j
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String7indexOfERKS_j
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String7indexOfERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfEcj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfEc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String7indexOfEcj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String7indexOfEc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String8getBytesEPhjj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String8endsWithERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String6equalsEPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String9compareToERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6StringgeERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6StringleERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6StringgtERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6StringltERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String6equalsERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String10startsWithERKS_j
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String10startsWithERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String12changeBufferEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String7replaceERKS_S1_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String7reserveEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEPKcj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEm
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEl
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatEPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String6concatERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String10invalidateEv
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperm
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperl
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperi
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperRK6String
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6String4copyEPKcj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1EPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2EPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringaSEPKc
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Emh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Emh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Elh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Elh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Ejh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Ejh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Eih
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Eih
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Ehh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Ehh
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1Ec
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2Ec
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String9substringEjj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZNK6String9substringEj
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringaSERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC1ERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringC2ERKS_
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringD1Ev
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text._ZN6StringD2Ev
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .bss._ZZN6StringixEjE19dummy_writable_char
+                0x00000000        0x0 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+ .text.fplib    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+ COMMON         0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+ .text.ctype    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+ .text.ctype    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+ .text.ctype    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memcpy.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memcpy.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memcpy.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strchr.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strchr.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strchr.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcmp.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcmp.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcmp.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcpy.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcpy.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcpy.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncmp.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncmp.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncmp.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncpy.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncpy.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncpy.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrchr.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrchr.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrchr.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strstr.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strstr.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strstr.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(mulsi10.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(mulsi10.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(mulsi10.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+ .text.ctype    0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrev.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrev.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrev.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+ .text          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+ .data          0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+ .bss           0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+ .text.libgcc   0x00000000        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00100000         xr
+data             0x00800200         0x0000fe00         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800200
+LOAD c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+LOAD build\Sonic.o
+LOAD E:\mr-bucket\Robot\Sonic\build\/lib_mega2560_16.a
+LOAD E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a
+LOAD c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a
+LOAD c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
+LOAD c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a
+LOAD c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x1162
+ *(.vectors)
+ .vectors       0x00000000       0xe4 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+ .progmem.data  0x000000e4      0x120 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                0x000000e4                port_to_mode_PGM
+                0x00000132                digital_pin_to_port_PGM
+                0x00000178                digital_pin_to_bit_mask_PGM
+                0x000000fe                port_to_output_PGM
+                0x00000118                port_to_input_PGM
+                0x000001be                digital_pin_to_timer_PGM
+                0x00000204                . = ALIGN (0x2)
+                0x00000204                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x00000204        0x0 linker stubs
+ *(.trampolines*)
+                0x00000204                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x00000204                __ctors_start = .
+ *(.ctors)
+ .ctors         0x00000204        0x2 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000206                __ctors_end = .
+                0x00000206                __dtors_start = .
+ *(.dtors)
+                0x00000206                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x00000206        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                0x00000206                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x00000206       0x10 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000216       0x1c c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                0x00000216                __do_copy_data
+ .init4         0x00000232       0x10 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+                0x00000232                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ .init6         0x00000242       0x16 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+                0x00000242                __do_global_ctors
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x00000258        0x8 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+ *(.init9)
+ *(.text)
+ .text          0x00000260        0x4 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                0x00000260                __vector_38
+                0x00000260                __vector_22
+                0x00000260                __vector_28
+                0x00000260                __vector_1
+                0x00000260                __vector_32
+                0x00000260                __vector_34
+                0x00000260                __vector_24
+                0x00000260                __vector_12
+                0x00000260                __vector_46
+                0x00000260                __bad_interrupt
+                0x00000260                __vector_6
+                0x00000260                __vector_31
+                0x00000260                __vector_35
+                0x00000260                __vector_39
+                0x00000260                __vector_3
+                0x00000260                __vector_30
+                0x00000260                __vector_45
+                0x00000260                __vector_11
+                0x00000260                __vector_13
+                0x00000260                __vector_17
+                0x00000260                __vector_19
+                0x00000260                __vector_56
+                0x00000260                __vector_7
+                0x00000260                __vector_49
+                0x00000260                __vector_41
+                0x00000260                __vector_43
+                0x00000260                __vector_27
+                0x00000260                __vector_5
+                0x00000260                __vector_33
+                0x00000260                __vector_47
+                0x00000260                __vector_4
+                0x00000260                __vector_44
+                0x00000260                __vector_9
+                0x00000260                __vector_2
+                0x00000260                __vector_21
+                0x00000260                __vector_15
+                0x00000260                __vector_29
+                0x00000260                __vector_40
+                0x00000260                __vector_8
+                0x00000260                __vector_48
+                0x00000260                __vector_14
+                0x00000260                __vector_53
+                0x00000260                __vector_10
+                0x00000260                __vector_50
+                0x00000260                __vector_16
+                0x00000260                __vector_18
+                0x00000260                __vector_20
+                0x00000260                __vector_42
+                0x00000264                . = ALIGN (0x2)
+ *(.text.*)
+ .text.loop     0x00000264       0x36 build\Sonic.o
+                0x00000264                loop
+ .text.setup    0x0000029a       0x1a build\Sonic.o
+                0x0000029a                setup
+ .text._Z11serialEventv
+                0x000002b4        0x2 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000002b4                serialEvent()
+ .text.__vector_25
+                0x000002b6       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000002b6                __vector_25
+ .text._Z12serialEvent1v
+                0x00000334        0x2 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000334                serialEvent1()
+ .text.__vector_36
+                0x00000336       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000336                __vector_36
+ .text._Z12serialEvent2v
+                0x000003b4        0x2 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000003b4                serialEvent2()
+ .text.__vector_51
+                0x000003b6       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000003b6                __vector_51
+ .text._Z12serialEvent3v
+                0x00000434        0x2 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000434                serialEvent3()
+ .text.__vector_54
+                0x00000436       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000436                __vector_54
+ .text._Z14serialEventRunv
+                0x000004b4       0x9a E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000004b4                serialEventRun()
+ .text.__vector_26
+                0x0000054e       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0000054e                __vector_26
+ .text.__vector_37
+                0x000005cc       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000005cc                __vector_37
+ .text.__vector_52
+                0x0000064a       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0000064a                __vector_52
+ .text.__vector_55
+                0x000006c8       0x7e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000006c8                __vector_55
+ .text._ZN14HardwareSerial5beginEm
+                0x00000746      0x11e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000746                HardwareSerial::begin(unsigned long)
+ .text._ZN14HardwareSerial9availableEv
+                0x00000864       0x22 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000864                HardwareSerial::available()
+ .text._ZN14HardwareSerial4peekEv
+                0x00000886       0x42 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000886                HardwareSerial::peek()
+ .text._ZN14HardwareSerial4readEv
+                0x000008c8       0x54 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x000008c8                HardwareSerial::read()
+ .text._ZN14HardwareSerial5flushEv
+                0x0000091c       0x1a E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0000091c                HardwareSerial::flush()
+ .text._ZN14HardwareSerial5writeEh
+                0x00000936       0x78 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00000936                HardwareSerial::write(unsigned char)
+ .text._GLOBAL__I_rx_buffer
+                0x000009ae      0x26c E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ .text.main     0x00000c1a       0x28 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+                0x00000c1a                main
+ .text._ZN5Print5writeEPKhj
+                0x00000c42       0x58 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                0x00000c42                Print::write(unsigned char const*, unsigned int)
+ .text._ZN5Print7printlnEv
+                0x00000c9a       0x40 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                0x00000c9a                Print::println()
+ .text._ZN5Print7printlnEPKc
+                0x00000cda       0x4c E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                0x00000cda                Print::println(char const*)
+ .text.__vector_23
+                0x00000d26       0x90 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x00000d26                __vector_23
+ .text.micros   0x00000db6       0x4e E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x00000db6                micros
+ .text.delay    0x00000e04       0x56 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x00000e04                delay
+ .text.init     0x00000e5a       0xc4 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x00000e5a                init
+ .text.pinMode  0x00000f1e       0x86 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                0x00000f1e                pinMode
+ .text.turnOffPWM
+                0x00000fa4       0xfe E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+ .text.digitalWrite
+                0x000010a2       0x6c E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                0x000010a2                digitalWrite
+ .text.libgcc   0x0000110e       0x44 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+                0x0000110e                __udivmodsi4
+ .text.libgcc   0x00001152        0xc c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+                0x00001156                __tablejump__
+                0x00001152                __tablejump2__
+                0x0000115e                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x0000115e        0x0 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+                0x0000115e                exit
+                0x0000115e                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x0000115e        0x4 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ *(.fini0)
+                0x00001162                _etext = .
+
+.data           0x00800200       0x1e load address 0x00001162
+                0x00800200                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800200        0xd build\Sonic.o
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ .rodata._ZTV14HardwareSerial
+                0x0080020d       0x10 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0080020d                vtable for HardwareSerial
+ *(.gnu.linkonce.d*)
+                0x0080021e                . = ALIGN (0x2)
+ *fill*         0x0080021d        0x1 00
+                0x0080021e                _edata = .
+                0x0080021e                PROVIDE (__data_end, .)
+
+.bss            0x0080021e      0x2b1
+                0x0080021e                PROVIDE (__bss_start, .)
+ *(.bss)
+ *(.bss*)
+ .bss.rx_buffer
+                0x0080021e       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0080021e                rx_buffer
+ .bss.tx_buffer
+                0x00800262       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00800262                tx_buffer
+ .bss.rx_buffer1
+                0x008002a6       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x008002a6                rx_buffer1
+ .bss.tx_buffer1
+                0x008002ea       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x008002ea                tx_buffer1
+ .bss.rx_buffer2
+                0x0080032e       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0080032e                rx_buffer2
+ .bss.tx_buffer2
+                0x00800372       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00800372                tx_buffer2
+ .bss.rx_buffer3
+                0x008003b6       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x008003b6                rx_buffer3
+ .bss.tx_buffer3
+                0x008003fa       0x44 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x008003fa                tx_buffer3
+ .bss.Serial    0x0080043e       0x22 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x0080043e                Serial
+ .bss.Serial1   0x00800460       0x22 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00800460                Serial1
+ .bss.Serial2   0x00800482       0x22 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x00800482                Serial2
+ .bss.Serial3   0x008004a4       0x22 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                0x008004a4                Serial3
+ .bss.timer0_overflow_count
+                0x008004c6        0x4 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x008004c6                timer0_overflow_count
+ .bss.timer0_millis
+                0x008004ca        0x4 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                0x008004ca                timer0_millis
+ .bss.timer0_fract
+                0x008004ce        0x1 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+ *(COMMON)
+                0x008004cf                PROVIDE (__bss_end, .)
+                0x00001162                __data_load_start = LOADADDR (.data)
+                0x00001180                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x008004cf        0x0
+                0x008004cf                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x008004cf                PROVIDE (__noinit_end, .)
+                0x008004cf                _end = .
+                0x008004cf                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info)
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(build\Sonic_mega2560.elf elf32-avr)
+LOAD linker stubs
+
+Cross Reference Table
+
+Symbol                                            File
+HardwareSerial::HardwareSerial(ring_buffer*, ring_buffer*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char) E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::HardwareSerial(ring_buffer*, ring_buffer*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char volatile*, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char) E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::available()                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::begin(unsigned long)              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  build\Sonic.o
+HardwareSerial::begin(unsigned long, unsigned char) E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::end()                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::flush()                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::operator bool()                   E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::peek()                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::read()                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+HardwareSerial::write(unsigned char)              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+Print::print(Printable const&)                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(String const&)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(__FlashStringHelper const*)          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(char const*)                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(char)                                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(double, int)                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(int, int)                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(long, int)                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(unsigned char, int)                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(unsigned int, int)                   E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::print(unsigned long, int)                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::printFloat(double, unsigned char)          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::printNumber(unsigned long, unsigned char)  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println()                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(Printable const&)                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(String const&)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(__FlashStringHelper const*)        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(char const*)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                                                  build\Sonic.o
+Print::println(char)                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(double, int)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(int, int)                          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(long, int)                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(unsigned char, int)                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(unsigned int, int)                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::println(unsigned long, int)                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::write(char const*)                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+Print::write(unsigned char const*, unsigned int)  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+Serial                                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  build\Sonic.o
+Serial1                                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+Serial2                                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+Serial3                                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+String::String(String const&)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(String const&)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(char const*)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(char const*)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(char)                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(char)                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(int, unsigned char)                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(int, unsigned char)                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(long, unsigned char)               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(long, unsigned char)               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned char, unsigned char)      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned char, unsigned char)      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned int, unsigned char)       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned int, unsigned char)       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned long, unsigned char)      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::String(unsigned long, unsigned char)      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::changeBuffer(unsigned int)                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::charAt(unsigned int) const                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::compareTo(String const&) const            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(String const&)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(char const*)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(char const*, unsigned int)         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(char)                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(int)                               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(long)                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(unsigned char)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(unsigned int)                      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::concat(unsigned long)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::copy(char const*, unsigned int)           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::endsWith(String const&) const             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::equals(String const&) const               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::equals(char const*) const                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::equalsIgnoreCase(String const&) const     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::getBytes(unsigned char*, unsigned int, unsigned int) const E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::indexOf(String const&) const              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::indexOf(String const&, unsigned int) const E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::indexOf(char) const                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::indexOf(char, unsigned int) const         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::invalidate()                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::lastIndexOf(String const&) const          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::lastIndexOf(String const&, unsigned int) const E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::lastIndexOf(char) const                   E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::lastIndexOf(char, unsigned int) const     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator<(String const&) const            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator<=(String const&) const           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator=(String const&)                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator=(char const*)                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator>(String const&) const            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator>=(String const&) const           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator[](unsigned int)                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::operator[](unsigned int) const            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+String::replace(String const&, String const&)     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::replace(char, char)                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::reserve(unsigned int)                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::setCharAt(unsigned int, char)             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::startsWith(String const&) const           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::startsWith(String const&, unsigned int) const E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::substring(unsigned int) const             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::substring(unsigned int, unsigned int) const E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::toInt() const                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::toLowerCase()                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::toUpperCase()                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::trim()                                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::~String()                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+String::~String()                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+__addsf3                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__addsf3x                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+__bad_interrupt                                   c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__brkval                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__bss_end                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+__bss_start                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+__cmpsf2                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+__ctors_end                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+__ctors_start                                     c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+__ctype_isfalse                                   c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+__ctype_istrue                                    c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(cty_isfalse.o)
+__cxa_guard_abort                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+__cxa_guard_acquire                               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+__cxa_guard_release                               E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+__cxa_pure_virtual                                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+__data_end                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__data_load_start                                 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__data_start                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__divsf3                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__divsf3_pse                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+__divsf3x                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+__do_clear_bss                                    c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+__do_copy_data                                    c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  build\Sonic.o
+__do_global_ctors                                 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+__epilogue_restores__                             c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_epilogue.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+__eqsf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+__fixsfsi                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__fixunssfsi                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__floatsisf                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__floatunsisf                                     c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__flp                                             c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__fp_cmp                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+__fp_inf                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__fp_nan                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__fp_pscA                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__fp_pscB                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__fp_round                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_round.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+__fp_split3                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__fp_splitA                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+__fp_szero                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+__fp_zero                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+__gesf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+__gtsf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(gesf2.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__heap_end                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__heap_start                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__init                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__lesf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__ltsf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__malloc_heap_end                                 c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+__malloc_heap_start                               c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+__malloc_margin                                   c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+__mulsf3                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__mulsf3_pse                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+__mulsf3x                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+__mulsi3                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__mulsi_const_10                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(mulsi10.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+__nesf2                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+__prologue_saves__                                c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_prologue.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+__stack                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__subsf3                                          c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(addsf3.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__tablejump2__                                    c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+__tablejump__                                     c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_tablejump.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_ctors.o)
+__udivmodhi4                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+__udivmodsi4                                      c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+__unordsf2                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libm.a(unordsf2.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+__vector_1                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_10                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_11                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_12                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_13                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_14                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_15                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_16                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_17                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_18                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_19                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_2                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_20                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_21                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_22                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_23                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_24                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_25                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_26                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_27                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_28                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_29                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_3                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_30                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_31                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_32                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_33                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_34                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_35                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_36                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_37                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_38                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_39                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_4                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_40                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_41                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_42                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_43                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_44                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_45                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_46                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_47                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_48                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_49                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_5                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_50                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_51                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_52                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_53                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_54                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_55                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_56                                       c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_6                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_7                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_8                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_9                                        c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vector_default                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+__vectors                                         c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+_exit                                             c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+atol                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(atol.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+delay                                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                                                  build\Sonic.o
+delayMicroseconds                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+digitalRead                                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+digitalWrite                                      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                                                  build\Sonic.o
+digital_pin_to_bit_mask_PGM                       E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+digital_pin_to_port_PGM                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+digital_pin_to_timer_PGM                          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+exit                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+free                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+init                                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+isspace                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(isspace.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+itoa                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+loop                                              build\Sonic.o
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+ltoa                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+main                                              E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
+malloc                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(malloc.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+memcpy                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memcpy.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+memmove                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(memmove.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+micros                                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+millis                                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+operator delete(void*)                            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+operator delete[](void*)                          E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+operator new(unsigned int)                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+operator new[](unsigned int)                      E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(new.cpp.o)
+operator+(StringSumHelper const&, String const&)  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, char const*)    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, char)           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, int)            E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, long)           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, unsigned char)  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, unsigned int)   E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+operator+(StringSumHelper const&, unsigned long)  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+pinMode                                           E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+                                                  build\Sonic.o
+port_to_input_PGM                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+port_to_mode_PGM                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+port_to_output_PGM                                E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring_digital.c.o)
+realloc                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(realloc.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+rx_buffer                                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+rx_buffer1                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+rx_buffer2                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+rx_buffer3                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+serialEvent()                                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+serialEvent1()                                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+serialEvent2()                                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+serialEvent3()                                    E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+serialEventRun()                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+setup                                             build\Sonic.o
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(main.cpp.o)
+strchr                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strchr.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strcmp                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcmp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strcpy                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strcpy.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strncmp                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncmp.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strncpy                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strncpy.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strrchr                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrchr.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+strrev                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strrev.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ltoa.o)
+                                                  c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(itoa.o)
+strstr                                            c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(strstr.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+timer0_millis                                     E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+timer0_overflow_count                             E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(wiring.c.o)
+tolower                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(tolower.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+toupper                                           c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(toupper.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+tx_buffer                                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+tx_buffer1                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+tx_buffer2                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+tx_buffer3                                        E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+ultoa                                             c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(ultoa.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+utoa                                              c:/users/veryangry/downloads/codeblocks/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(utoa.o)
+                                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(WString.cpp.o)
+vtable for HardwareSerial                         E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
+vtable for Print                                  E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(Print.cpp.o)
+vtable for Stream                                 E:\mr-bucket\Robot\Sonic\build\/core_mega2560_16.a(HardwareSerial.cpp.o)
