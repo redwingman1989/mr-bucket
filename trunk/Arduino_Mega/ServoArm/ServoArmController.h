@@ -36,6 +36,7 @@ public:
   void commandSwingArm(swingArmStates_t state);
   void commandPickupServo(pickupServoSelection_t selection, pickupStates_t state);
   void exec(void);
+  void init(void);
 
 private:
   Servo swingArm;

@@ -17,9 +17,9 @@ void setup()
 void loop()
 {
     static bool light = true;
-	testFront.beginCheck();
+    testFront.beginCheck();
     delayMicroseconds(300);
     testFront.getReading();
     Serial.println(testFront.sensorReadings.allReadings,BIN);
-	digitalWrite(13, light != light);   // set the LED on
+    digitalWrite(13, light != light);   // set the LED on
 }

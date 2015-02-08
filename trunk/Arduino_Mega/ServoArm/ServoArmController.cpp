@@ -7,42 +7,46 @@ const int pwmMax = 2000;
 const int pwmCenter = (pwmMax + pwmMin) / 2;
 
 const int updateRate = 50; //50 hz exec call rate
-const int swingArmLimit = (pwmMax - pwmMin) / (5 * updateRate); // full movement in five seconds
+const int swingArmLimit = (pwmMax - pwmMin) / (3 * updateRate); // full movement in five seconds
 const int pickupLimit = (pwmMax - pwmMin) / (1 * updateRate); // full movement in one seconds
 
 inline int rateLimit(int command, int current, int rate);
 
 ServoArmController::ServoArmController()
 {
-  //Setup servo pins
-  this->pickupLeft.attach(38);
-  this->pickupCenter.attach(39);
-  this->pickupRight.attach(40);
-  this->swingArm.attach(41);
-
   //Setup servo constants
-  this->swingArmConstants[SA_DOWN] = pwmCenter;
-  this->swingArmConstants[SA_UP] = pwmCenter;
+  this->swingArmConstants[SA_DOWN] = 670;
+  this->swingArmConstants[SA_UP] = 1540;
 
-  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = pwmCenter;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = pwmCenter;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1505;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1690;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1597;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1782;
 
-  this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = pwmCenter;
-  this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = pwmCenter;
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = 1420;
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1595;
+  this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = 1507;
+  this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1682;
 
-  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = pwmCenter;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = pwmCenter;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = pwmCenter;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1620;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1790;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1705;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1875;
 
   this->swingArmCommand = this->swingArmConstants[SA_DOWN];
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
   this->pickupCenterCommand = this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO];
   this->pickupRightCommand = this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO];
+}
+
+void ServoArmController::init(void)
+{
+  //Setup servo pins
+  this->pickupLeft.attach(38);
+  this->pickupCenter.attach(39);
+  this->pickupRight.attach(40);
+  this->swingArm.attach(41);
+  exec();
 }
 
 void ServoArmController::commandSwingArm(swingArmStates_t state)
@@ -83,6 +87,7 @@ void ServoArmController::exec()
   this->pickupLeft.writeMicroseconds(this->pickupLeftCommand);
   this->pickupCenter.writeMicroseconds(this->pickupCenterCommand);
   this->pickupRight.writeMicroseconds(this->pickupRightCommand);
+  
 }
 
 inline int rateLimit(int command, int current, int rate)
@@ -90,4 +95,5 @@ inline int rateLimit(int command, int current, int rate)
   if ((command - current) > rate) return (current + rate);
   else if ((current - command) > rate) return (current - rate);
   else return command;
+  //return command;
 }
