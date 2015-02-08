@@ -1,12 +1,13 @@
 #include <Arduino.h>
+#include "../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
 //#include "TimerOne.h"
 //#include <TimerThree.h>
 #include "global.h"
 #include "LineSensor.h"
 #include "Setup.h"
+#include "LineSensor_ino_header.h"
 
-void cycle();
-void heartbeat();
+LineSensor* lineSensor1 = new LineSensor(centerFront);
 
 /*******************************************************************
  Function: void setup(void)
@@ -77,8 +78,16 @@ void cycle() {
   /* Pulse Heartbeat LED on PIN 13 */
   heartbeat();
 
-  /* Begin checking for the line */
-//  lineSensorExec();
+  /* Prepare the line sensor to give a reading */
+  lineSensor1->beginCheck();
+
+  /* delay 300 us */
+  delayMicroseconds(300);
+
+  lineSensor1->takeReading();
+
+  Serial.print("Port Value: ");
+  Serial.println(lineSensor1->getLineSensorReadings(), BIN);
 }
 
 
