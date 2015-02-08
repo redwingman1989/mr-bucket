@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1423359692 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor_codeblocks.ino
+1423429126 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor_codeblocks.ino
 	<Arduino.h>
+	"../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
 	"global.h"
 	"LineSensor.h"
 	"Setup.h"
+	"LineSensor_ino_header.h"
 
 1371029502 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\arduino.h
 	<stdlib.h>
@@ -55,14 +57,56 @@
 1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\variants\mega\pins_arduino.h
 	<avr/pgmspace.h>
 
-1423359084 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\global.h
+1423422249 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\global.h
 
-1423360583 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.h
+1423425056 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.h
 
-1423359288 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.h
+1423421855 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.h
 
-1423361019 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.cpp
+1423424409 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.cpp
 	<Arduino.h>
 	"LineSensor.h"
 	"global.h"
+
+1421619639 source:c:\users\justin\desktop\codeblocks\arduino\libraries\timerone\timerone.cpp
+	"TimerOne.h"
+
+1421619638 c:\users\justin\desktop\codeblocks\arduino\libraries\timerone\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"config/known_16bit_timers.h"
+
+1421619639 c:\users\justin\desktop\codeblocks\arduino\libraries\timerone\config\known_16bit_timers.h
+
+1421619638 source:c:\users\justin\desktop\codeblocks\arduino\libraries\timerone\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"config/known_16bit_timers.h"
+
+1421619639 source:c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\timerone.cpp
+	"TimerOne.h"
+
+1421619638 c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"config/known_16bit_timers.h"
+
+1421619639 c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\config\known_16bit_timers.h
+
+1423421950 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor_ino_header.h
+
+1423425056 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.h
+
+1421619638 source:c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"config/known_16bit_timers.h"
+
+1423423502 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.cpp
+	<Arduino.h>
+	"../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
+	"LineSensor_ino_header.h"
+	"global.h"
+
+1423421855 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.h
 

@@ -75,42 +75,46 @@ static unsigned char sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_
                                                              PORTL_PIN_3, PORTL_PIN_4, PORTL_PIN_5,
                                                              PORTL_PIN_6, PORTL_PIN_7};
 
-typedef union readings_t {
-     struct {
-       unsigned char sensor1 : 1;
-       unsigned char sensor2 : 1;
-       unsigned char sensor3 : 1;
-       unsigned char sensor4 : 1;
-       unsigned char sensor5 : 1;
-       unsigned char sensor6 : 1;
-       unsigned char sensor7 : 1;
-       unsigned char sensor8 : 1;
-     } individualReadings;
-     unsigned char allReadings;
- } readings;
-
 class LineSensor {
+
+
+
   public:
+typedef union readings_t
+{
+  struct {
+    unsigned char sensor1 : 1;
+    unsigned char sensor2 : 1;
+    unsigned char sensor3 : 1;
+    unsigned char sensor4 : 1;
+    unsigned char sensor5 : 1;
+    unsigned char sensor6 : 1;
+    unsigned char sensor7 : 1;
+    unsigned char sensor8 : 1;
+  } individualReadings;
+  unsigned char allReadings;
+} readings;
+
+
     //Constructor
     LineSensor(unsigned char * inPinMap);
+    void beginCheck();
+    void takeReading();
 
     // Methods
-    void beginCheck();
-    void getReading();
+    unsigned char getLineSensorReadings();
 
   private:
-    // Pin Numbers
+    /* Methods */
+
+
+    /* Sensor Pin Numbers */
     unsigned char * pinMap;
-//    unsigned char pinSen2;
-//    unsigned char pinSen3;
-//    unsigned char pinSen4;
-//    unsigned char pinSen5;
-//    unsigned char pinSen6;
-//    unsigned char pinSen7;
-//    unsigned char pinSen8;
-    // Readings from the Line Sensor
+
+    /* Readings from the Line Sensor */
     readings sensorReadings;
-    // Start Cap Charge Time;
+
+    /* Start Cap Charge Time in us */
     unsigned long startCapChargeTime;
 
 };

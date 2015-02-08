@@ -31,6 +31,7 @@ startCapChargeTime(0)
 
 /*************************************************************
  * Function:     getReading()
+ * Parameters:   void
  * Return:       void
  * Description:  This function is called after the LineSensor::beginCheck()
  *                 is called. In order to figure out what PORT that the invoking
@@ -109,11 +110,15 @@ void LineSensor::beginCheck()
       /* TO DO: Perhaps invalidate the sensor? Not sure how we could recover.
        *          would need to add a new member to the class. */
   }
+
+  /* Mark the start time of the capacitor charging */
+  this->startCapChargeTime = micros();
 }
 
 
 /*************************************************************
- * Function:     getReading()
+ * Function:     takeReading()
+ * Parameter(s): void
  * Return:       void
  * Description:  This function is called after the LineSensor::beginCheck()
  *                 is called. In order to figure out what PORT that the invoking
@@ -121,7 +126,7 @@ void LineSensor::beginCheck()
  *                 pinSen1 value. Once the PORT is identified, the value of the
  *                 PORT is stored in the object's sensorReadings member.
  *************************************************************/
-void LineSensor::getReading()
+void LineSensor::takeReading()
 {
   /* Figure out which PORT this sensor is configured for
    *   and return the value of the PORT to the Line Sensor
@@ -146,5 +151,19 @@ void LineSensor::getReading()
     /* TO DO: Perhaps invalidate the sensor? Not sure how we could recover.
      *          would need to add new member to the class. */
   }
-
 }
+
+
+/*************************************************************
+ * Function:     getLineSensorReadings()
+ * Return:       void
+ * Description:  This function is called after the LineSensor::beginCheck()
+ *                 is called. In order to figure out what PORT that the invoking
+ *                 object is attached to, the function looks at what the object's
+ *                 pinSen1 value. Once the PORT is identified, the value of the
+ *                 PORT is stored in the object's sensorReadings member.
+ *************************************************************/
+unsigned char LineSensor::getLineSensorReadings() {
+  return this->sensorReadings.allReadings;
+}
+

@@ -49,16 +49,16 @@ struct interruptFlagStruct {
 
 /**************************** Global Variables *******************************/
 
-interruptFlagStruct iFlags;
+static interruptFlagStruct iFlags;
 
-unsigned long loopStartTime;  // Variable Used for millis() at start of loop()
-unsigned long icount;         // 50Hz/cycle counter
-unsigned long acount;         // 500Hz/Analog counter
+static unsigned long loopStartTime;  // Variable Used for millis() at start of loop()
+static unsigned long icount;         // 50Hz/cycle counter
+static unsigned long acount;         // 500Hz/Analog counter
 
-unsigned char printOutLineSenData;
+static unsigned char printOutLineSenData;
 
 
-unsigned char loopTime;
-unsigned char maxLoopTime;
+static unsigned char loopTime;
+static unsigned char maxLoopTime;
 
 #endif
