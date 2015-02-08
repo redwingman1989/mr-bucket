@@ -1,0 +1,68 @@
+# depslib dependency file v1.0
+1423359692 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor_codeblocks.ino
+	<Arduino.h>
+	"global.h"
+	"LineSensor.h"
+	"Setup.h"
+
+1371029502 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\arduino.h
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<avr/pgmspace.h>
+	<avr/io.h>
+	<avr/interrupt.h>
+	"binary.h"
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"pins_arduino.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\binary.h
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\wcharacter.h
+	<ctype.h>
+
+1371029534 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\wstring.h
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<avr/pgmspace.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\hardwareserial.h
+	<inttypes.h>
+	"Stream.h"
+	"USBAPI.h"
+
+1371029230 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\stream.h
+	<inttypes.h>
+	"Print.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\print.h
+	<inttypes.h>
+	<stdio.h>
+	"WString.h"
+	"Printable.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\printable.h
+	<new.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\new.h
+	<stdlib.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\usbapi.h
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\variants\mega\pins_arduino.h
+	<avr/pgmspace.h>
+
+1423359084 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\global.h
+
+1423360583 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.h
+
+1423359288 c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.h
+
+1423361019 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\linesensor.cpp
+	<Arduino.h>
+	"LineSensor.h"
+	"global.h"
+
