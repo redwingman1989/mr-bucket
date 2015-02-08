@@ -7,11 +7,12 @@ This module will implement the omniwheel motor command mixing
 #ifndef MotorControl_h
 #define MotorControl_h
 #include <Arduino.h>
+#include <Servo.h>
 #include "SabertoothPWM.h"
 
 const float outputPowerLimit = 50.0;
 const float outputCountConvert = (PWMmaxCmd - PWMminCmd) / 200.0;
-const int outputOffset = PWMminCmd;
+const int outputOffset = (PWMmaxCmd + PWMminCmd) / 2;
 
 //Rate limit in counts per microsecond
 const float outputRateLimit = 200.0 / 1000000.0; //limit to 200 percent in 1M usec (-100 to 100 in 1 sec)
@@ -41,6 +42,7 @@ class MotorController {
 
     //Used for debug output
     float getCurrentMotorCommand(motor_t motor);
+    int getActual(motor_t motor);
 
   private:
 

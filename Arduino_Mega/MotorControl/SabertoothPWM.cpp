@@ -3,8 +3,11 @@ SabertoothPWM motor controller driver
 Implements the packetized PWM method of control
 */
 
+#include <Arduino.h>
 #include "SabertoothPWM.h"
 #include "Servo.h"
+
+const int startupDelay = 500;
 
 //Local function
 inline int pwmLimit(int command);
@@ -22,6 +25,12 @@ void SabertoothPWM::init(int motorOnePin, int motorTwoPin)
   this->motorOne.attach(motorOnePin);
   this->motorTwo.attach(motorTwoPin);
 
+  killMotors();  
+  delay(startupDelay);
+  updateBothMotors(2000, 2000);
+  delay(startupDelay);
+  updateBothMotors(1000, 1000);
+  delay(startupDelay);
   killMotors();
 }
 
