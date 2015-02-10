@@ -2,17 +2,27 @@
 #include <math.h>
 #include "Magnetometer.h"
 
+/* 
+  Function: Magnetometer(uint8_t)
+  
+  Description: Magnetometer constructor. Builds instance of Magnetometer and 
+    sets I2C address of instance
+ 
+  Arguments:
+    "a" - Magnetometer instance address (should be 0x1E per data sheet) 
+*/
 Magnetometer::Magnetometer(uint8_t a) {
   addr = a;
 };
 
-uint16_t Magnetometer::getHeading() {
+
+
+uint16_t Magnetometer::calcHeading() {
   static double filter[MAG_FILTER_SIZE];
-  static unsigned int index;
-  static uint16_t prev_sHeading;
-  uint16_t sHeading;
-  double result, x, y;
+  static uint8_t index;
+  double result, x, y, delta;
   
+  /* update sensor data */
   updateXYZ();
   
   x = (double)data_x;
@@ -29,21 +39,33 @@ uint16_t Magnetometer::getHeading() {
       filter[index] = 0;
   };
   
-  index++;
-  if(index == MAG_FILTER_SIZE)
+  rawHeading = filter[index];
+  
+  /* Address corner case when transitioning from 0 to 359 deg and vice versa */
+  if (index > 0) {
+    delta = filter[index] - filter[index-1];
+  }
+  else {
+    delta = filter[index] - filter[MAG_FILTER_SIZE - 1];
+  }
+  
+  if(abs(delta) > 180) {
+    for(uint8_t i = 0; i < MAG_FILTER_SIZE; i++)
+      filter[i] = rawHeading;
+  }
+  
+  
+  if(++index == MAG_FILTER_SIZE)
     index = 0;
   
-  for(int i = 0; i < MAG_FILTER_SIZE; i++) {
+  for(uint8_t i = 0; i < MAG_FILTER_SIZE; i++) {
     result += filter[i];
   };
   
   result /= MAG_FILTER_SIZE;
-  
-  //result *= 100;
     
-  sHeading = (uint16_t) result;
-  
-  return sHeading;
+  filteredHeading = (uint16_t) result;
+
 };
 
 void Magnetometer::readMagnetometer(uint8_t startReg,uint8_t dataSize) {
@@ -92,4 +114,12 @@ void Magnetometer::sendByte(uint8_t reg,uint8_t data) {
   Wire.write(reg); 
   Wire.write(data); 
   Wire.endTransmission(); 
+};
+
+uint16_t Magnetometer::getFiltHead() {
+  return filteredHeading;
+};
+
+uint16_t Magnetometer::getRawHead() {
+  return rawHeading;
 };

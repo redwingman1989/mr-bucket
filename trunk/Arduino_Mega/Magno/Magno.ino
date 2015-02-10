@@ -11,6 +11,7 @@ void setup(){
 
 void loop(){
   delay(20);
-  Serial.println(mag.getHeading());
+  mag.calcHeading();
+  Serial.println(mag.getFiltHead());
 }
 
