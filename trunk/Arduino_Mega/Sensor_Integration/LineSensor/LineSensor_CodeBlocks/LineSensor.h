@@ -4,6 +4,10 @@
 /* Macros */
 
 /* PORT A */
+#define PORTA_DATA_REG     (0x22)
+#define PORTA_DATA_DIR_REG (0x21)
+#define PORTA_IN_PINS_REG  (0x20)
+  /* Arduino Pins */
 #define PORTA_PIN_0 (22)
 #define PORTA_PIN_1 (23)
 #define PORTA_PIN_2 (24)
@@ -14,6 +18,10 @@
 #define PORTA_PIN_7 (29)
 
 /* PORT B */
+#define PORTB_DATA_REG     (0x25)
+#define PORTB_DATA_DIR_REG (0x24)
+#define PORTB_IN_PINS_REG  (0x23)
+  /* Arduino Pins */
 #define PORTB_PIN_0 (53)
 #define PORTB_PIN_1 (52)
 #define PORTB_PIN_2 (51)
@@ -24,6 +32,10 @@
 #define PORTB_PIN_7 (13)
 
 /* PORT C */
+#define PORTC_DATA_REG     (0x28)
+#define PORTC_DATA_DIR_REG (0x27)
+#define PORTC_IN_PINS_REG  (0x26)
+  /* Arduino Pins */
 #define PORTC_PIN_0 (37)
 #define PORTC_PIN_1 (36)
 #define PORTC_PIN_2 (35)
@@ -34,6 +46,10 @@
 #define PORTC_PIN_7 (30)
 
 /* PORT L */
+#define PORTL_DATA_REG     (0x10B)
+#define PORTL_DATA_DIR_REG (0x10A)
+#define PORTL_IN_PINS_REG  (0x109)
+  /* Arduino Pins */
 #define PORTL_PIN_0 (49)
 #define PORTL_PIN_1 (48)
 #define PORTL_PIN_2 (47)
@@ -57,21 +73,21 @@ enum lineSensorSensors {
 };
 
 /* Center Front Line Sensor is on PORT A */
-static unsigned char centerFront[NUM_LINE_SENSOR_SENSORS] = {PORTA_PIN_0, PORTA_PIN_1, PORTA_PIN_2,
+static uint8_t centerFront[NUM_LINE_SENSOR_SENSORS] = {PORTA_PIN_0, PORTA_PIN_1, PORTA_PIN_2,
                                                              PORTA_PIN_3, PORTA_PIN_4, PORTA_PIN_5,
                                                              PORTA_PIN_6, PORTA_PIN_7};
 /* Center Back Line Sensor is on PORT B */
-static unsigned char centerBack[NUM_LINE_SENSOR_SENSORS]  = {PORTB_PIN_0, PORTB_PIN_1, PORTB_PIN_2,
+static uint8_t centerBack[NUM_LINE_SENSOR_SENSORS]  = {PORTB_PIN_0, PORTB_PIN_1, PORTB_PIN_2,
                                                              PORTB_PIN_3, PORTB_PIN_4, PORTB_PIN_5,
                                                              PORTB_PIN_6, PORTB_PIN_7};
 
 /* Side Front Line Sensor is on PORT C */
-static unsigned char sideFront[NUM_LINE_SENSOR_SENSORS]   = {PORTC_PIN_0, PORTC_PIN_1, PORTC_PIN_2,
+static uint8_t sideFront[NUM_LINE_SENSOR_SENSORS]   = {PORTC_PIN_0, PORTC_PIN_1, PORTC_PIN_2,
                                                              PORTC_PIN_3, PORTC_PIN_4, PORTC_PIN_5,
                                                              PORTC_PIN_6, PORTC_PIN_7};
 
 /* Side Back Line Sensor is on PORT L */
-static unsigned char sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_PIN_1, PORTL_PIN_2,
+static uint8_t sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_PIN_1, PORTL_PIN_2,
                                                              PORTL_PIN_3, PORTL_PIN_4, PORTL_PIN_5,
                                                              PORTL_PIN_6, PORTL_PIN_7};
 
@@ -83,39 +99,47 @@ class LineSensor {
 typedef union readings_t
 {
   struct {
-    unsigned char sensor1 : 1;
-    unsigned char sensor2 : 1;
-    unsigned char sensor3 : 1;
-    unsigned char sensor4 : 1;
-    unsigned char sensor5 : 1;
-    unsigned char sensor6 : 1;
-    unsigned char sensor7 : 1;
-    unsigned char sensor8 : 1;
+    uint8_t sensor1 : 1;
+    uint8_t sensor2 : 1;
+    uint8_t sensor3 : 1;
+    uint8_t sensor4 : 1;
+    uint8_t sensor5 : 1;
+    uint8_t sensor6 : 1;
+    uint8_t sensor7 : 1;
+    uint8_t sensor8 : 1;
   } individualReadings;
-  unsigned char allReadings;
+  uint8_t allReadings;
 } readings;
 
 
     //Constructor
-    LineSensor(unsigned char * inPinMap);
+    LineSensor(uint8_t * inPinMap);
     void beginCheck();
     void takeReading();
 
     // Methods
-    unsigned char getLineSensorReadings();
+    uint8_t getLineSensorReadings();
 
   private:
     /* Methods */
 
-
     /* Sensor Pin Numbers */
-    unsigned char * pinMap;
+    uint8_t * pinMap;
 
     /* Readings from the Line Sensor */
     readings sensorReadings;
 
     /* Start Cap Charge Time in us */
-    unsigned long startCapChargeTime;
+    uint32_t startCapChargeTime;
+
+    /* Pointer to Sensor's Data Register */
+    uint8_t * ptrPortDataReg;
+
+    /* Pointer to Sensor's Data Direction Register */
+    uint8_t * ptrPortDataDirReg;
+
+    /* Pointer to Sensor's PORT Input Pins */
+    uint8_t * ptrPortInputPins;
 
 };
 
