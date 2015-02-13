@@ -73,47 +73,44 @@ enum lineSensorSensors {
 };
 
 /* Center Front Line Sensor is on PORT A */
-static uint8_t centerFront[NUM_LINE_SENSOR_SENSORS] = {PORTA_PIN_0, PORTA_PIN_1, PORTA_PIN_2,
+static const uint8_t centerFront[NUM_LINE_SENSOR_SENSORS] = {PORTA_PIN_0, PORTA_PIN_1, PORTA_PIN_2,
                                                              PORTA_PIN_3, PORTA_PIN_4, PORTA_PIN_5,
                                                              PORTA_PIN_6, PORTA_PIN_7};
 /* Center Back Line Sensor is on PORT B */
-static uint8_t centerBack[NUM_LINE_SENSOR_SENSORS]  = {PORTB_PIN_0, PORTB_PIN_1, PORTB_PIN_2,
+static const uint8_t centerBack[NUM_LINE_SENSOR_SENSORS]  = {PORTB_PIN_0, PORTB_PIN_1, PORTB_PIN_2,
                                                              PORTB_PIN_3, PORTB_PIN_4, PORTB_PIN_5,
                                                              PORTB_PIN_6, PORTB_PIN_7};
 
 /* Side Front Line Sensor is on PORT C */
-static uint8_t sideFront[NUM_LINE_SENSOR_SENSORS]   = {PORTC_PIN_0, PORTC_PIN_1, PORTC_PIN_2,
+static const uint8_t sideFront[NUM_LINE_SENSOR_SENSORS]   = {PORTC_PIN_0, PORTC_PIN_1, PORTC_PIN_2,
                                                              PORTC_PIN_3, PORTC_PIN_4, PORTC_PIN_5,
                                                              PORTC_PIN_6, PORTC_PIN_7};
 
 /* Side Back Line Sensor is on PORT L */
-static uint8_t sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_PIN_1, PORTL_PIN_2,
+static const uint8_t sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_PIN_1, PORTL_PIN_2,
                                                              PORTL_PIN_3, PORTL_PIN_4, PORTL_PIN_5,
                                                              PORTL_PIN_6, PORTL_PIN_7};
 
 class LineSensor {
-
-
-
   public:
-typedef union readings_t
-{
-  struct {
-    uint8_t sensor1 : 1;
-    uint8_t sensor2 : 1;
-    uint8_t sensor3 : 1;
-    uint8_t sensor4 : 1;
-    uint8_t sensor5 : 1;
-    uint8_t sensor6 : 1;
-    uint8_t sensor7 : 1;
-    uint8_t sensor8 : 1;
-  } individualReadings;
-  uint8_t allReadings;
-} readings;
+    typedef union readings_t
+    {
+      struct {
+        uint8_t sensor1 : 1;
+        uint8_t sensor2 : 1;
+        uint8_t sensor3 : 1;
+        uint8_t sensor4 : 1;
+        uint8_t sensor5 : 1;
+        uint8_t sensor6 : 1;
+        uint8_t sensor7 : 1;
+        uint8_t sensor8 : 1;
+      } individualReadings;
+    uint8_t allReadings;
+    } readings;
 
 
     //Constructor
-    LineSensor(uint8_t * inPinMap);
+    LineSensor(const uint8_t * inPinMap);
     void beginCheck();
     void takeReading();
 
@@ -124,7 +121,7 @@ typedef union readings_t
     /* Methods */
 
     /* Sensor Pin Numbers */
-    uint8_t * pinMap;
+    const uint8_t * pinMap;
 
     /* Readings from the Line Sensor */
     readings sensorReadings;
