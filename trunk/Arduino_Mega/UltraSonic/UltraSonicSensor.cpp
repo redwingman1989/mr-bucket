@@ -21,9 +21,9 @@
     /* Map the Echo pin number to the external interrupt */
     if (((uint8_t) (*this->pinMap+ECHO_PIN)) == ULTRA_FRONT_ECHO_PIN)
         this->extInterruptNumber = (uint8_t) EXT_INTERRUPT_3;
-    else if ((uint8_t) (*this->pinMap+ECHO_PIN)) == ULTRA_LEFT_ECHO_PIN)
+    else if ((uint8_t) (*this->pinMap+ECHO_PIN) == ULTRA_LEFT_ECHO_PIN)
         this->extInterruptNumber = (uint8_t) EXT_INTERRUPT_2;
-    else if ((uint8_t) (*this->pinMap+ECHO_PIN)) == ULTRA_RIGHT_ECHO_PIN)
+    else if ((uint8_t) (*this->pinMap+ECHO_PIN) == ULTRA_RIGHT_ECHO_PIN)
         this->extInterruptNumber = (uint8_t) EXT_INTERRUPT_4;
     else {
         if (DEBUG_BUILD)
@@ -56,15 +56,8 @@
  *************************************************************/
 void UltraSonicSensor::initEchoInterrupt()
 {
-    /* Macro for the number of configuration bits per external interrupt
-     *   for the External Interrupt Control Register. */
-    #define NUM_CFG_BITS_PER_EXT_INTERRUPT (2)
-
-    /* Save off the number of interrupts that can be configured per byte */
-    uint8_t interruptsPerByte = NUM_EXT_INTERRUPTS / NUM_CFG_BITS_PER_EXT_INTERRUPT;
-
-    /* Bit Shift amount */
-    uint8_t bitShift = 0;
+    /* Pointer to the appropriate External Interrupt Control Register */
+    uint8_t * ptrExtIntCtrlReg;
 
     /* Clear the global interrupt flag to ensure we don't trigger
      *   an interrupt while configuring the interrupt.
@@ -78,31 +71,21 @@ void UltraSonicSensor::initEchoInterrupt()
      *   value for the external interrupt to: "0 1" (0 is the MSB bit)  */
     if (this->extInterruptNumber <= EXT_INTERRUPT_3) {
         /* This Interrupt is configured with External Interrupt Control Register A (EICRA) */
-
-        /* To calculate the bits that need to be configured. The forumla is as follows:
-         *   (External Interrupt Number % interruptsPerByte) * NUM_CFG_BITS_PER_EXT_INTERRUPT = bit shift of the LSb  */
-        bitShift = ((this->extInterruptNumber) % interruptsPerByte) * NUM_CFG_BITS_PER_EXT_INTERRUPT
-
-        EICRA |= ((uint8_t) 0x01 << bitShift);
-
-
-        /* NEED TO 0 out the bitShift + 1 bit. */
-
-
-
-
+        ptrExtIntCtrlReg = (uint8_t *)ADDR_EXT_INT_CTRL_REG_A;
     }
     else if (this->extInterruptNumber < NUM_EXT_INTERRUPTS) {
         /* This Interrupt is configured with External Interrupt Control Register B (EICRB) */
+        ptrExtIntCtrlReg = (uint8_t *)ADDR_EXT_INT_CTRL_REG_B;
     }
 
-    /* Set the proper External Interrupt Mask Register bit */
-    ENABLE_EXT_INTERRUPT(this->extInterruptNumber);
+    /* Configure the External Interrupt Control Register */
+    configureExtIntCtrlRegister(ptrExtIntCtrlReg);
+
+    /* Set the proper External Interrupt Mask Register (EIMSK) bit */
+    EIMSK |= ((uint8_t)0x01 << (this->extInterruptNumber));
 
     /* Make sure the global interrupt flag is set */
     sei();
-
-    #undef NUM_CFG_BITS_PER_EXT_INTERRUPT
 }
 
 
@@ -129,4 +112,57 @@ uint8_t UltraSonicSensor::getTriggerPin()
 uint8_t UltraSonicSensor::getEchoPin()
 {
     return ((uint8_t) *(this->pinMap+ECHO_PIN));
+}
+
+
+/*************************************************************
+ * Function:     configureExtIntCtrlRegister
+ * Input:        uint8_t * externalInterruptRegister
+ * Return:       void
+ * Description:  Configures the appropriate External Interrupt Control Register
+ *************************************************************/
+void UltraSonicSensor::configureExtIntCtrlRegister(uint8_t * ptrRegister) {
+    /* Macro for the number of configuration bits per external interrupt
+     *   for the External Interrupt Control Register. */
+    #define NUM_CFG_BITS_PER_EXT_INTERRUPT (2)
+
+    /* Save off the number of interrupts that can be configured per byte */
+    uint8_t interruptsPerByte = NUM_EXT_INTERRUPTS / NUM_CFG_BITS_PER_EXT_INTERRUPT;
+
+    /* Save off the registers value into a local, temp variable */
+    uint8_t newReisterValue = (*ptrRegister);
+
+    /* Bit Shift amount */
+    uint8_t bitShift = 0;
+
+    /* Temporary byte */
+    uint8_t clearBitMaskingByte = 0;
+
+    /* New Register value */
+    uint8_t newRegisterValue = 0;
+
+    /* To calculate the bits that need to be configured. The forumla is as follows:
+     *   (External Interrupt Number % interruptsPerByte) * NUM_CFG_BITS_PER_EXT_INTERRUPT = bit shift of the LSb  */
+    bitShift = ((this->extInterruptNumber) % interruptsPerByte) * NUM_CFG_BITS_PER_EXT_INTERRUPT;
+
+    /* Set the least significant control register bit for the appropriate interrupt */
+    newRegisterValue |= ((uint8_t) 0x01 << bitShift);
+
+    /* Clear the most significant control register bit for the appropriate interrupt.
+     *   Bit shift ones into the byte (except in the spot that needs to be cleared).
+     *   This leaves a 0 in the bit spot that needs to be cleared in the EICRX register.
+     *   AND logic then can be applied to clear the appropriate bit while preserving the
+     *   value of the other bits */
+    for (uint8_t i = 0; i < EXT_INTERRUPT_7; i++) {
+      if (i != (bitShift + 1))
+        clearBitMaskingByte |= (0x01 << i);
+    }
+
+    /* Use AND logic to clear the requested bit */
+    newRegisterValue &= (clearBitMaskingByte);
+
+    /* Set the Register to teh new register value */
+    (*ptrRegister) = newRegisterValue;
+
+    #undef NUM_CFG_BITS_PER_EXT_INTERRUPT
 }

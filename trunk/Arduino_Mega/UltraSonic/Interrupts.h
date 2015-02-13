@@ -1,16 +1,9 @@
 #ifndef _INTERRUPTS_H
 #define _INTERRUPTS_H
 
-
-/* Macro Functions */
-
-/* Enable External Interrupt
- *   Global Interrupts must be enabled as well */
-#define ENABLE_EXT_INTERRUPT (interrupt) \
-  do {                                       \
-    EIMSK |= ((uint8_t)0x01 << interrupt);            \
-  } while (0)
-
+/* Register Addresses for the External Interrupt Control Registers */
+#define ADDR_EXT_INT_CTRL_REG_A (0x69)
+#define ADDR_EXT_INT_CTRL_REG_B (0x6A)
 
 /* Enumeration */
 enum externalInterrupts {
