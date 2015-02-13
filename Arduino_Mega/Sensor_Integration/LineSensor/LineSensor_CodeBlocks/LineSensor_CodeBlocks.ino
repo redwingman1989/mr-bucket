@@ -5,7 +5,10 @@
 #include "Setup.h"
 #include "LineSensor_ino_header.h"
 
-LineSensor* lineSensor1 = new LineSensor(centerFront);
+LineSensor* centerFrontLineSensor = new LineSensor(centerFront);
+LineSensor* sideFrontLineSensor = new LineSensor(sideFront);
+LineSensor* centerBackLineSensor = new LineSensor(centerBack);
+LineSensor* sideBackLineSensor = new LineSensor(sideBack);
 
 /*******************************************************************
  Function: void setup(void)
@@ -56,15 +59,27 @@ void cycle() {
   heartbeat();
 
   /* Prepare the line sensor to give a reading */
-  lineSensor1->beginCheck();
+//  centerFrontLineSensor->beginCheck();
+//  sideFrontLineSensor->beginCheck();
+  centerBackLineSensor->beginCheck();
+//  sideBackLineSensor->beginCheck();
 
   /* delay 300 us */
   delayMicroseconds(300);
 
-  lineSensor1->takeReading();
+//  centerFrontLineSensor->takeReading();
+//  sideFrontLineSensor->takeReading();
+  centerBackLineSensor->takeReading();
+//  sideBackLineSensor->takeReading();
 
-  Serial.print("Port Value: ");
-  Serial.println(lineSensor1->getLineSensorReadings(), BIN);
+  for (int i = 0; i < 8; i++) {
+    Serial.print((centerBackLineSensor->getLineSensorReadings() >> i) & 0x01);
+    Serial.print("  ");
+    if (i == 7) {
+        Serial.println();
+    }
+  }
+  //Serial.println(centerFrontLineSensor->getLineSensorReadings(), BIN);
 }
 
 
