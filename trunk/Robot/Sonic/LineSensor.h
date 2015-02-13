@@ -1,6 +1,7 @@
 #ifndef _LINESENSOR_H
 #define _LINESENSOR_H
 
+#include "System/RunableModule.h"
 /* Macros */
 
 /* PORT A */
@@ -89,7 +90,7 @@ typedef union readings_t {
      unsigned char allReadings;
  } readings;
 
-class LineSensor {
+class LineSensor : public RunableModule{
   public:
     //Constructor
     LineSensor(int port, int configRegister);
@@ -101,12 +102,15 @@ class LineSensor {
         // Readings from the Line Sensor
     readings sensorReadings;
 
+    bool RunTick(float time,RobotState state);
+
   private:
     // Pin Numbers
     int port;
     int configRegister;
     // Start Cap Charge Time;
     unsigned long startCapChargeTime;
+    void DebugOutput(void);
 
 };
 
