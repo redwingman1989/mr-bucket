@@ -13,8 +13,8 @@
                 the ISR.
 *******************************************************************/
 void setupTimer1Int(unsigned long periodInMicroSecs) {
-  Timer1.initialize(periodInMicroSecs);
-  Timer1.attachInterrupt(PIT);
+//  Timer1.initialize(periodInMicroSecs);
+//  Timer1.attachInterrupt(PIT);
 }
 
 

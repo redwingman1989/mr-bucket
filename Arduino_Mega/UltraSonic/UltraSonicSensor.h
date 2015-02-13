@@ -49,6 +49,9 @@ class UltraSonicSensor {
     /* Get the Echo Pin */
     uint8_t getEchoPin();
 
+    /* Configure External Interrupt Control Register */
+    void configureExtIntCtrlRegister(uint8_t * ptrRegister);
+
   private:
     /* Sensor Pin Numbers */
     const uint8_t * pinMap;
