@@ -1,10 +1,11 @@
 #include <Arduino.h>
-#include "../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
-//#include <TimerOne.h>
 #include "global.h"
 #include "Setup.h"
+#include "UltraSonicSensor.h"
 #include "UltraSonic_ino_header.h"
+#include "Interrupts.h"
 
+UltraSonicSensor * ultraSonicFront = new UltraSonicSensor(frontUltraSonic);
 
 /*******************************************************************
  Function: void setup(void)
@@ -12,7 +13,7 @@
 *******************************************************************/
 void setup() {
   setupSerial(SERIAL_BAUD_RATE);
-  setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
+  //setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
   setupPinModes();
 }
 
@@ -26,6 +27,9 @@ void setup() {
 void loop() {
   /* Debug Varibales*/
   int i = 0;
+  unsigned char * aPtr = (unsigned char *)0x22;
+  unsigned int temp = (unsigned int)&PORTA;
+
 
   /* Log the Arduino Loop starting time in milliseconds */
   loopStartTime = millis();
@@ -39,39 +43,29 @@ void loop() {
     /* Reset the 50Hz Flag */
     iFlags.pit_50Hz = 0;
 
-    /* Perform Debug Print Outs */
-    /* Print Out Line Sensor Data */
-//    if (printOutLineSenData) {
-//      Serial.println(portA);
-//      for (i = 0; i < NUM_LINE_SENSOR_SENSORS; i++) {
-//        Serial.print("[");
-//        Serial.print(i);
-//        Serial.print("]: ");
-//        if(frontLineSensorDischargeTimes[i] == 0) {
-//          Serial.println("Black");
-//        }
-//        else {
-//          Serial.println(frontLineSensorDischargeTimes[i]);
-//        }
-//        if (i == NUM_LINE_SENSOR_SENSORS-1) {
-//          Serial.println();
-//        } /* if */
-//      } /* for */
-//
-//    } /* if (printOutLineSenData) */
   } /* if (PIT Flag) */
+
+  PORTA = 0xA5;
+  Serial.println(PORTA);
+  *aPtr = 0x2B;
+  Serial.println(PORTA);
+//  Serial.println(temp);
+//  Serial.println(&PINA, HEX);
+//  Serial.println(&PORTA, HEX);
 }
 
 
 /****************************************************************
- Function: void cycle(void)
- Description: Called from loop() at 50Hz. Handles periodic tasks
- at 50Hz including:
-   - Calling the Line Sensor's Exec Function
+ * Function: void cycle(void)
+ * Description: Called from loop() at 50Hz. Handles periodic tasks
+ *                at 50Hz including:
+ *                  - Calling the Line Sensor's Exec Function
 ****************************************************************/
 void cycle() {
   /* Pulse Heartbeat LED on PIN 13 */
   heartbeat();
+
+
 }
 
 
