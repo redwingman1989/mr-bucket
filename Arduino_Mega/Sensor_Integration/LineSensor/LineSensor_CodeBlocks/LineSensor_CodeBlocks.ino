@@ -1,7 +1,5 @@
 #include <Arduino.h>
-#include "../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
-//#include "TimerOne.h"
-//#include <TimerThree.h>
+#include "../../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
 #include "global.h"
 #include "LineSensor.h"
 #include "Setup.h"
@@ -16,7 +14,6 @@ LineSensor* lineSensor1 = new LineSensor(centerFront);
 void setup() {
   setupSerial(SERIAL_BAUD_RATE);
   setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
-//  setupTimer3Int(LINE_SENSOR_POLL_PERIOD);
   setupLineSensor();
   setupPinModes();
 }
