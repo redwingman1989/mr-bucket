@@ -21,7 +21,7 @@
  *                 was detected (Bit Value = 1), or if a white surface was detected
  *                 (Bit Value = 0);
  *************************************************************/
-LineSensor::LineSensor(unsigned char * inPinMap) :
+LineSensor::LineSensor(const uint8_t * inPinMap) :
 pinMap(inPinMap),
 startCapChargeTime(0)
 {

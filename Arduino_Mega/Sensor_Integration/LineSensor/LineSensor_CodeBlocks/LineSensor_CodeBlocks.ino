@@ -41,26 +41,6 @@ void loop() {
     /* Reset the 50Hz Flag */
     iFlags.pit_50Hz = 0;
 
-    /* Perform Debug Print Outs */
-    /* Print Out Line Sensor Data */
-//    if (printOutLineSenData) {
-//      Serial.println(portA);
-//      for (i = 0; i < NUM_LINE_SENSOR_SENSORS; i++) {
-//        Serial.print("[");
-//        Serial.print(i);
-//        Serial.print("]: ");
-//        if(frontLineSensorDischargeTimes[i] == 0) {
-//          Serial.println("Black");
-//        }
-//        else {
-//          Serial.println(frontLineSensorDischargeTimes[i]);
-//        }
-//        if (i == NUM_LINE_SENSOR_SENSORS-1) {
-//          Serial.println();
-//        } /* if */
-//      } /* for */
-//
-//    } /* if (printOutLineSenData) */
   } /* if (PIT Flag) */
 }
 
