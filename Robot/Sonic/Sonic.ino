@@ -1,9 +1,12 @@
 #include <Arduino.h>
 #include "LineSensor.h"
+#include "System\CycleUnit.h"
 /*
   Turns on an LED on for one second, then off for one second, repeatedly.
 */
+CycleUnit sense;
 LineSensor testFront(PORTA,DDRA);
+
 void setup()
 {
 	Serial.begin(57600);
@@ -12,14 +15,16 @@ void setup()
 	// Pin 13 has an LED connected on most Arduino boards:
 	pinMode(13, OUTPUT);
 
+	sense.addTask(&testFront);
+
 }
 
 void loop()
 {
     static bool light = true;
-    testFront.beginCheck();
-    delayMicroseconds(300);
-    testFront.getReading();
-    Serial.println(testFront.sensorReadings.allReadings,BIN);
+    //Sense
+    sense.RunTasks(millis(),LoadRings);
+    //Plan
+    //Act
     digitalWrite(13, light != light);   // set the LED on
 }

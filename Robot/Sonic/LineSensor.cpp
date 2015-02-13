@@ -72,3 +72,15 @@ void LineSensor::getReading()
     this->sensorReadings.allReadings = PINA;
 
 }
+
+bool LineSensor::RunTick(float time,RobotState state){
+    beginCheck();
+    delayMicroseconds(300);
+    getReading();
+    //everything went well
+    return true;
+}
+
+void LineSensor::DebugOutput(void){
+     Serial.println(sensorReadings.allReadings,BIN);
+}
