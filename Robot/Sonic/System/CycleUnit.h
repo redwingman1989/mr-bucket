@@ -10,7 +10,7 @@ public:
     CycleUnit(void);
     ~CycleUnit(void);
     //main loop function
-    void RunTasks(float time,RobotState state);
+    void RunTasks(uint16_t time,RobotState state);
     //False return if no task is added
     bool addTask(RunableModule * task);
 protected:
