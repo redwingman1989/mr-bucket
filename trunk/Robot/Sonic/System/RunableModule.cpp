@@ -11,7 +11,7 @@ RunableModule::~RunableModule(void)
 }
 
 //main entry point
-bool RunableModule::RunTick(float time,RobotState state){
+bool RunableModule::RunTick(uint16_t time,RobotState state){
     return false;
 }
 

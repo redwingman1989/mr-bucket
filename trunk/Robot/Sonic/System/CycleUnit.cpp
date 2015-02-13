@@ -11,7 +11,7 @@ CycleUnit::~CycleUnit(void)
 {
 }
 
-void CycleUnit::RunTasks(float time,RobotState state)
+void CycleUnit::RunTasks(uint16_t time,RobotState state)
 {
     for(int i = 0; i < taskSize; i++){
         tasks[i]->RunTick(time,state);
