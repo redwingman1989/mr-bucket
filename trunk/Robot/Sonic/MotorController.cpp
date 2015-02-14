@@ -3,7 +3,7 @@ This module will implement the omniwheel motor command mixing
 */
 
 #include "MotorController.h"
-
+ HardwareSerial * temp = &Serial;
 MotorController::MotorController()
 {
   this->motorFrontBack = SabertoothPWM();
@@ -18,7 +18,7 @@ MotorController::MotorController()
   this->init();
 }
 
-MotorController::RunTick(uint16_t time, RobotState state)
+bool MotorController::RunTick(uint16_t time, RobotState state)
 {
   if (state == RS_Startup)
   {
@@ -28,7 +28,7 @@ MotorController::RunTick(uint16_t time, RobotState state)
   else this->exec();
 }
 
-MotorController::DebugOutput(HardwareSerial *serialPort)
+void MotorController::DebugOutput(HardwareSerial *serialPort)
 {
   serialPort->print("DEBUG OUTPUT\n");
 }

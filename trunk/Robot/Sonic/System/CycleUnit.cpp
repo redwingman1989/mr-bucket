@@ -15,7 +15,7 @@ void CycleUnit::RunTasks(uint16_t time,RobotState state)
 {
     for(int i = 0; i < taskSize; i++){
         tasks[i]->RunTick(time,state);
-        tasks[i]->DebugOutput();
+        tasks[i]->DebugOutput(&Serial);
     }
 }
 

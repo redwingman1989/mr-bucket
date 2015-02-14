@@ -23,7 +23,7 @@ void loop()
 {
     static bool light = true;
     //Sense
-    sense.RunTasks(millis(),LoadRings);
+    sense.RunTasks(millis(),RS_LoadRings);
     //Plan
     //Act
     digitalWrite(13, light != light);   // set the LED on

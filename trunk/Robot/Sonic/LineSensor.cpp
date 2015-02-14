@@ -110,7 +110,7 @@ void LineSensor::takeReading()
      this->sensorReadings.allReadings = (uint8_t)*this->ptrPortInputPins;
   else {
     /* Print out a debug message if debug build */
-    if (DEBUG_BUILD == TRUE)
+    if (DEBUG_BUILD == 1)
       Serial.println("Line Sensor Input Pins Pointer is NULL!");
 
     /* TO DO: Perhaps invalidate the sensor? Not sure how we could recover.
