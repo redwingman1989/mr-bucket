@@ -110,12 +110,13 @@
 
 1423421855 source:c:\users\justin\desktop\roborodentia_2015\linesensor_codeblocks\setup.h
 
-1423806620 source:c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor.cpp
+1423880209 source:c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor.cpp
 	<Arduino.h>
 	"LineSensor.h"
 	"global.h"
 
-1423806668 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor.h
+1423880597 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor.h
+	<stdint.h>
 
 1423422249 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\global.h
 
@@ -127,13 +128,22 @@
 
 1423421950 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor_ino_header.h
 
-1423870530 source:c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor_codeblocks.ino
+1423882030 source:c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensor_codeblocks.ino
 	<Arduino.h>
 	"../../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
 	"global.h"
 	"LineSensor.h"
+	"LineSensorMgr.h"
 	"Setup.h"
 	"LineSensor_ino_header.h"
 
 1423421855 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\setup.h
+
+1423880422 c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensormgr.h
+	"LineSensor.h"
+
+1423880639 source:c:\users\justin\desktop\roborodentia_2015\linesensor_dev\linesensor_codeblocks\linesensormgr.cpp
+	<Arduino.h>
+	"LineSensor.h"
+	"LineSensorMgr.h"
 

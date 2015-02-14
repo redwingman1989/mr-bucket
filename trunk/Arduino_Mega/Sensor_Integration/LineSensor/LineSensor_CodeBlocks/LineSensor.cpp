@@ -74,7 +74,7 @@ startCapChargeTime(0)
  *                 pinSen1 value. Once the PORT is identified, the value of the
  *                 PORT is stored in the object's sensorReadings member.
  *************************************************************/
-void LineSensor::beginCheck()
+void LineSensor::beginCheck1()
 {
     /* Drive Sensor Line High */
     *(this->ptrPortDataReg) |= 0xFF; //B11111111
@@ -82,9 +82,13 @@ void LineSensor::beginCheck()
     /* Make the port an output */
     *(this->ptrPortDataDirReg) |= 0xFF; //B11111111
 
-    /* Charge the lines for 10 us */
-    delayMicroseconds(10);
 
+
+}
+
+
+void LineSensor::beginCheck2()
+{
     /* Make the port an input */
     *(this->ptrPortDataDirReg) &= 0x00;
 
