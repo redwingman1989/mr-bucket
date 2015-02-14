@@ -31,21 +31,29 @@ void setup()
 void loop()
 {
     const uint16_t desiredAngle = 180;
-    const uint8_t deadBand = 2;
+    const uint8_t deadBand = 1;
     int16_t delta;
+    const uint8_t maxSpd = 35;
+    const uint8_t minSpd = 20;
     int8_t rotSpeed;
     static bool light = true;
     //Sense
     sense.RunTasks(millis(),RS_LoadRings);
     //Plan
 
-    delta = desiredAngle - mag.getFiltHead();
+    delta = desiredAngle - mag.getRawHead();
 
-    if (delta >= 0-deadBand){
-        rotSpeed = 35;
+    if (delta >= 25){
+        rotSpeed = -maxSpd;
+    }
+    else if (delta >= 0+deadBand) {
+        rotSpeed = -((float)delta/50.0)*(maxSpd - minSpd)+minSpd;
+    }
+    else if (delta <= -25){
+        rotSpeed = maxSpd;
     }
     else if (delta <= 0-deadBand) {
-        rotSpeed = -35;
+        rotSpeed = ((float)delta/50.0)*(maxSpd - minSpd)+minSpd;
     }
     else{
         rotSpeed = 0;
