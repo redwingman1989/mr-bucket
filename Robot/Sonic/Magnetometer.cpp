@@ -13,7 +13,7 @@
 */
 Magnetometer::Magnetometer(uint8_t a) {
   addr = a;
-  init();
+  //init();
 };
 
 

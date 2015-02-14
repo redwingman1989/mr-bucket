@@ -15,7 +15,7 @@ MotorController::MotorController()
   this->actualOutput[M_FRONT] = 0;
   this->actualOutput[M_BACK] = 0;
 
-  this->init();
+//  this->init();
 }
 
 bool MotorController::RunTick(uint16_t time, RobotState state)
@@ -68,11 +68,11 @@ void MotorController::exec(void)
 
   if (temp > outputPowerLimit) {
       temp /= outputPowerLimit;
-      this->outputCmds[M_LEFT] = 0.25*temp*this->rotation + 0.75*temp*this->fwdBack;
+      this->outputCmds[M_LEFT] = -0.25*temp*this->rotation + 0.75*temp*this->fwdBack;
       this->outputCmds[M_RIGHT] = 0.25*temp*this->rotation - 0.75*temp*this->fwdBack;
   }
   else {
-      this->outputCmds[M_LEFT] = this->rotation + this->fwdBack;
+      this->outputCmds[M_LEFT] = -this->rotation + this->fwdBack;
       this->outputCmds[M_RIGHT] = this->rotation - this->fwdBack;
   }
 
@@ -81,21 +81,21 @@ void MotorController::exec(void)
   if (temp > outputPowerLimit) {
       temp /= outputPowerLimit;
       this->outputCmds[M_FRONT]  = 0.25*temp*this->rotation + 0.75*temp*this->leftRight;
-      this->outputCmds[M_BACK] = 0.25*temp*this->rotation - 0.75*temp*this->leftRight;
+      this->outputCmds[M_BACK] = -0.25*temp*this->rotation - 0.75*temp*this->leftRight;
   }
   else {
       this->outputCmds[M_FRONT] = this->rotation + this->leftRight;
-      this->outputCmds[M_BACK] = this->rotation - this->leftRight;
+      this->outputCmds[M_BACK] = -this->rotation - this->leftRight;
   }
 
-  //OUTPUT COMMMAND RATELIMIT
-  temp = this->timeDelta * outputRateLimit;
-  for (i=M_LEFT; i<M_NUM_OF_MOTORS; i++) {
-    delta = this->outputCmds[i] - this->prevOutputCmds[i];
-    if (abs(delta) > temp)
-      if (delta > 0) this->outputCmds[i] = this->prevOutputCmds[i] + temp;
-      else this->outputCmds[i] = this->prevOutputCmds[i] - temp;
-  }
+//  //OUTPUT COMMMAND RATELIMIT
+//  temp = this->timeDelta * outputRateLimit;
+//  for (i=M_LEFT; i<M_NUM_OF_MOTORS; i++) {
+//    delta = this->outputCmds[i] - this->prevOutputCmds[i];
+//    if (abs(delta) > temp)
+//      if (delta > 0) this->outputCmds[i] = this->prevOutputCmds[i] + temp;
+//      else this->outputCmds[i] = this->prevOutputCmds[i] - temp;
+//  }
 
   //CONVERT TO ACTUAL OUTPUT COMMANDS
   this->actualOutput[M_LEFT] = ((int) (this->outputCmds[M_LEFT] * outputCountConvert)) + outputOffset;
