@@ -104,8 +104,8 @@ void MotorController::exec(void)
   this->actualOutput[M_BACK] = ((int) (this->outputCmds[M_BACK] * outputCountConvert)) + outputOffset;
 
   //UPDATE AND SEND MOTOR COMMANDS
-  this->motorLeftRight.updateBothMotors(this->outputCmds[M_LEFT], this->outputCmds[M_RIGHT]);
-  this->motorFrontBack.updateBothMotors(this->outputCmds[M_FRONT], this->outputCmds[M_BACK]);
+  this->motorLeftRight.updateBothMotors(this->actualOutput[M_LEFT], this->actualOutput[M_RIGHT]);
+  this->motorFrontBack.updateBothMotors(this->actualOutput[M_FRONT], this->actualOutput[M_BACK]);
 }
 
 //Inputs are in percentage of max command -100% to +100%
@@ -124,9 +124,9 @@ void MotorController::updateCommand(float fwdBack, float leftRight, float rotati
 
   //apply command limits of +/- 100%
   if (this->fwdBack < -outputPowerLimit) this->fwdBack = -outputPowerLimit;
-  if (this->fwdBack > -outputPowerLimit) this->fwdBack = outputPowerLimit;
+  if (this->fwdBack > outputPowerLimit) this->fwdBack = outputPowerLimit;
   if (this->leftRight < -outputPowerLimit) this->leftRight = -outputPowerLimit;
-  if (this->leftRight > -outputPowerLimit) this->leftRight = outputPowerLimit;
+  if (this->leftRight > outputPowerLimit) this->leftRight = outputPowerLimit;
   if (this->rotation < -outputPowerLimit) this->rotation = -outputPowerLimit;
-  if (this->rotation > -outputPowerLimit) this->rotation = outputPowerLimit;
+  if (this->rotation > outputPowerLimit) this->rotation = outputPowerLimit;
 }
