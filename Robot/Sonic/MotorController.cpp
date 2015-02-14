@@ -68,24 +68,24 @@ void MotorController::exec(void)
 
   if (temp > outputPowerLimit) {
       temp /= outputPowerLimit;
-      this->outputCmds[M_LEFT] = 0.25*temp*this->rotation + 0.75*temp*this->fwdBack;
-      this->outputCmds[M_RIGHT] = -0.25*temp*this->rotation - 0.75*temp*this->fwdBack;
+      this->outputCmds[M_LEFT] = -0.25*temp*this->rotation - 0.75*temp*this->fwdBack;
+      this->outputCmds[M_RIGHT] = 0.25*temp*this->rotation - 0.75*temp*this->fwdBack;
   }
   else {
-      this->outputCmds[M_LEFT] = this->rotation + this->fwdBack;
-      this->outputCmds[M_RIGHT] = -this->rotation - this->fwdBack;
+      this->outputCmds[M_LEFT] = -this->rotation - this->fwdBack;
+      this->outputCmds[M_RIGHT] = this->rotation - this->fwdBack;
   }
 
   temp = abs(this->rotation) + abs(this->leftRight);
 
   if (temp > outputPowerLimit) {
       temp /= outputPowerLimit;
-      this->outputCmds[M_FRONT]  = -0.25*temp*this->rotation + 0.75*temp*this->leftRight;
-      this->outputCmds[M_BACK] = 0.25*temp*this->rotation - 0.75*temp*this->leftRight;
+      this->outputCmds[M_FRONT]  = 0.25*temp*this->rotation + 0.75*temp*this->leftRight;
+      this->outputCmds[M_BACK] = -0.25*temp*this->rotation + 0.75*temp*this->leftRight;
   }
   else {
-      this->outputCmds[M_FRONT] = -this->rotation + this->leftRight;
-      this->outputCmds[M_BACK] = this->rotation - this->leftRight;
+      this->outputCmds[M_FRONT] = this->rotation + this->leftRight;
+      this->outputCmds[M_BACK] = -this->rotation + this->leftRight;
   }
 
 //  //OUTPUT COMMMAND RATELIMIT
