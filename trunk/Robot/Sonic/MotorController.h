@@ -42,8 +42,9 @@ class MotorController : public RunableModule {
     bool RunTick(uint16_t time,RobotState state);
     void DebugOutput(HardwareSerial *serialPort);
 
-  private:
     void init(void);
+  private:
+
     void exec(void);
 
     //Assuming both are connected to serial port one
