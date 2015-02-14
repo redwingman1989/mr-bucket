@@ -1,6 +1,8 @@
 #ifndef _LINESENSOR_H
 #define _LINESENSOR_H
 
+#include <stdint.h>
+
 /* Macros */
 
 /* PORT A */
@@ -111,7 +113,8 @@ class LineSensor {
 
     //Constructor
     LineSensor(const uint8_t * inPinMap);
-    void beginCheck();
+    void beginCheck1();
+    void beginCheck2();
     void takeReading();
 
     // Methods

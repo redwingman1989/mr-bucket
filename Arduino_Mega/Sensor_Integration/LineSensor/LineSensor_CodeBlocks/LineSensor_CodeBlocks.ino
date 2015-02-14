@@ -2,13 +2,15 @@
 #include "../../../../../../ArduinoDev/arduino-1.0.6-windows/arduino-1.0.6/libraries/TimerOne/TimerOne.h"
 #include "global.h"
 #include "LineSensor.h"
+#include "LineSensorMgr.h"
 #include "Setup.h"
 #include "LineSensor_ino_header.h"
 
-LineSensor* centerFrontLineSensor = new LineSensor(centerFront);
-LineSensor* sideFrontLineSensor = new LineSensor(sideFront);
-LineSensor* centerBackLineSensor = new LineSensor(centerBack);
-LineSensor* sideBackLineSensor = new LineSensor(sideBack);
+LineSensor * centerFrontLineSensor;
+LineSensor * sideFrontLineSensor;
+LineSensor * centerBackLineSensor;
+LineSensor * sideBackLineSensor;
+LineSensorMgr * lineSenMgr;
 
 /*******************************************************************
  Function: void setup(void)
@@ -19,6 +21,15 @@ void setup() {
   setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
   setupLineSensor();
   setupPinModes();
+
+  centerFrontLineSensor = new LineSensor(centerFront);
+  sideFrontLineSensor = new LineSensor(sideFront);
+  centerBackLineSensor = new LineSensor(centerBack);
+  sideBackLineSensor = new LineSensor(sideBack);
+  lineSenMgr = new LineSensorMgr(centerFrontLineSensor,
+                                 sideFrontLineSensor,
+                                 centerBackLineSensor,
+                                 sideBackLineSensor);
 }
 
 
@@ -61,24 +72,46 @@ void cycle() {
   /* Prepare the line sensor to give a reading */
 //  centerFrontLineSensor->beginCheck();
 //  sideFrontLineSensor->beginCheck();
-  centerBackLineSensor->beginCheck();
+//  centerBackLineSensor->beginCheck();
 //  sideBackLineSensor->beginCheck();
 
-  /* delay 300 us */
-  delayMicroseconds(300);
+//  /* delay 300 us */
+//  delayMicroseconds(300);
 
 //  centerFrontLineSensor->takeReading();
 //  sideFrontLineSensor->takeReading();
-  centerBackLineSensor->takeReading();
+//  centerBackLineSensor->takeReading();
 //  sideBackLineSensor->takeReading();
 
+  lineSenMgr->takeAllSensorReadings();
+for (int y = 0; y < 4; y++) {
   for (int i = 0; i < 8; i++) {
-    Serial.print((centerBackLineSensor->getLineSensorReadings() >> i) & 0x01);
-    Serial.print("  ");
-    if (i == 7) {
+    if (y == 0){
+      if (i == 0)
+        Serial.print("CF:");
+      Serial.print((centerFrontLineSensor->getLineSensorReadings() >> i) & 0x01);
+    }
+    else if (y == 1) {
+      if (i == 0)
+        Serial.print("    SF: ");
+      Serial.print((sideFrontLineSensor->getLineSensorReadings() >> i) & 0x01);
+    }
+    else if (y == 2) {
+      if (i == 0)
+        Serial.print("    CB: ");
+      Serial.print((centerBackLineSensor->getLineSensorReadings() >> i) & 0x01);
+    }
+    else if (y == 3) {
+      if (i == 0)
+        Serial.print("    SB: ");
+      Serial.print((sideBackLineSensor->getLineSensorReadings() >> i) & 0x01);
+    }
+
+    if (i == 7 && y == 3) {
         Serial.println();
     }
   }
+}
   //Serial.println(centerFrontLineSensor->getLineSensorReadings(), BIN);
 }
 
