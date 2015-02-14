@@ -1,7 +1,7 @@
 /* Line Sensor Class */
 #include <Arduino.h>
 #include "LineSensor.h"
-//#include "global.h"
+#include "global.h"
 
 
 /*************************************************************
@@ -21,17 +21,52 @@
  *                 was detected (Bit Value = 1), or if a white surface was detected
  *                 (Bit Value = 0);
  *************************************************************/
-LineSensor::LineSensor(int port, int configRegister) :
-port(port),
-configRegister(configRegister),
+LineSensor::LineSensor(const uint8_t * inPinMap) :
+pinMap(inPinMap),
 startCapChargeTime(0)
 {
+  /* Map the PORT to the member */
+  if ((uint8_t)(*this->pinMap) == (uint8_t)PORTA_PIN_0) {
+    /* Pin 0 Value matches to PORTA */
+    this->ptrPortDataReg    = (uint8_t *)PORTA_DATA_REG;
+    this->ptrPortDataDirReg = (uint8_t *)PORTA_DATA_DIR_REG;
+    this->ptrPortInputPins  = (uint8_t *)PORTA_IN_PINS_REG;
+  }
+  else if ((uint8_t) (*this->pinMap) == (uint8_t)PORTB_PIN_0) {
+    /* Pin 0 Value matches to PORTB */
+    this->ptrPortDataReg    = (uint8_t *)PORTB_DATA_REG;
+    this->ptrPortDataDirReg = (uint8_t *)PORTB_DATA_DIR_REG;
+    this->ptrPortInputPins  = (uint8_t *)PORTB_IN_PINS_REG;
+  }
+  else if ((uint8_t)(*this->pinMap) == (uint8_t)PORTC_PIN_0) {
+    /* Pin 0 Value matches to PORTC */
+    this->ptrPortDataReg    = (uint8_t *)PORTC_DATA_REG;
+    this->ptrPortDataDirReg = (uint8_t *)PORTC_DATA_DIR_REG;
+    this->ptrPortInputPins  = (uint8_t *)PORTC_IN_PINS_REG;
+  }
+  else if ((uint8_t)(*this->pinMap) == (uint8_t)PORTL_PIN_0) {
+    /* Pin 0 Value matches to PORTL */
+    this->ptrPortDataReg    = (uint8_t *)PORTL_DATA_REG;
+    this->ptrPortDataDirReg = (uint8_t *)PORTL_DATA_DIR_REG;
+    this->ptrPortInputPins  = (uint8_t *)PORTL_IN_PINS_REG;
+  }
+  else {
+    if (DEBUG_BUILD)
+      Serial.println("Invalid LineSensor pin to PORT Mapping.");
+
+    this->ptrPortDataReg    = NULL;
+    this->ptrPortDataDirReg = NULL;
+    this->ptrPortInputPins  = NULL;
+  }
+
+  /* Set all readings to 0. (Remove any garbage value) */
   this->sensorReadings.allReadings = 0;
 }
 
 
 /*************************************************************
  * Function:     getReading()
+ * Parameters:   void
  * Return:       void
  * Description:  This function is called after the LineSensor::beginCheck()
  *                 is called. In order to figure out what PORT that the invoking
@@ -42,21 +77,25 @@ startCapChargeTime(0)
 void LineSensor::beginCheck()
 {
       /* Drive Sensor Line High */
-      this->port |= 0xff;
+    *(this->ptrPortDataReg) |= 0xFF; //B11111111
 
       /* Make the port an output */
-      this->configRegister |= 0xff;
+    *(this->ptrPortDataDirReg) |= 0xFF; //B11111111
 
       /* Charge the lines for 10 us */
       delayMicroseconds(10);
 
       /* Make the port an input */
-      this->configRegister &= 0;
+    *(this->ptrPortDataDirReg) &= 0x00;
+
+    /* Mark the start time of the capacitor charging */
+    this->startCapChargeTime = micros();
 }
 
 
 /*************************************************************
- * Function:     getReading()
+ * Function:     takeReading()
+ * Parameter(s): void
  * Return:       void
  * Description:  This function is called after the LineSensor::beginCheck()
  *                 is called. In order to figure out what PORT that the invoking
@@ -64,23 +103,32 @@ void LineSensor::beginCheck()
  *                 pinSen1 value. Once the PORT is identified, the value of the
  *                 PORT is stored in the object's sensorReadings member.
  *************************************************************/
-void LineSensor::getReading()
+void LineSensor::takeReading()
 {
-  /* Figure out which PORT this sensor is configured for
-   *   and return the value of the PORT to the Line Sensor
-   *   object's sensorReadings data member */
-    this->sensorReadings.allReadings = PINA;
+  /* Look at the Line Sensor's Input Pins */
+   if (this->ptrPortInputPins != NULL)
+     this->sensorReadings.allReadings = (uint8_t)*this->ptrPortInputPins;
+  else {
+    /* Print out a debug message if debug build */
+    if (DEBUG_BUILD == TRUE)
+      Serial.println("Line Sensor Input Pins Pointer is NULL!");
 
+    /* TO DO: Perhaps invalidate the sensor? Not sure how we could recover.
+     *          would need to add new member to the class. */
+}
 }
 
-bool LineSensor::RunTick(float time,RobotState state){
-    beginCheck();
-    delayMicroseconds(300);
-    getReading();
-    //everything went well
-    return true;
+
+/*************************************************************
+ * Function:     getLineSensorReadings()
+ * Return:       void
+ * Description:  This function is called after the LineSensor::beginCheck()
+ *                 is called. In order to figure out what PORT that the invoking
+ *                 object is attached to, the function looks at what the object's
+ *                 pinSen1 value. Once the PORT is identified, the value of the
+ *                 PORT is stored in the object's sensorReadings member.
+ *************************************************************/
+uint8_t LineSensor::getLineSensorReadings() {
+  return this->sensorReadings.allReadings;
 }
 
-void LineSensor::DebugOutput(void){
-     Serial.println(sensorReadings.allReadings,BIN);
-}

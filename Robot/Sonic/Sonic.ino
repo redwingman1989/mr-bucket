@@ -5,7 +5,10 @@
   Turns on an LED on for one second, then off for one second, repeatedly.
 */
 CycleUnit sense;
-LineSensor testFront(PORTA,DDRA);
+LineSensor* centerFrontLineSensor = new LineSensor(centerFront);
+LineSensor* sideFrontLineSensor = new LineSensor(sideFront);
+LineSensor* centerBackLineSensor = new LineSensor(centerBack);
+LineSensor* sideBackLineSensor = new LineSensor(sideBack);
 
 void setup()
 {
@@ -14,9 +17,6 @@ void setup()
 	// initialize the digital pin as an output.
 	// Pin 13 has an LED connected on most Arduino boards:
 	pinMode(13, OUTPUT);
-
-	sense.addTask(&testFront);
-
 }
 
 void loop()
