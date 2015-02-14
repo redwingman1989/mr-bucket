@@ -39,7 +39,7 @@ class LineSensorManager : public RunableModule {
   lineDriveCommand_t determineLineDriveCommand(lineSensorLocations sensorA,
                                                lineSensorLocations sensorB);
 
-  lineSensor_t lineSensors[NUM_OF_LINESENSORS];
+  LineSensor lineSensors[NUM_OF_LINESENSORS];
   sensorHit_t sensorHits[NUM_OF_LINESENSORS];
   lineDriveCommand_t driveCommands[NUM_OF_LINESENSORS];
 }
