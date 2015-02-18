@@ -683,6 +683,12 @@
 		<Unit filename="LineSensor.h">
 			<Option target="Arduino Mega 2560/ADK" />
 		</Unit>
+		<Unit filename="LineSensorMgr.cpp">
+			<Option target="Arduino Mega 2560/ADK" />
+		</Unit>
+		<Unit filename="LineSensorMgr.h">
+			<Option target="Arduino Mega 2560/ADK" />
+		</Unit>
 		<Unit filename="LineSensor_CodeBlocks.ino">
 			<Option compile="1" />
 			<Option link="1" />
