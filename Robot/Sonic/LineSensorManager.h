@@ -3,22 +3,62 @@
 #include "System/RunableModule.h"
 #include "LineSensor.h"
 
+const uint8_t NUM_OF_LINESENSORS = 4;
+const uint8_t NUM_OF_SENSORPAIRS = 3;
+const uint8_t NUM_SENSORS_PER_ARRAY = 8;
+
+const unsigned int CHARGE_DELAY_US = 10;
+const unsigned int READING_DELAY_US = 300;
+
+inline double radToDegrees(double a) { return a * 180.0 / M_PI;}
+
 enum lineSensorLocations {
   LSL_CENTER_FRONT,
-  LSL_CENTER_BACK,
   LSL_RIGHT_FRONT,
+  LSL_CENTER_BACK,
   LSL_RIGHT_BACK
 };
 
-const uint8_t NUM_OF_LINESENSORS = 4;
-const uint8_t NUM_SENSORS_PER_ARRAY = 8;
+const char * sensorIDs[] =
+{
+"CENTER-FRONT: ",
+"CENTER-BACK: ",
+"RIGHT-FRONT: ",
+"RIGHT-BACK: "
+};
+
+enum lineSensorPairs {
+  LSP_CENTER,
+  LSP_RIGHT,
+  LSP_BACK
+};
+
+const char * pairIDs[] =
+{
+"CENTER: ",
+"RIGHT: ",
+"BACK"
+};
 
 typedef struct {
+  lineSensorLocations sensorA;
+  lineSensorLocations sensorB;
+} sensorPairSensors;
+
+const sensorPairSensors sensorPairs[NUM_OF_SENSORPAIRS] =
+{
+  {LSL_CENTER_FRONT, LSL_CENTER_BACK},
+  {LSL_RIGHT_FRONT, LSL_RIGHT_BACK},
+  {LSL_RIGHT_BACK, LSL_CENTER_BACK}
+};
+
+struct  point_t{
   double x;
   double y;
-} point_t;
+};
 
 typedef struct {
+  bool valid;
   point_t offset;
   double angle;
 } lineDriveCommand_t;
@@ -33,17 +73,25 @@ class LineSensorManager : public RunableModule {
   LineSensorManager(LineSensor **lineSensors);
   bool RunTick(uint16_t time,RobotState state);
   void DebugOutput(HardwareSerial *serialPort);
+  lineDriveCommand_t getLineDriveCommand(lineSensorPairs sensorPair);
 
   private:
-  sensorHit_t determineSensorHits(lineSensorLocations sensor);
-  lineDriveCommand_t determineLineDriveCommand(lineSensorLocations sensorA,
-                                               lineSensorLocations sensorB);
+  void determineSensorHits(lineSensorLocations sensor);
+  void determineLineDriveCommand(lineSensorPairs sensorPair);
+  void pollLineSensors(void);
 
-  LineSensor *lineSensors[NUM_OF_LINESENSORS];
+  void sensorDebugOutput(lineSensorLocations sensor, HardwareSerial *serialPort);
+  void sensorHitDebugOutput(lineSensorLocations sensor, HardwareSerial *serialPort);
+  void driveCommandDebugOutput(lineSensorPairs sensorPair, HardwareSerial *serialPort);
+
+  LineSensor **lineSensors;
   sensorHit_t sensorHits[NUM_OF_LINESENSORS];
-  lineDriveCommand_t driveCommands[NUM_OF_LINESENSORS];
+  lineDriveCommand_t driveCommands[NUM_OF_SENSORPAIRS];
+
 };
 
+//Individual sensor reference geometry in inches from the robot center
+//From the top, +X is to the right, +Y is to the front
 const point_t sensorPositions[NUM_OF_LINESENSORS][NUM_SENSORS_PER_ARRAY] = {
 {{-1.8125, 2.9},
 {-1.4375, 2.9},
@@ -79,6 +127,8 @@ const point_t sensorPositions[NUM_OF_LINESENSORS][NUM_SENSORS_PER_ARRAY] = {
 {4.428075301, -2.499995301}}
 };
 
+//Reference geometry of the center of the line sensor along the sensor array axis
+//Same coordinate system as individual sensor geometry
 const point_t sensorCenters[NUM_OF_LINESENSORS] = {
 {-1.547334957, 3.165165043},
 {2.452665043, 3.165165043},
