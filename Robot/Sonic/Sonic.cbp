@@ -667,9 +667,10 @@
 		<Compiler>
 			<Add directory="." />
 		</Compiler>
-		<Unit filename="LibraryFiles/config/known_16bit_timers.h" />
 		<Unit filename="LineSensor.cpp" />
 		<Unit filename="LineSensor.h" />
+		<Unit filename="LineSensorManager.cpp" />
+		<Unit filename="LineSensorManager.h" />
 		<Unit filename="Magnetometer.cpp" />
 		<Unit filename="Magnetometer.h" />
 		<Unit filename="MotorController.cpp" />
