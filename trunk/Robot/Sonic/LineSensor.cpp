@@ -77,31 +77,35 @@ LineSensor::~LineSensor()
 
 
 /*************************************************************
- * Function:     getReading()
+ * Function:     startCharging()
  * Parameters:   void
  * Return:       void
- * Description:  This function is called after the LineSensor::beginCheck()
- *                 is called. In order to figure out what PORT that the invoking
- *                 object is attached to, the function looks at what the object's
- *                 pinSen1 value. Once the PORT is identified, the value of the
- *                 PORT is stored in the object's sensorReadings member.
+ * Description:  This function charges the sensors
  *************************************************************/
-void LineSensor::beginCheck()
+void LineSensor::startCharging()
 {
-      /* Drive Sensor Line High */
-    *(this->ptrPortDataReg) |= 0xFF; //B11111111
+  /* Drive Sensor Line High */
+  *(this->ptrPortDataReg) |= 0xFF; //B11111111
 
-      /* Make the port an output */
-    *(this->ptrPortDataDirReg) |= 0xFF; //B11111111
+  /* Make the port an output */
+  *(this->ptrPortDataDirReg) |= 0xFF; //B11111111
+}
 
-      /* Charge the lines for 10 us */
-      delayMicroseconds(10);
 
-      /* Make the port an input */
-    *(this->ptrPortDataDirReg) &= 0x00;
+/*************************************************************
+ * Function:     stopCharging()
+ * Parameters:   void
+ * Return:       void
+ * Description:  This function stops charging the sensors
+ *               and sets up for reading
+ *************************************************************/
+void LineSensor::stopCharging()
+{
+  /* Make the port an input */
+  *(this->ptrPortDataDirReg) &= 0x00;
 
-    /* Mark the start time of the capacitor charging */
-    this->startCapChargeTime = micros();
+  /* Mark the start time of the reading */
+  this->startCapChargeTime = micros();
 }
 
 
@@ -142,29 +146,4 @@ void LineSensor::takeReading()
  *************************************************************/
 uint8_t LineSensor::getLineSensorReadings() {
   return this->sensorReadings.allReadings;
-}
-
-
- /*************************************************************
- * Function:     RunTick()
- * Parameter:    void
- * Return:       void
- * Description:  This is a virtual function inherited from the parent class:
- *                 RunableModule.
- *************************************************************/
-bool LineSensor::RunTick(uint16_t time,RobotState state) {
-  return true;
-}
-
-
- /*************************************************************
- * Function:     DebugOutput()
- * Parameter:    void
- * Return:       void
- * Description:  This is a virtual function inherited from the parent class:
- *                 RunableModule.
- *************************************************************/
-void LineSensor::DebugOutput(HardwareSerial *serialPort)
-{
-    return;
 }
