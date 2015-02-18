@@ -8,7 +8,7 @@ enum lineSensorLocations {
   LSL_CENTER_BACK,
   LSL_RIGHT_FRONT,
   LSL_RIGHT_BACK
-}
+};
 
 const uint8_t NUM_OF_LINESENSORS = 4;
 const uint8_t NUM_SENSORS_PER_ARRAY = 8;
@@ -30,19 +30,19 @@ typedef struct {
 
 class LineSensorManager : public RunableModule {
   public:
-  LineSensorManager(LineSensor *lineSensors);
+  LineSensorManager(LineSensor **lineSensors);
   bool RunTick(uint16_t time,RobotState state);
-  void DebugOutput(HardwareSerial *serialPort;);
+  void DebugOutput(HardwareSerial *serialPort);
 
   private:
-  sensorHit_t determineSensorHits(LineSensor *sensor);
+  sensorHit_t determineSensorHits(lineSensorLocations sensor);
   lineDriveCommand_t determineLineDriveCommand(lineSensorLocations sensorA,
                                                lineSensorLocations sensorB);
 
-  LineSensor lineSensors[NUM_OF_LINESENSORS];
+  LineSensor *lineSensors[NUM_OF_LINESENSORS];
   sensorHit_t sensorHits[NUM_OF_LINESENSORS];
   lineDriveCommand_t driveCommands[NUM_OF_LINESENSORS];
-}
+};
 
 const point_t sensorPositions[NUM_OF_LINESENSORS][NUM_SENSORS_PER_ARRAY] = {
 {{-1.8125, 2.9},
@@ -84,4 +84,4 @@ const point_t sensorCenters[NUM_OF_LINESENSORS] = {
 {2.452665043, 3.165165043},
 {-1.162914957, -0.3786749571},
 {2.837085043, -0.3786749571}
-}
+};
