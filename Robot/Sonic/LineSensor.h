@@ -92,7 +92,7 @@ static const uint8_t sideBack[NUM_LINE_SENSOR_SENSORS]    = {PORTL_PIN_0, PORTL_
                                                              PORTL_PIN_3, PORTL_PIN_4, PORTL_PIN_5,
                                                              PORTL_PIN_6, PORTL_PIN_7};
 
-class LineSensor {
+class LineSensor : public RunableModule {
   public:
     typedef union readings_t
     {
@@ -112,6 +112,12 @@ class LineSensor {
 
     //Constructor
     LineSensor(const uint8_t * inPinMap);
+    ~LineSensor();
+
+    //Implement Virtual Functions from Parent Class
+    bool RunTick(uint16_t time,RobotState state);
+    void DebugOutput(HardwareSerial *serialPort);
+
     void beginCheck();
     void takeReading();
 

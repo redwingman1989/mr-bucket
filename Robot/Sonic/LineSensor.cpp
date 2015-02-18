@@ -65,6 +65,18 @@ startCapChargeTime(0)
 
 
 /*************************************************************
+ * Function:     LineSensor Destructor
+ * Input:        void
+ * Return:       void
+ * Description:  This is the Destructor for a LineSensor object.
+ *************************************************************/
+LineSensor::~LineSensor()
+{
+    free(this);
+}
+
+
+/*************************************************************
  * Function:     getReading()
  * Parameters:   void
  * Return:       void
@@ -132,3 +144,27 @@ uint8_t LineSensor::getLineSensorReadings() {
   return this->sensorReadings.allReadings;
 }
 
+
+ /*************************************************************
+ * Function:     RunTick()
+ * Parameter:    void
+ * Return:       void
+ * Description:  This is a virtual function inherited from the parent class:
+ *                 RunableModule.
+ *************************************************************/
+bool LineSensor::RunTick(uint16_t time,RobotState state) {
+  return true;
+}
+
+
+ /*************************************************************
+ * Function:     DebugOutput()
+ * Parameter:    void
+ * Return:       void
+ * Description:  This is a virtual function inherited from the parent class:
+ *                 RunableModule.
+ *************************************************************/
+void LineSensor::DebugOutput(HardwareSerial *serialPort)
+{
+    return;
+}
