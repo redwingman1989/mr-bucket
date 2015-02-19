@@ -1,0 +1,82 @@
+# depslib dependency file v1.0
+1423794604 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\setup.cpp
+	<Arduino.h>
+	"UltraSonic_ino_header.h"
+	"global.h"
+
+1371029502 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\arduino.h
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<avr/pgmspace.h>
+	<avr/io.h>
+	<avr/interrupt.h>
+	"binary.h"
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"pins_arduino.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\binary.h
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\wcharacter.h
+	<ctype.h>
+
+1371029534 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\wstring.h
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<avr/pgmspace.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\hardwareserial.h
+	<inttypes.h>
+	"Stream.h"
+	"USBAPI.h"
+
+1371029230 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\stream.h
+	<inttypes.h>
+	"Print.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\print.h
+	<inttypes.h>
+	<stdio.h>
+	"WString.h"
+	"Printable.h"
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\printable.h
+	<new.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\new.h
+	<stdlib.h>
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\cores\arduino\usbapi.h
+
+1362983350 c:\users\justin\desktop\codeblocks\arduino\hardware\arduino\variants\mega\pins_arduino.h
+	<avr/pgmspace.h>
+
+1421619638 c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"config/known_16bit_timers.h"
+
+1421619639 c:\arduinodev\arduino-1.0.6-windows\arduino-1.0.6\libraries\timerone\config\known_16bit_timers.h
+
+1423465390 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonic_ino_header.h
+
+1423465390 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\global.h
+
+1423794639 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.cpp
+	<Arduino.h>
+	"global.h"
+	"UltraSonicSensor.h"
+
+1423794638 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.h
+
+1423797473 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonic_codeblocks.ino
+	<Arduino.h>
+	"global.h"
+	"Setup.h"
+	"UltraSonic_ino_header.h"
+
+1423631307 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\setup.h
+
