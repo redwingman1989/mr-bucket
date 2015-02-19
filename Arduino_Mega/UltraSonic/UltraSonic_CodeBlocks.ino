@@ -1,20 +1,25 @@
 #include <Arduino.h>
-#include "global.h"
 #include "Setup.h"
 #include "UltraSonicSensor.h"
 #include "UltraSonic_ino_header.h"
 #include "Interrupts.h"
 
-UltraSonicSensor * ultraSonicFront = new UltraSonicSensor(frontUltraSonic);
+UltraSonicSensor ultraSonicFront(frontUltraSonic);
+UltraSonicSensor ultraSonicLeft(leftUltraSonic);
+UltraSonicSensor ultraSonicRight(rightUltraSonic);
 
 /*******************************************************************
  Function: void setup(void)
  Description: Arduino main function for initialization code.
 *******************************************************************/
 void setup() {
-  setupSerial(SERIAL_BAUD_RATE);
-  //setupTimer1Int(PIT_PERIOD_IN_MICROSECS);
+  setupSerial(115200);
   setupPinModes();
+  setupUltraSonicInterrups();
+
+//  ultraSonicFront = UltraSonicSensor(frontUltraSonic);
+//  ultraSonicLeft  = UltraSonicSensor(leftUltraSonic);
+//  ultraSonicRight = UltraSonicSensor(rightUltraSonic);
 }
 
 
@@ -26,32 +31,19 @@ void setup() {
 ********************************************************************/
 void loop() {
   /* Debug Varibales*/
-  int i = 0;
-  unsigned char * aPtr = (unsigned char *)0x22;
-  unsigned int temp = (unsigned int)&PORTA;
-
-
-  /* Log the Arduino Loop starting time in milliseconds */
-  loopStartTime = millis();
-
-  /* Execute cycle() at 50Hz */
-  if (iFlags.pit_50Hz == 1) {
-    /* Execute Main Cycle */
-    cycle();
-    /* Update the Cycle Count */
-    icount++;
-    /* Reset the 50Hz Flag */
-    iFlags.pit_50Hz = 0;
-
-  } /* if (PIT Flag) */
-
-  PORTA = 0xA5;
-  Serial.println(PORTA);
-  *aPtr = 0x2B;
-  Serial.println(PORTA);
+//  int i = 0;
+//  unsigned char * aPtr = (unsigned char *)0x22;
+//  unsigned int temp = (unsigned int)&PORTA;
+//  PORTA = 0xA5;
+//  Serial.println(PORTA);
+//  *aPtr = 0x2B;
+//  Serial.println(PORTA);
 //  Serial.println(temp);
 //  Serial.println(&PINA, HEX);
 //  Serial.println(&PORTA, HEX);
+
+  cycle();
+
 }
 
 
@@ -75,8 +67,8 @@ void cycle() {
 ************************************************************/
 void heartbeat() {
   // Toggle Board LED at 4 Hz
-  if (!(icount % 25))
-    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
+//  if (!(icount % 25))
+//    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
 }
 
 
@@ -93,7 +85,7 @@ void PIT() {
     //sprintf(outStr, "cycle overrun");
     //Serial.println(outStr);
   //}
-  iFlags.pit_50Hz = 1;
+//  iFlags.pit_50Hz = 1;
   //if(++scaler % 10 == 0) {
    // iFlags.pit_50Hz = 1;
     //if(scaler == 20) {
