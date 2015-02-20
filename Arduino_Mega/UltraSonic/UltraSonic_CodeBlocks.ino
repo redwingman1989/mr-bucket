@@ -31,19 +31,29 @@ void setup() {
 ********************************************************************/
 void loop() {
   /* Debug Varibales*/
-//  int i = 0;
-//  unsigned char * aPtr = (unsigned char *)0x22;
-//  unsigned int temp = (unsigned int)&PORTA;
-//  PORTA = 0xA5;
-//  Serial.println(PORTA);
-//  *aPtr = 0x2B;
-//  Serial.println(PORTA);
-//  Serial.println(temp);
-//  Serial.println(&PINA, HEX);
-//  Serial.println(&PORTA, HEX);
+  static uint32_t loopCount = 0;
+  static bool lockOutPulse = false;
+  static UltraSonicSensor * ptrSensor = &ultraSonicFront;
 
-  cycle();
+  if (lockOutPulse  == false) {
+    Serial.println("Dbg Flag 1");
+    ptrSensor->triggerAPulse();
+    lockOutPulse = true;
+  }
+  if (loopCount % 10000) {
+//    Serial.println(ptrSensor->getTimeForCalcFlag());
+//    Serial.println(ptrSensor->getFirstEchoTime());
 
+  }
+
+  if (ptrSensor->getTimeForCalcFlag() == true) {
+    Serial.println("Dbg Flag 2");
+    ptrSensor->setReadyForDistanceCalc(false);
+    lockOutPulse = false;
+    Serial.println(ptrSensor->calculateDistance());
+  }
+
+  ++loopCount;
 }
 
 
