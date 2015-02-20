@@ -78,8 +78,14 @@ class UltraSonicSensor : public RunableModule{
     /* Get the Echo Pin */
     uint8_t getEchoPin();
 
+    /* Get a look at the flag that indicates that it is time for a calculation */
+    bool getTimeForCalcFlag();
+
 //    /* The ISR called when the Echo pin interrupts the Mega */
 //    void echoISR();
+
+    /* Set the trigger pin */
+    void triggerAPulse(void);
 
     /* Calculate the distance to reflected surface */
     uint8_t calculateDistance();
@@ -108,10 +114,10 @@ class UltraSonicSensor : public RunableModule{
 //    uint8_t extInterruptNumber;
 
     /* Echo 1st Pulse Receive time */
-    uint32_t rxFirstEchoTime;
+    volatile uint32_t rxFirstEchoTime;
 
     /* Echo last pulse Receive time */
-    uint32_t rxLastEchoTime;
+    volatile uint32_t rxLastEchoTime;
 
     /* Flag indicating that it is time to run calculations on ISR timing data */
     bool timeToCalculateDistance;

@@ -10,6 +10,7 @@
 *************************************************************/
 void frontUltraSonicISR()
 {
+    Serial.println("Called");
     if (digitalRead(ultraSonicFront.getTriggerPin()))
         ultraSonicFront.setFirstEchoTime((uint32_t) micros());
     else {

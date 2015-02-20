@@ -195,6 +195,23 @@ void UltraSonicSensor::setReadyForDistanceCalc(bool timeForDistanceCalc)
 }
 
 
+ /*************************************************************
+ * Function:     triggerAPulse()
+ * Parameter:    void
+ * Return:       void
+ * Description:  Sets the trigger pin high for 10 microseconds.
+ *                 This triggers an ultrasonic wave to be produced
+ *                 by the ultrasonic sensor.
+ *************************************************************/
+void UltraSonicSensor::triggerAPulse()
+{
+    Serial.println(*(this->pinMap+TRIGGER_PIN));
+    digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), HIGH);
+    delayMicroseconds(10);
+    digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), LOW);
+}
+
+
 // /*************************************************************
 // * Function:     getFirstEchoTime()
 // * Parameter:    void
@@ -245,6 +262,31 @@ uint8_t UltraSonicSensor::getTriggerPin()
 uint8_t UltraSonicSensor::getEchoPin()
 {
     return ((uint8_t) *(this->pinMap+ECHO_PIN));
+}
+
+
+ /*************************************************************
+ * Function:     getTimeForCalcFlag
+ * Input:        void
+ * Return:       uint8_t echoPin
+ * Description:  Returns the value of the UltraSonicSensor
+ *                 object's Echo pin.
+ *************************************************************/
+bool UltraSonicSensor::getTimeForCalcFlag()
+{
+    return ((bool)this->timeToCalculateDistance);
+}
+
+
+ /*************************************************************
+ * Function:     getFirstEchoTime
+ * Input:        void
+ * Return:       uint8_t echoPin
+ * Description:  Returns the time of the first echo pulse.
+ *************************************************************/
+uint32_t UltraSonicSensor::getFirstEchoTime()
+{
+    return ((uint32_t)this->rxFirstEchoTime);
 }
 
 
