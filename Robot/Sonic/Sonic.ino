@@ -1,20 +1,36 @@
 #include <Arduino.h>
-#include "LineSensor.h"
 #include "Magnetometer.h"
 #include "MotorController.h"
 #include "System\CycleUnit.h"
-/*
-  Turns on an LED on for one second, then off for one second, repeatedly.
-*/
+#include "LineSensorManager.h"
+
 CycleUnit sense;
+CycleUnit plan;
+CycleUnit act;
 
 Magnetometer mag(0x1E);
+//////////////////
+/////Line Sensors
+/////////////////
+LineSensor linesensorCenterFront(centerFront);
+LineSensor linesensorCenterBack(centerBack);
+LineSensor linesensorRightFront(sideFront);
+LineSensor linesensorRightBack(sideBack);
+LineSensor * linesensors[4];
+LineSensorManager lineManager(linesensors);
+///////
+
 MotorController wheels;
 
 
 void setup()
 {
 	Serial.begin(57600);
+
+	linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
+    linesensors[LSL_CENTER_BACK] =  &linesensorCenterBack;
+    linesensors[LSL_RIGHT_FRONT] = &linesensorRightFront;
+    linesensors[LSL_RIGHT_BACK] = &linesensorRightBack;
 
 	// initialize the digital pin as an output.
 	// Pin 13 has an LED connected on most Arduino boards:
@@ -25,7 +41,9 @@ void setup()
 	pinMode(13, OUTPUT);
 
 	sense.addTask(&mag);
-	sense.addTask(&wheels);
+	sense.addTask(&lineManager);
+
+	act.addTask(&wheels);
 }
 
 void loop()
@@ -39,27 +57,6 @@ void loop()
     static bool light = true;
     //Sense
     sense.RunTasks(millis(),RS_LoadRings);
-    //Plan
-
-    delta = desiredAngle - mag.getRawHead();
-
-    if (delta >= 25){
-        rotSpeed = -maxSpd;
-    }
-    else if (delta >= 0+deadBand) {
-        rotSpeed = -((float)delta/50.0)*(maxSpd - minSpd)+minSpd;
-    }
-    else if (delta <= -25){
-        rotSpeed = maxSpd;
-    }
-    else if (delta <= 0-deadBand) {
-        rotSpeed = ((float)delta/50.0)*(maxSpd - minSpd)+minSpd;
-    }
-    else{
-        rotSpeed = 0;
-    }
-
-    wheels.updateCommand(0, 0, rotSpeed);
 
     delay(20);
     //Act

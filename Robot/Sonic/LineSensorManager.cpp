@@ -3,6 +3,21 @@
 #include "LineSensor.h"
 #include "math.h"
 
+
+const char * sensorIDs[] =
+{
+"CENTER-FRONT: ",
+"CENTER-BACK: ",
+"RIGHT-FRONT: ",
+"RIGHT-BACK: "
+};
+
+const char * pairIDs[] =
+{
+"CENTER: ",
+"RIGHT: ",
+"BACK"
+};
 //Constructor, pass in pointer to array of line sensors
 LineSensorManager::LineSensorManager(LineSensor **lineSensors) {
   this->lineSensors = lineSensors;

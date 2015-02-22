@@ -1,5 +1,4 @@
-#ifndef _LINESENSOR_H
-#define _LINESENSOR_H
+#pragma once
 
 #include "System/RunableModule.h"
 /* Macros */
@@ -144,5 +143,3 @@ class LineSensor{
 
 };
 
-
-#endif
