@@ -19,13 +19,6 @@ enum lineSensorLocations {
   LSL_RIGHT_BACK
 };
 
-const char * sensorIDs[] =
-{
-"CENTER-FRONT: ",
-"CENTER-BACK: ",
-"RIGHT-FRONT: ",
-"RIGHT-BACK: "
-};
 
 enum lineSensorPairs {
   LSP_CENTER,
@@ -33,12 +26,6 @@ enum lineSensorPairs {
   LSP_BACK
 };
 
-const char * pairIDs[] =
-{
-"CENTER: ",
-"RIGHT: ",
-"BACK"
-};
 
 typedef struct {
   lineSensorLocations sensorA;

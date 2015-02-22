@@ -1,11 +1,8 @@
 /*
 This module will implement the omniwheel motor command mixing
 */
+#pragma once
 
-
-
-#ifndef MotorControl_h
-#define MotorControl_h
 #include <Arduino.h>
 #include <Servo.h>
 #include "SabertoothPWM.h"
@@ -69,4 +66,3 @@ class MotorController : public RunableModule {
 
 };
 
-#endif
