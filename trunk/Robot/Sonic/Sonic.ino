@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Magnetometer.h"
+#include "Buttons.h"
 #include "MotorController.h"
 #include "System\CycleUnit.h"
 #include "LineSensorManager.h"
@@ -9,6 +10,7 @@ CycleUnit plan;
 CycleUnit act;
 
 Magnetometer mag(0x1E);
+ButtonManager buttMan;
 //////////////////
 /////Line Sensors
 /////////////////
@@ -25,40 +27,34 @@ MotorController wheels;
 
 void setup()
 {
-	Serial.begin(57600);
+  Serial.begin(115200);
 
-	linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
-    linesensors[LSL_CENTER_BACK] =  &linesensorCenterBack;
-    linesensors[LSL_RIGHT_FRONT] = &linesensorRightFront;
-    linesensors[LSL_RIGHT_BACK] = &linesensorRightBack;
+  mag.init();
 
-	// initialize the digital pin as an output.
-	// Pin 13 has an LED connected on most Arduino boards:
-	//mag = new Magnetometer(0x1E);
-	mag.init();
-	//wheels.init();
+  buttMan.init();
+  buttMan.addButton(LBUTT);
+  buttMan.addButton(RBUTT);
 
-	pinMode(13, OUTPUT);
+  linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
+  linesensors[LSL_CENTER_BACK]  = &linesensorCenterBack;
+  linesensors[LSL_RIGHT_FRONT]  = &linesensorRightFront;
+  linesensors[LSL_RIGHT_BACK]   = &linesensorRightBack;
 
-	sense.addTask(&mag);
-	sense.addTask(&lineManager);
+  wheels.init();
 
-	//act.addTask(&wheels);
+  sense.addTask(&mag);
+  sense.addTask(&buttMan);
+  sense.addTask(&lineManager);
+
+  //act.addTask(&wheels);
 }
 
 void loop()
 {
-    const uint16_t desiredAngle = 180;
-    const uint8_t deadBand = 1;
-    int16_t delta;
-    const uint8_t maxSpd = 35;
-    const uint8_t minSpd = 20;
-    int8_t rotSpeed;
-    static bool light = true;
-    //Sense
-    sense.RunTasks(millis(),RS_LoadRings);
+  static bool light = true;
+  //Sense
+  sense.RunTasks(millis(),RS_LoadRings);
 
-    delay(2000);
-    //Act
-    digitalWrite(13, light != light);   // set the LED on
+  delay(20);
+  //Act
 }
