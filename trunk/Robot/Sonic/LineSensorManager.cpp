@@ -6,10 +6,10 @@
 
 const char * sensorIDs[] =
 {
-"CENTER-FRONT: ",
-"CENTER-BACK: ",
-"RIGHT-FRONT: ",
-"RIGHT-BACK: "
+"CF: ",
+"RF: ",
+"CB: ",
+"RB: "
 };
 
 const char * pairIDs[] =
@@ -73,7 +73,7 @@ void LineSensorManager::sensorDebugOutput(lineSensorLocations sensor, HardwareSe
 
   serialPort->print(sensorIDs[sensor]);
   serialPort->print(":");
-  for (i=0 ; i<8; i++) serialPort->print(reading & (1 << i));
+  for (i=0 ; i<8; i++) serialPort->print((reading & (1 << i))!=0);
 
 }
 

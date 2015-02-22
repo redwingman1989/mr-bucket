@@ -36,14 +36,14 @@ void setup()
 	// Pin 13 has an LED connected on most Arduino boards:
 	//mag = new Magnetometer(0x1E);
 	mag.init();
-	wheels.init();
+	//wheels.init();
 
 	pinMode(13, OUTPUT);
 
 	sense.addTask(&mag);
 	sense.addTask(&lineManager);
 
-	act.addTask(&wheels);
+	//act.addTask(&wheels);
 }
 
 void loop()
@@ -58,7 +58,7 @@ void loop()
     //Sense
     sense.RunTasks(millis(),RS_LoadRings);
 
-    delay(20);
+    delay(2000);
     //Act
     digitalWrite(13, light != light);   // set the LED on
 }
