@@ -68,20 +68,21 @@
 
 1423465390 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\global.h
 
-1424638946 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.cpp
+1424655344 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.cpp
 	<Arduino.h>
 	"UltraSonicSensor.h"
 	"Interrupts.h"
 
-1424640520 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.h
+1424670716 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicsensor.h
 	"System\RunableModule.h"
 
-1424638607 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonic_codeblocks.ino
+1424656648 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonic_codeblocks.ino
 	<Arduino.h>
+	"System\CycleUnit.h"
 	"Setup.h"
+	"UltraSonicManager.h"
 	"UltraSonicSensor.h"
 	"UltraSonic_ino_header.h"
-	"Interrupts.h"
 
 1424638579 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\setup.h
 
@@ -107,11 +108,19 @@
 	<Arduino.h>
 	"LineSensor.h"
 
-1423876206 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\system\runablemodule.cpp
+1424670819 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\system\runablemodule.cpp
 	"RunableModule.h"
 
-1424639203 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicisr.cpp
+1424650858 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicisr.cpp
 	"UltraSonicISR.h"
 	"UltraSonicSensor.h"
 	"UltraSonic_ino_header.h"
+
+1424655778 c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicmanager.h
+	"UltraSonicSensor.h"
+	"System/RunableModule.h"
+
+1424669820 source:c:\users\justin\desktop\roborodentia_2015\ultrasonic_dev\ultrasonicmanager.cpp
+	"UltraSonicSensor.h"
+	"UltraSonicManager.h"
 

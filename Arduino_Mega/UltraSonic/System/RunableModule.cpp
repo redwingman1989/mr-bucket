@@ -16,5 +16,5 @@ bool RunableModule::RunTick(uint16_t time,RobotState state){
 }
 
 void RunableModule::DebugOutput(HardwareSerial *serial){
-    Serial.println("its working");
+    //Serial.println("its working");
 }

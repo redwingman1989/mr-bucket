@@ -17,7 +17,8 @@
                                     rxFirstEchoTime(0),
                                     rxLastEchoTime(0),
                                     timeToCalculateDistance(false),
-                                    readingInProgress(false)
+                                    readingInProgress(false),
+                                    invalidFlag(false)
 {
     /* Save a local variable to prevent calling getTriggerPin 3 times */
     uint8_t triggerPin = this->getTriggerPin();

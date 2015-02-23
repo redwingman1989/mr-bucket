@@ -1,7 +1,7 @@
 #ifndef _ULTRASONICSENSOR_H
 #define _ULTRASONICSENSOR_H
 
-//#include "System\RunableModule.h"
+#include "System\RunableModule.h"
 
 /* Macros */
 
@@ -107,7 +107,7 @@ class UltraSonicSensor {
     void triggerAPulse(void);
 
     /* Calculate the distance to reflected surface */
-    uint8_t calculateDistance();
+    float calculateDistance();
 
     /* Implement functions from the parent class */
 //    bool RunTick(uint16_t time, RobotState state);
@@ -163,17 +163,17 @@ class UltraSonicSensor {
  *                                             = ~ 13,386 inches/second
  *                                             = ~ 0.013386 inches/microsecond
  *************************************************************/
-inline uint8_t UltraSonicSensor::calculateDistance()
+inline float UltraSonicSensor::calculateDistance()
 {
     #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.013386)
     uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
     float timeDeltaFloat = (float) timeDelta;
-    float finalVal = (uint8_t)((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS / 2.0);
+    float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
 
     Serial.print("calcDist delta float: ");
     Serial.println(finalVal);
 
-    return (uint8_t) finalVal;
+    return finalVal;
 
     #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
 }
