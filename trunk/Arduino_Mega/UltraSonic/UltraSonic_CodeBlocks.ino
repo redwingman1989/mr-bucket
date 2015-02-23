@@ -1,9 +1,13 @@
 #include <Arduino.h>
+#include "System\CycleUnit.h"
 #include "Setup.h"
 #include "UltraSonicManager.h"
 #include "UltraSonicSensor.h"
 #include "UltraSonic_ino_header.h"
-#include "Interrupts.h"
+
+CycleUnit sense;
+CycleUnit plan;
+CycleUnit act;
 
 UltraSonicSensor ultraSonicFront(frontUltraSonic);
 UltraSonicSensor ultraSonicLeft(leftUltraSonic);
@@ -27,9 +31,8 @@ void setup() {
   ultraSonicArr[LEFT]  = &ultraSonicLeft;
   ultraSonicArr[RIGHT] = &ultraSonicRight;
 
-//  ultraSonicFront = UltraSonicSensor(frontUltraSonic);
-//  ultraSonicLeft  = UltraSonicSensor(leftUltraSonic);
-//  ultraSonicRight = UltraSonicSensor(rightUltraSonic);
+  sense.addTask(&ultraSonicMgr);
+
 }
 
 
@@ -41,28 +44,30 @@ void setup() {
 ********************************************************************/
 void loop() {
   /* Debug Varibales*/
-  static uint32_t loopCount = 0;
-  static bool lockOutPulse = false;
-  static UltraSonicSensor * ptrSensor = &ultraSonicFront;
-
-  if (lockOutPulse  == false) {
-    Serial.println("Dbg Flag 1");
-    ptrSensor->triggerAPulse();
-    lockOutPulse = true;
-  }
-  if (loopCount % 100000) {
-    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
-  }
-
-  if (ptrSensor->getTimeForCalcFlag() == true) {
-    Serial.println("Dbg Flag 2");
-    ptrSensor->setReadyForDistanceCalc(false);
-    lockOutPulse = false;
-    Serial.print("Reading: ");
-    Serial.println(ptrSensor->calculateDistance());
-  }
-
-  ++loopCount;
+//  static uint32_t loopCount = 0;
+//  static bool lockOutPulse = false;
+//  static UltraSonicSensor * ptrSensor = &ultraSonicFront;
+//
+//  if (lockOutPulse  == false) {
+//    Serial.println("Dbg Flag 1");
+//    ptrSensor->triggerAPulse();
+//    lockOutPulse = true;
+//  }
+//  if (loopCount % 100000) {
+//    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
+//  }
+//
+//  if (ptrSensor->getTimeForCalcFlag() == true) {
+//    Serial.println("Dbg Flag 2");
+//    ptrSensor->setReadyForDistanceCalc(false);
+//    lockOutPulse = false;
+//    Serial.print("Reading: ");
+//    Serial.println(ptrSensor->calculateDistance());
+//  }
+//
+//  ++loopCount;
+  //Sense
+  sense.RunTasks(millis(),RS_LoadRings);
 }
 
 
