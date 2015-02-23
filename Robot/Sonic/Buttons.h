@@ -44,13 +44,15 @@ class ButtonManager : public RunableModule {
     uint8_t  numButtons;
     uint8_t  buttPoses;
 
+    void readButtons();
+    bool RunTick(uint16_t , RobotState);
+    void DebugOutput(HardwareSerial*);
+
   public:
     ButtonManager();
     bool init();
     int8_t addButton(uint8_t);
-    uint8_t readButtons();
-    bool RunTick(uint16_t , RobotState);
-    void DebugOutput(HardwareSerial*);
+    uint8_t getButtons();
 };
 
 #endif

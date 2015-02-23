@@ -62,7 +62,7 @@ int8_t ButtonManager::addButton(uint8_t addr){
   return result;
 };
 
-uint8_t ButtonManager::readButtons(){
+void ButtonManager::readButtons(){
   int8_t i;
   uint8_t pos;
   uint8_t result = 0;
@@ -72,15 +72,19 @@ uint8_t ButtonManager::readButtons(){
     pos = buttons[i].getPos();
     result |= (pos << i);
   };
-  return result;
+  buttPoses = result;
 };
 
 bool ButtonManager::RunTick(uint16_t time,RobotState state) {
-  buttPoses = readButtons();
+  readButtons();
   return true;
 };
 
 
 void ButtonManager::DebugOutput(HardwareSerial *serialPort) {
   serialPort->println(buttPoses);
+};
+
+uint8_t ButtonManager::getButtons(){
+  return buttPoses;
 };
