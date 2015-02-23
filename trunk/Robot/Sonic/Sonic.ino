@@ -28,6 +28,7 @@ void followRightLine(void);
 void reverseIt(void);
 void uTurn(void);
 
+
 enum states{
     FOLLOW_RIGHT_LINE,
     REVERSE_IT,
@@ -37,6 +38,7 @@ enum states{
 int state = FOLLOW_RIGHT_LINE;
 int prevState = 0;
 int stateChange = true;
+uint16_t desiredHeading;
 
 void setup()
 {
@@ -55,11 +57,14 @@ void setup()
 
   wheels.init();
 
-  act.addTask(&wheels);
+  act.addTask(&wheels, 20000, true);
 
-  sense.addTask(&mag);
-  sense.addTask(&lineManager);
-  sense.addTask(&buttMan);
+  sense.addTask(&mag, 4000, false);
+  sense.addTask(&lineManager, 4000, false);
+  sense.addTask(&buttMan, 4000, true);
+
+  sense.setPrevMicro(micros());
+  act.setPrevMicro(micros());
 }
 
 float convertRadToPercent(float rad){
@@ -76,55 +81,44 @@ void loop()
     //act
     act.RunTasks(millis(),RS_LoadRings);
 
-
-    delay(20);
     //Act
 
     switch (state) {
     case FOLLOW_RIGHT_LINE:
         followRightLine();
-        Serial.println("follow");
+        //Serial.println("follow");
         break;
     case REVERSE_IT:
         reverseIt();
-        Serial.println("reverse");
+        //Serial.println("reverse");
         break;
     case U_TURN:
         uTurn();
-        Serial.println("uturn");
+        //Serial.println("uturn");
         break;
     }
 
     if (prevState != state) stateChange = true;
     else stateChange = false;
     prevState = state;
+
+
 }
 
 void followRightLine(void) {
     static bool buttFlag = false;
-    static int buttTime = 0;
+    static unsigned long buttTime = 0;
 
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
 
-    if (buttMan.getButtons() == 0b11) {
-        if (!buttFlag) buttTime = millis();
-        buttFlag = true;
-    }
-    else buttFlag = false;
-
-    if (buttFlag && (millis()-buttTime > 500)) {
-       state = REVERSE_IT;
-       buttFlag = false;
-    }
-
     if(rightPair.valid){
-            Serial.println("rightpair is valid");
+            //Serial.println("rightpair is valid");
         if(! backPair.valid){
             float driveSpeed = 30;
             float adjustedAngleRad = rightPair.angle - PI / 2.0;
             adjustedAngleRad = convertRadToPercent(adjustedAngleRad);
-            Serial.println(adjustedAngleRad , 4);
+            //Serial.println(adjustedAngleRad , 4);
             float xDistance = (rightPair.offset.x -  sensorCenters[LSL_RIGHT_FRONT].x ) / 1.5 * 30;
             //float maxScale = xDistance + adjustedAngleRad;
             wheels.updateCommand(driveSpeed,xDistance,adjustedAngleRad);
@@ -136,23 +130,35 @@ void followRightLine(void) {
     }
     else wheels.updateCommand(0,0,0);
 
+
+    if (buttMan.getButtons() == 0b11) {
+        if (!buttFlag) buttTime = millis();
+        wheels.updateCommand(0,0,0);
+        buttFlag = true;
+    }
+
+    if (buttFlag && (millis()-buttTime > 2000)) {
+       state = REVERSE_IT;
+       buttFlag = false;
+    }
+
 }
 
 void reverseIt(void) {
-    static int stateChangeTime = 0;
-    if (stateChange) stateChangeTime = millis();
+    static unsigned long stateChangeTime = 0;
+    if (stateChange) {
+        desiredHeading = mag.getFiltHead() + 180;
+        if (desiredHeading > 360) desiredHeading -= 360;
+        stateChangeTime = millis();
+    }
     wheels.updateCommand(-50,0,0);
-    if (millis() - stateChangeTime > 1000) state = U_TURN;
+    if (millis() - stateChangeTime > 500) state = U_TURN;
 }
 
 void uTurn(void) {
-    static int16_t desiredHeading = 0;
-    int16_t heading = mag.getFiltHead();
+    int16_t heading = mag.getRawHead();
     int16_t delta;
-    if (stateChange) {
-        desiredHeading = heading + 180;
-        if (desiredHeading > 360) desiredHeading -= 360;
-    }
+
 
     delta = desiredHeading - heading;
     if (delta > 180) delta -= 360;
@@ -162,5 +168,8 @@ void uTurn(void) {
         state = FOLLOW_RIGHT_LINE;
         wheels.updateCommand(0,0,0);
     }
-    else wheels.updateCommand(0,0,0.5*delta);
+    else {
+        if (delta>0) wheels.updateCommand(0,0,(0.2*delta)+25);
+        else wheels.updateCommand(0,0,-25 + (0.2*delta));
+    }
 }

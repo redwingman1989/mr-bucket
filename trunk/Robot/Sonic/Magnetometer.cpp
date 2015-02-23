@@ -123,7 +123,7 @@ uint16_t Magnetometer::getRawHead() {
   return rawHeading;
 };
 
-bool Magnetometer::RunTick(uint16_t time,RobotState state) {
+bool Magnetometer::RunTick() {
   calcHeading();
   return true;
 };

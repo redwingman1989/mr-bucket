@@ -60,7 +60,7 @@ typedef struct {
 class LineSensorManager : public RunableModule {
   public:
   LineSensorManager(LineSensor **lineSensors);
-  bool RunTick(uint16_t time,RobotState state);
+  bool RunTick();
   void DebugOutput(HardwareSerial *serialPort);
   lineDriveCommand_t getLineDriveCommand(lineSensorPairs sensorPair);
 

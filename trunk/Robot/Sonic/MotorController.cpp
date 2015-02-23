@@ -18,14 +18,9 @@ MotorController::MotorController()
 //  this->init();
 }
 
-bool MotorController::RunTick(uint16_t time, RobotState state)
+bool MotorController::RunTick()
 {
-  if (state == RS_Startup)
-  {
-    this->motorLeftRight.killMotors();
-    this->motorFrontBack.killMotors();
-  }
-  else this->exec();
+   this->exec();
 }
 
 void MotorController::DebugOutput(HardwareSerial *serialPort)
