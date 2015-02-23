@@ -3,7 +3,7 @@
 
 void setupTimer1Int(unsigned long periodInMicroSecs);
 
-void setupUltraSonicInterrups();
+void setupUltraSonicInterrupts();
 
 void setupSerial(unsigned long baud);
 
