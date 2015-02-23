@@ -62,7 +62,7 @@ int8_t ButtonManager::addButton(uint8_t addr){
   return result;
 };
 
-void ButtonManager::readButtons(){
+bool ButtonManager::RunTick() {
   int8_t i;
   uint8_t pos;
   uint8_t result = 0;
@@ -73,10 +73,6 @@ void ButtonManager::readButtons(){
     result |= (pos << i);
   };
   buttPoses = result;
-};
-
-bool ButtonManager::RunTick(uint16_t time,RobotState state) {
-  readButtons();
   return true;
 };
 

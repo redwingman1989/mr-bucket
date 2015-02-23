@@ -169,7 +169,7 @@ class Magnetometer: public RunableModule {
     uint16_t calcHeading(void);
     uint16_t getRawHead(void);
     uint16_t getFiltHead(void);
-    bool RunTick(uint16_t time,RobotState state);
+    bool RunTick();
     void DebugOutput(HardwareSerial *serialPort);
 };
 

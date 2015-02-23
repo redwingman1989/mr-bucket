@@ -36,7 +36,7 @@ class MotorController : public RunableModule {
     //Public methods
     void updateCommand(float fwdBack, float leftRight, float rotation);
 
-    bool RunTick(uint16_t time,RobotState state);
+    bool RunTick();
     void DebugOutput(HardwareSerial *serialPort);
 
     void init(void);

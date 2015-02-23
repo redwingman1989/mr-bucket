@@ -44,8 +44,7 @@ class ButtonManager : public RunableModule {
     uint8_t  numButtons;
     uint8_t  buttPoses;
 
-    void readButtons();
-    bool RunTick(uint16_t , RobotState);
+    bool RunTick();
     void DebugOutput(HardwareSerial*);
 
   public:

@@ -22,7 +22,7 @@ LineSensorManager::LineSensorManager(LineSensor **lineSensors) {
 }
 
 //Main executive, poll line sensors then perform some calculations
-bool LineSensorManager::RunTick(uint16_t time, RobotState state) {
+bool LineSensorManager::RunTick() {
 
   //Poll the line sensors
   this->pollLineSensors();
