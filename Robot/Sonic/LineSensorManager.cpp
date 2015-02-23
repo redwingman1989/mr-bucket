@@ -1,7 +1,5 @@
 #include "LineSensorManager.h"
-#include "System/RunableModule.h"
-#include "LineSensor.h"
-#include "math.h"
+
 
 
 const char * sensorIDs[] =
@@ -160,7 +158,7 @@ void LineSensorManager::determineLineDriveCommand(lineSensorPairs sensorPair) {
   point_t B = sensorHits[sensorPairs[sensorPair].sensorB].center;
 
     //Set output as valid, both sensors bad will invalidate it
-  output->valid = true;
+  output->valid = false;
 
   if (sensorHits[sensorPairs[sensorPair].sensorA].hit) {
     if (sensorHits[sensorPairs[sensorPair].sensorB].hit) {
@@ -170,6 +168,7 @@ void LineSensorManager::determineLineDriveCommand(lineSensorPairs sensorPair) {
       output->offset.y = (A.y + B.y) * 0.5;
       //Calc angle
       output->angle = atan2(A.y-B.y, A.x-B.x);
+      output->valid = true;
     }
     else {
       //Only A hit
