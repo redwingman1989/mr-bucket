@@ -4,6 +4,7 @@
 #include "MotorController.h"
 #include "System\CycleUnit.h"
 #include "LineSensorManager.h"
+#include <math.h>
 
 CycleUnit sense;
 CycleUnit plan;
@@ -42,19 +43,42 @@ void setup()
 
   wheels.init();
 
-  sense.addTask(&mag);
-  sense.addTask(&buttMan);
-  sense.addTask(&lineManager);
+	act.addTask(&wheels);
+}
 
-  //act.addTask(&wheels);
+float convertRadToPercent(float rad){
+    return rad / PI * 50.0 * 4.0;
 }
 
 void loop()
 {
-  static bool light = true;
-  //Sense
-  sense.RunTasks(millis(),RS_LoadRings);
+    static bool light = true;
+    //Sense
+    sense.RunTasks(millis(),RS_LoadRings);
+    lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
+    lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
+    if(rightPair.valid){
+            Serial.println("rightpair is valid");
+        if(! backPair.valid){
+            float driveSpeed = 30;
+            float adjustedAngleRad = rightPair.angle - PI / 2.0;
+            adjustedAngleRad = convertRadToPercent(adjustedAngleRad);
+            Serial.println(adjustedAngleRad , 4);
+            float xDistance = (rightPair.offset.x -  sensorCenters[LSL_RIGHT_FRONT].x ) / sensorCenters[LSL_RIGHT_FRONT].x * 10;
+            //float maxScale = xDistance + adjustedAngleRad;
+            wheels.updateCommand(driveSpeed,xDistance,adjustedAngleRad);
+        }
+        else {
+            wheels.updateCommand(0,0,0);
+            delay(2000);
+        }
+    }
+    else wheels.updateCommand(0,0,0);
+    //act
+    act.RunTasks(millis(),RS_LoadRings);
 
-  delay(20);
-  //Act
+
+    delay(20);
+    //Act
+    digitalWrite(13, light = !light);   // set the LED on
 }

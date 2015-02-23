@@ -2,6 +2,8 @@
 
 #include "System/RunableModule.h"
 #include "LineSensor.h"
+#include "System/RunableModule.h"
+#include <math.h>
 
 const uint8_t NUM_OF_LINESENSORS = 4;
 const uint8_t NUM_OF_SENSORPAIRS = 3;
@@ -117,8 +119,8 @@ const point_t sensorPositions[NUM_OF_LINESENSORS][NUM_SENSORS_PER_ARRAY] = {
 //Reference geometry of the center of the line sensor along the sensor array axis
 //Same coordinate system as individual sensor geometry
 const point_t sensorCenters[NUM_OF_LINESENSORS] = {
-{-1.547334957, 3.165165043},
-{2.452665043, 3.165165043},
-{-1.162914957, -0.3786749571},
-{2.837085043, -0.3786749571}
+{-.50, 2.9},
+{3.5, 2.9},
+{-.5, -1.57192},
+{3.5, -1.57192}
 };
