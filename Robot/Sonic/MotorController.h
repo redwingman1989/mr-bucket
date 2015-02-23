@@ -8,7 +8,7 @@ This module will implement the omniwheel motor command mixing
 #include "SabertoothPWM.h"
 #include "System/RunableModule.h"
 
-const float outputPowerLimit = 75.0;
+const float outputPowerLimit = 50.0;
 const float outputCountConvert = (PWMmaxCmd - PWMminCmd) / 200.0;
 const int outputOffset = (PWMmaxCmd + PWMminCmd) / 2;
 
