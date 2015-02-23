@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Setup.h"
+#include "UltraSonicManager.h"
 #include "UltraSonicSensor.h"
 #include "UltraSonic_ino_header.h"
 #include "Interrupts.h"
@@ -7,6 +8,11 @@
 UltraSonicSensor ultraSonicFront(frontUltraSonic);
 UltraSonicSensor ultraSonicLeft(leftUltraSonic);
 UltraSonicSensor ultraSonicRight(rightUltraSonic);
+UltraSonicSensor * ultraSonicArr[NUM_ULTRA_SENSORS];
+UltraSonicManager ultraSonicMgr(ultraSonicArr);
+
+
+#define LED_PIN (13)
 
 /*******************************************************************
  Function: void setup(void)
@@ -15,7 +21,11 @@ UltraSonicSensor ultraSonicRight(rightUltraSonic);
 void setup() {
   setupSerial(115200);
   setupPinModes();
-  setupUltraSonicInterrups();
+  setupUltraSonicInterrupts();
+
+  ultraSonicArr[FRONT] = &ultraSonicFront;
+  ultraSonicArr[LEFT]  = &ultraSonicLeft;
+  ultraSonicArr[RIGHT] = &ultraSonicRight;
 
 //  ultraSonicFront = UltraSonicSensor(frontUltraSonic);
 //  ultraSonicLeft  = UltraSonicSensor(leftUltraSonic);
@@ -40,16 +50,15 @@ void loop() {
     ptrSensor->triggerAPulse();
     lockOutPulse = true;
   }
-  if (loopCount % 10000) {
-//    Serial.println(ptrSensor->getTimeForCalcFlag());
-//    Serial.println(ptrSensor->getFirstEchoTime());
-
+  if (loopCount % 100000) {
+    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
   }
 
   if (ptrSensor->getTimeForCalcFlag() == true) {
     Serial.println("Dbg Flag 2");
     ptrSensor->setReadyForDistanceCalc(false);
     lockOutPulse = false;
+    Serial.print("Reading: ");
     Serial.println(ptrSensor->calculateDistance());
   }
 

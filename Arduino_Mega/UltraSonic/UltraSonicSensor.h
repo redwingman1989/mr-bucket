@@ -1,7 +1,7 @@
 #ifndef _ULTRASONICSENSOR_H
 #define _ULTRASONICSENSOR_H
 
-#include "System\RunableModule.h"
+//#include "System\RunableModule.h"
 
 /* Macros */
 
@@ -33,6 +33,13 @@ enum readings {
   NUM_ULTRA_FILT_READINGS
 };
 
+enum sensors {
+  FRONT,
+  LEFT,
+  RIGHT,
+  NUM_ULTRA_SENSORS
+};
+
 /* Front Facing UltraSonic Sensor Pin Mappings */
 static const uint8_t frontUltraSonic[NUM_ULTRA_PINS] = {ULTRA_FRONT_TRIG_PIN, ULTRA_FRONT_ECHO_PIN};
 
@@ -43,7 +50,7 @@ static const uint8_t leftUltraSonic[NUM_ULTRA_PINS] = {ULTRA_LEFT_TRIG_PIN, ULTR
 static const uint8_t rightUltraSonic[NUM_ULTRA_PINS] = {ULTRA_RIGHT_TRIG_PIN, ULTRA_RIGHT_ECHO_PIN};
 
 
-class UltraSonicSensor : public RunableModule{
+class UltraSonicSensor {
   public:
     /* Constructor */
     UltraSonicSensor(const uint8_t * inPinMap);
@@ -66,6 +73,12 @@ class UltraSonicSensor : public RunableModule{
     /* Set the duration the Trigger pin was high */
     void setReadyForDistanceCalc(bool timeForDistanceCalc);
 
+    /* Set a flag indicating whether or not a reading is in progress */
+    void setReadingInProgress(bool inProgress);
+
+    /* Set a flag indicating the sensor is invalid */
+    void setInvalidSensorFlag(bool invalid);
+
     /* Get the echo pulse start time */
     uint32_t getFirstEchoTime();
 
@@ -81,6 +94,12 @@ class UltraSonicSensor : public RunableModule{
     /* Get a look at the flag that indicates that it is time for a calculation */
     bool getTimeForCalcFlag();
 
+    /* Get whether or not a reading is in progress */
+    bool getReadingInProgress();
+
+    /* Get whether or not the sensor has been marked as invalid */
+    bool getInvalidStatus();
+
 //    /* The ISR called when the Echo pin interrupts the Mega */
 //    void echoISR();
 
@@ -91,8 +110,8 @@ class UltraSonicSensor : public RunableModule{
     uint8_t calculateDistance();
 
     /* Implement functions from the parent class */
-    bool RunTick(uint16_t time, RobotState state);
-    void DebugOutput(HardwareSerial * hwSerialPort);
+//    bool RunTick(uint16_t time, RobotState state);
+//    void DebugOutput(HardwareSerial * hwSerialPort);
 
   private:
     /* Sensor Pin Numbers */
@@ -122,6 +141,12 @@ class UltraSonicSensor : public RunableModule{
     /* Flag indicating that it is time to run calculations on ISR timing data */
     bool timeToCalculateDistance;
 
+    /* Boolean indicating that a reading is in progress */
+    bool readingInProgress;
+
+    /* Flag indicating that the sensor is invalid due to some issue */
+    bool invalidFlag;
+
 };
 
      /*************************************************************
@@ -141,9 +166,14 @@ class UltraSonicSensor : public RunableModule{
 inline uint8_t UltraSonicSensor::calculateDistance()
 {
     #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.013386)
+    uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
+    float timeDeltaFloat = (float) timeDelta;
+    float finalVal = (uint8_t)((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS / 2.0);
 
-    return (uint8_t)((float)(this->rxLastEchoTime - this->rxFirstEchoTime)) *
-                      (float) VELOCITY_ULTRA_WAVE_IN_MICROSECONDS / 2.0;
+    Serial.print("calcDist delta float: ");
+    Serial.println(finalVal);
+
+    return (uint8_t) finalVal;
 
     #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
 }

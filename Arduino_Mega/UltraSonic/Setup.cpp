@@ -24,20 +24,20 @@
  * Function: void setupUltraSonicInterrups(void)
  * Description: Initializes the interrupts for the UltraSonic Sensors.
  *******************************************************************/
-void setupUltraSonicInterrups() {
+void setupUltraSonicInterrupts() {
     /* This is hard coded and I do not like it but for now I don't have much of
      *   an option, since I cannot set an ISR to a class method. */
-     Serial.println(ultraSonicFront.getTriggerPin());
+//     Serial.println(ultraSonicFront.getTriggerPin());
   pinMode(ultraSonicFront.getTriggerPin(), OUTPUT);
   pinMode(ultraSonicLeft.getTriggerPin(), OUTPUT);
   pinMode(ultraSonicRight.getTriggerPin(), OUTPUT);
 
-  Serial.println(ultraSonicFront.getEchoPin());
+//  Serial.println(ultraSonicFront.getEchoPin());
   pinMode(ultraSonicFront.getEchoPin(), INPUT);
   pinMode(ultraSonicLeft.getEchoPin(), INPUT);
   pinMode(ultraSonicRight.getEchoPin(), INPUT);
 
-  Serial.println(ULTRA_FRONT_EXT_INTERRUPT_NUM);
+//  Serial.println(ULTRA_FRONT_EXT_INTERRUPT_NUM);
 
   attachInterrupt((uint8_t)ULTRA_FRONT_EXT_INTERRUPT_NUM, frontUltraSonicISR, CHANGE);
   attachInterrupt((uint8_t)ULTRA_LEFT_EXT_INTERRUPT_NUM, leftUltraSonicISR, CHANGE);

@@ -16,7 +16,8 @@
                                     rawDataArrayIdx(0),
                                     rxFirstEchoTime(0),
                                     rxLastEchoTime(0),
-                                    timeToCalculateDistance(false)
+                                    timeToCalculateDistance(false),
+                                    readingInProgress(false)
 {
     /* Save a local variable to prevent calling getTriggerPin 3 times */
     uint8_t triggerPin = this->getTriggerPin();
@@ -26,26 +27,6 @@
 
     /* Initialize the Raw Data Array */
     memset(this->rawDataArray, 0, sizeof(uint8_t) * NUM_ULTRA_FILT_READINGS);
-
-    /* Attach the motherfucking interrupt
-     * You cannot attach Class Methods as the ISR to call. So I had to make
-     * the ISR a regular function outside of the class */
-//    if (triggerPin == ULTRA_FRONT_ECHO_PIN) {
-//      attachInterrupt(EXT_INTERRUPT_3, echoISR, CHANGE);
-//      this->extInterruptNumber = EXT_INTERRUPT_3;
-//    }
-//    else if (triggerPin == ULTRA_LEFT_ECHO_PIN) {
-//      attachInterrupt(EXT_INTERRUPT_2, echoISR, CHANGE);
-//      this->extInterruptNumber = EXT_INTERRUPT_2;
-//    }
-//    else if (triggerPin == ULTRA_RIGHT_ECHO_PIN) {
-//      attachInterrupt(EXT_INTERRUPT_4, echoISR, CHANGE);
-//      this->extInterruptNumber = EXT_INTERRUPT_4;
-//    }
-//    else {
-//      /* Write out some sort of warning. Need to implement this. */
-//      this->DebugOutput(&Serial);
-//    }
 
 }
 
@@ -196,6 +177,32 @@ void UltraSonicSensor::setReadyForDistanceCalc(bool timeForDistanceCalc)
 
 
  /*************************************************************
+ * Function:     setReadingInProgress()
+ * Parameter:    bool inProgress
+ * Return:       void
+ * Description:  Set the class member variable that wil be used to
+ *                 see if a reading is in progress.
+ *************************************************************/
+void UltraSonicSensor::setReadingInProgress(bool inProgress)
+{
+    readingInProgress = inProgress;
+}
+
+
+ /*************************************************************
+ * Function:     setInvalidSensorFlag()
+ * Parameter:    bool inProgress
+ * Return:       void
+ * Description:  Set the class member variable that wil be used to
+ *                 see if a reading is in progress.
+ *************************************************************/
+void UltraSonicSensor::setInvalidSensorFlag(bool invalid)
+{
+    invalidFlag = invalid;
+}
+
+
+ /*************************************************************
  * Function:     triggerAPulse()
  * Parameter:    void
  * Return:       void
@@ -205,10 +212,10 @@ void UltraSonicSensor::setReadyForDistanceCalc(bool timeForDistanceCalc)
  *************************************************************/
 void UltraSonicSensor::triggerAPulse()
 {
-    Serial.println(*(this->pinMap+TRIGGER_PIN));
-    digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), HIGH);
-    delayMicroseconds(10);
-    digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), LOW);
+  this->readingInProgress = true;
+  digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), HIGH);
+  delayMicroseconds(10);
+  digitalWrite((uint8_t) *(this->pinMap+TRIGGER_PIN), LOW);
 }
 
 
@@ -268,13 +275,39 @@ uint8_t UltraSonicSensor::getEchoPin()
  /*************************************************************
  * Function:     getTimeForCalcFlag
  * Input:        void
- * Return:       uint8_t echoPin
- * Description:  Returns the value of the UltraSonicSensor
- *                 object's Echo pin.
+ * Return:       bool timeToCalculateDistance
+ * Description:  Returns whether or not it is time to run distance
+ *                 calculations.
  *************************************************************/
 bool UltraSonicSensor::getTimeForCalcFlag()
 {
-    return ((bool)this->timeToCalculateDistance);
+    return (this->timeToCalculateDistance);
+}
+
+
+ /*************************************************************
+ * Function:     getReadingInProgress
+ * Input:        void
+ * Return:       bool readingInProgress
+ * Description:  Returns whether or not a reading is in progress.
+ *                 This is used tpo prevent multiple UltraSonic
+ *                 sensors from sending out pulses at the same time.
+ *************************************************************/
+bool UltraSonicSensor::getReadingInProgress()
+{
+    return (this->readingInProgress);
+}
+
+
+ /*************************************************************
+ * Function:     getInvalidStatus
+ * Input:        void
+ * Return:       bool
+ * Description:  Returns sensor validity status.
+ *************************************************************/
+bool UltraSonicSensor::getInvalidStatus()
+{
+    return (this->invalidFlag);
 }
 
 
@@ -349,28 +382,28 @@ uint32_t UltraSonicSensor::getFirstEchoTime()
 //}
 
 
- /*************************************************************
- * Function:     RunTick()
- * Parameter:    void
- * Return:       void
- * Description:  This is a virtual function inherited from the parent class:
- *                 RunableModule.
- *************************************************************/
-bool UltraSonicSensor::RunTick(uint16_t time,RobotState state)
-{
-  /* Need to implement */
-  return true;
-}
-
-
- /*************************************************************
- * Function:     DebugOutput()
- * Parameter:    void
- * Return:       void
- * Description:  This is a virtual function inherited from the parent class:
- *                 RunableModule.
- *************************************************************/
-void UltraSonicSensor::DebugOutput(HardwareSerial *serialPort)
-{
-    return;
-}
+// /*************************************************************
+// * Function:     RunTick()
+// * Parameter:    void
+// * Return:       void
+// * Description:  This is a virtual function inherited from the parent class:
+// *                 RunableModule.
+// *************************************************************/
+//bool UltraSonicSensor::RunTick(uint16_t time,RobotState state)
+//{
+//  /* Need to implement */
+//  return true;
+//}
+//
+//
+// /*************************************************************
+// * Function:     DebugOutput()
+// * Parameter:    void
+// * Return:       void
+// * Description:  This is a virtual function inherited from the parent class:
+// *                 RunableModule.
+// *************************************************************/
+//void UltraSonicSensor::DebugOutput(HardwareSerial *serialPort)
+//{
+//    return;
+//}

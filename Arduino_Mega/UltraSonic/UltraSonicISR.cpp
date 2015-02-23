@@ -10,12 +10,12 @@
 *************************************************************/
 void frontUltraSonicISR()
 {
-    Serial.println("Called");
-    if (digitalRead(ultraSonicFront.getTriggerPin()))
+    if (digitalRead(ultraSonicFront.getEchoPin()))
         ultraSonicFront.setFirstEchoTime((uint32_t) micros());
     else {
         ultraSonicFront.setLastEchoTime((uint32_t) micros());
         ultraSonicFront.setReadyForDistanceCalc(true);
+        ultraSonicFront.setReadingInProgress(false);
     } /* else */
 } /* frontUltraSonicISR() */
 
@@ -33,6 +33,7 @@ void leftUltraSonicISR()
     else {
         ultraSonicLeft.setLastEchoTime((uint32_t) micros());
         ultraSonicLeft.setReadyForDistanceCalc(true);
+        ultraSonicLeft.setReadingInProgress(false);
     } /* else */
 } /* frontUltraSonicISR() */
 
@@ -50,5 +51,6 @@ void rightUltraSonicISR()
     else {
         ultraSonicRight.setLastEchoTime((uint32_t) micros());
         ultraSonicRight.setReadyForDistanceCalc(true);
+        ultraSonicRight.setReadingInProgress(false);
     } /* else */
 } /* frontUltraSonicISR() */

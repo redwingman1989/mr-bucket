@@ -22,13 +22,14 @@ enum externalInterrupts {
 
     /* External Interrupt 3 = Front UltraSonic Sensor */
     EXT_INTERRUPT_3,
-    ULTRA_FRONT_EXT_INTERRUPT_NUM = EXT_INTERRUPT_3,
+    //ULTRA_FRONT_EXT_INTERRUPT_NUM = EXT_INTERRUPT_3,
 
     /* External Interrupt 4 = Right UltraSonic Sensor */
     EXT_INTERRUPT_4,
     ULTRA_RIGHT_EXT_INTERRUPT_NUM = EXT_INTERRUPT_4,
 
     EXT_INTERRUPT_5,
+    ULTRA_FRONT_EXT_INTERRUPT_NUM = EXT_INTERRUPT_5,
 
     EXT_INTERRUPT_6,
 
