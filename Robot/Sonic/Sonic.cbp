@@ -667,6 +667,8 @@
 		<Compiler>
 			<Add directory="." />
 		</Compiler>
+		<Unit filename="Buttons.cpp" />
+		<Unit filename="Buttons.h" />
 		<Unit filename="LineSensor.cpp" />
 		<Unit filename="LineSensor.h" />
 		<Unit filename="LineSensorManager.cpp" />
@@ -675,6 +677,7 @@
 		<Unit filename="Magnetometer.h" />
 		<Unit filename="MotorController.cpp" />
 		<Unit filename="MotorController.h" />
+		<Unit filename="Pins.h" />
 		<Unit filename="SabertoothPWM.cpp" />
 		<Unit filename="SabertoothPWM.h" />
 		<Unit filename="Sonic.ino">
