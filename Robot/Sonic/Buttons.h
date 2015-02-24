@@ -35,7 +35,6 @@ class Button {
     bool getPos();
     uint8_t getTrans();
     uint8_t getCount();
-
 };
 
 class ButtonManager : public RunableModule {
@@ -43,6 +42,8 @@ class ButtonManager : public RunableModule {
     Button   buttons[MAX_BUTTONS];
     uint8_t  numButtons;
     uint8_t  buttPoses;
+    uint8_t  buttH2LTrans;
+    uint8_t  buttL2HTrans;
 
     bool RunTick();
     void DebugOutput(HardwareSerial*);
@@ -52,6 +53,8 @@ class ButtonManager : public RunableModule {
     bool init();
     int8_t addButton(uint8_t);
     uint8_t getButtons();
+    uint8_t getL2HTrans();
+    uint8_t getH2LTrans();
 };
 
 #endif
