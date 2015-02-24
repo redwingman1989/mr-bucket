@@ -1,11 +1,9 @@
 #include "CycleUnit.h"
 
-
 CycleUnit::CycleUnit(void)
 {
     taskSize = 0;
 }
-
 
 CycleUnit::~CycleUnit(void)
 {
@@ -19,10 +17,11 @@ void CycleUnit::RunTasks(uint16_t time,RobotState state)
         deltaMicro = currentMicro - prevMicro;
         if (tasks[i]->decTimer(deltaMicro)) {
           tasks[i]->RunTick();
-          if (tasks[i]->debugEnable)
+          if (tasks[i]->debugEnable) {
             tasks[i]->DebugOutput(&Serial);
             Serial.print("FOM: ");
             Serial.println(tasks[i]->getTimer());
+          }
         }
     }
 
