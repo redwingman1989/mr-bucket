@@ -1,29 +1,6 @@
-#include <Arduino.h>
-#include "Magnetometer.h"
-#include "Buttons.h"
-#include "MotorController.h"
-#include "System\CycleUnit.h"
-#include "LineSensorManager.h"
-#include <math.h>
+#include "Globals.h"
 
-CycleUnit sense;
-CycleUnit plan;
-CycleUnit act;
-
-Magnetometer mag(0x1E);
-ButtonManager buttMan;
-//////////////////
-/////Line Sensors
-/////////////////
-LineSensor linesensorCenterFront(centerFront);
-LineSensor linesensorCenterBack(centerBack);
-LineSensor linesensorRightFront(sideFront);
-LineSensor linesensorRightBack(sideBack);
-LineSensor * linesensors[4];
-LineSensorManager lineManager(linesensors);
-///////
-
-MotorController wheels;
+void bullShitDemoCode(void);
 void followRightLine(void);
 void reverseIt(void);
 void uTurn(void);
@@ -40,35 +17,42 @@ int prevState = 0;
 int stateChange = true;
 uint16_t desiredHeading;
 
+float convertRadToPercent(float rad){
+    return rad / PI * 50.0 * 4.0;
+}
+
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(serialBaud);
 
-  mag.init();
-
+  /*--- Initialize Runable Modules ---*/
+  /* Inputs */
   buttMan.init();
-  buttMan.addButton(LBUTT);
-  buttMan.addButton(RBUTT);
+  buttMan.addButton(pinLButton); // Button 0
+  buttMan.addButton(pinRButton); // Button 1
+  buttMan.addButton(pinRButton); // Button 2
 
   linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
   linesensors[LSL_CENTER_BACK]  = &linesensorCenterBack;
   linesensors[LSL_RIGHT_FRONT]  = &linesensorRightFront;
   linesensors[LSL_RIGHT_BACK]   = &linesensorRightBack;
 
+  mag.init();
+
+  /* Outputs */
   wheels.init();
 
-  act.addTask(&wheels, 20000, true);
+  /*--- Add Runable Modules to Cycle Units ---*/
+  act.addTask(&wheels, rate50Hz, false);
+  act.addTask(&heart, rate2Hz, true);
 
-  sense.addTask(&mag, 4000, false);
-  sense.addTask(&lineManager, 4000, false);
-  sense.addTask(&buttMan, 4000, true);
+  sense.addTask(&mag, rate250Hz, false);
+  sense.addTask(&lineManager, rate250Hz, false);
+  sense.addTask(&buttMan, rate250Hz, false);
 
+  /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());
   act.setPrevMicro(micros());
-}
-
-float convertRadToPercent(float rad){
-    return rad / PI * 50.0 * 4.0;
 }
 
 void loop()
@@ -78,12 +62,18 @@ void loop()
     //Sense
     sense.RunTasks(millis(),RS_LoadRings);
 
-    //act
+    //Plan
+    plan.RunTasks(millis(),RS_LoadRings);
+
+    //Act
     act.RunTasks(millis(),RS_LoadRings);
 
     //Act
+    bullShitDemoCode();
+}
 
-    switch (state) {
+void bullShitDemoCode(void) {
+  switch (state) {
     case FOLLOW_RIGHT_LINE:
         followRightLine();
         //Serial.println("follow");
@@ -96,13 +86,11 @@ void loop()
         uTurn();
         //Serial.println("uturn");
         break;
-    }
+  }
 
     if (prevState != state) stateChange = true;
     else stateChange = false;
     prevState = state;
-
-
 }
 
 void followRightLine(void) {
