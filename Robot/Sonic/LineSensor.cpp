@@ -1,7 +1,6 @@
 /* Line Sensor Class */
 #include <Arduino.h>
 #include "LineSensor.h"
-#include "global.h"
 
 
 /*************************************************************
@@ -51,9 +50,6 @@ startCapChargeTime(0)
     this->ptrPortInputPins  = (uint8_t *)PORTL_IN_PINS_REG;
   }
   else {
-    if (DEBUG_BUILD)
-      Serial.println("Invalid LineSensor pin to PORT Mapping.");
-
     this->ptrPortDataReg    = NULL;
     this->ptrPortDataDirReg = NULL;
     this->ptrPortInputPins  = NULL;
@@ -124,14 +120,7 @@ void LineSensor::takeReading()
   /* Look at the Line Sensor's Input Pins */
    if (this->ptrPortInputPins != NULL)
      this->sensorReadings.allReadings = (uint8_t)*this->ptrPortInputPins;
-  else {
-    /* Print out a debug message if debug build */
-    if (DEBUG_BUILD == 1)
-      Serial.println("Line Sensor Input Pins Pointer is NULL!");
-
-    /* TO DO: Perhaps invalidate the sensor? Not sure how we could recover.
-     *          would need to add new member to the class. */
-}
+  /* TO DO: Mark sensor as invalid */
 }
 
 
