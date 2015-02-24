@@ -1,7 +1,7 @@
 #include "Buttons.h"
 
+/*--- Button Scope ---*/
 Button::Button(void) {
-
 };
 
 bool Button::init(uint8_t addr) {
@@ -42,7 +42,9 @@ uint8_t Button::getTrans(){
 uint8_t Button::getCount() {
   return ((buttonStatus >> 4) & 0x0F);
 };
+/*--- End of Button Scope ---*/
 
+/*--- Button Manager Scope ---*/
 ButtonManager::ButtonManager(){
 
 };
@@ -65,17 +67,24 @@ int8_t ButtonManager::addButton(uint8_t addr){
 bool ButtonManager::RunTick() {
   int8_t i;
   uint8_t pos;
-  uint8_t result = 0;
+  uint8_t trans;
+  uint8_t posResult = 0;
+  uint8_t h2lResult = 0;
+  uint8_t l2hResult = 0;
 
   for(i=(numButtons-1); i >= 0; i--) {
     buttons[i].update();
     pos = buttons[i].getPos();
-    result |= (pos << i);
+    posResult |= (pos << i);
+    trans = buttons[i].getTrans();
+    h2lResult |= ((trans & 0x01) << i);
+    l2hResult |= (((trans >> 1) & 0x01) << i);
   };
-  buttPoses = result;
+  buttPoses = posResult;
+  buttH2LTrans = h2lResult;
+  buttL2HTrans = l2hResult;
   return true;
 };
-
 
 void ButtonManager::DebugOutput(HardwareSerial *serialPort) {
   serialPort->println(buttPoses);
@@ -84,3 +93,13 @@ void ButtonManager::DebugOutput(HardwareSerial *serialPort) {
 uint8_t ButtonManager::getButtons(){
   return buttPoses;
 };
+
+uint8_t ButtonManager::getH2LTrans(){
+  return buttH2LTrans;
+};
+
+uint8_t ButtonManager::getL2HTrans(){
+  return buttL2HTrans;
+};
+
+/*--- End of Button Manager Scope ---*/
