@@ -12,7 +12,8 @@ public:
     //main loop function
     void RunTasks(uint16_t time,RobotState state);
     //False return if no task is added
-    bool addTask(RunableModule *, uint32_t, bool);
+    bool addTask(RunableModule *, uint32_t, uint8_t);
+    bool addTask(RunableModule *, uint32_t, uint8_t, const char*);
 
     void setPrevMicro(uint32_t time) {prevMicro = time;};
 protected:
