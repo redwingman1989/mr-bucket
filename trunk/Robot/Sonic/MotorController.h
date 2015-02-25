@@ -7,6 +7,7 @@ This module will implement the omniwheel motor command mixing
 #include <Servo.h>
 #include "SabertoothPWM.h"
 #include "System/RunableModule.h"
+#include "Pins.h"
 
 const float outputMax = 100.0;
 const float outputPowerLimit = 100.0;
@@ -20,10 +21,10 @@ const int outputOffset = (PWMmaxCmd + PWMminCmd) / 2;
 //One second to ramp 0 to 100
 const float outputRateLimit = outputMax / (1000000.0);
 
-const int leftMotorPin = 5;
-const int rightMotorPin = 6;
-const int frontMotorPin = 3;
-const int backMotorPin = 4;
+const int leftMotorPin = pinLMotorPWM;
+const int rightMotorPin = pinRMotorPWM;
+const int frontMotorPin = pinFMotorPWM;
+const int backMotorPin = pinAMotorPWM;
 
 typedef enum {
   M_LEFT,

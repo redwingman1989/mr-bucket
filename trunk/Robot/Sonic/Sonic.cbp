@@ -683,6 +683,8 @@
 		<Unit filename="Pins.h" />
 		<Unit filename="SabertoothPWM.cpp" />
 		<Unit filename="SabertoothPWM.h" />
+		<Unit filename="ServoArmController.cpp" />
+		<Unit filename="ServoArmController.h" />
 		<Unit filename="Sonic.ino">
 			<Option compile="1" />
 			<Option link="1" />
