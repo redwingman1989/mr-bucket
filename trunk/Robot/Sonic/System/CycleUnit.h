@@ -1,7 +1,7 @@
 #pragma once
 #include "RunableModule.h"
 #include <Arduino.h>
-#include "LineSensor.h"
+
 const int TaskListMax = 10;
 
 class CycleUnit
