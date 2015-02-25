@@ -16,7 +16,14 @@ bool RunableModule::RunTick(){
 }
 
 void RunableModule::DebugOutput(HardwareSerial *serial){
-    Serial.println("its working");
+  switch(debugLevel) {
+    case 0:
+      break;
+    case 1:
+      /* Level 1 Debug Data */
+    default:
+      Serial.println("its working");
+  }
 }
 
 bool RunableModule::setTimeOut(uint32_t time) {

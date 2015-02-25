@@ -56,7 +56,7 @@ void setup()
   buttMan.init();
   buttMan.addButton(pinLButton); // Button 0
   buttMan.addButton(pinRButton); // Button 1
-  buttMan.addButton(pinRButton); // Button 2
+  buttMan.addButton(pinGrnButton); // Button 2
 
   linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
   linesensors[LSL_CENTER_BACK]  = &linesensorCenterBack;
@@ -69,12 +69,12 @@ void setup()
   wheels.init();
 
   /*--- Add Runable Modules to Cycle Units ---*/
-  act.addTask(&wheels, rate50Hz, true);
-  act.addTask(&heart, rate2Hz, false);
+  act.addTask(&wheels, rate50Hz, 1);
+  act.addTask(&heart, rate2Hz, 0);
 
-  sense.addTask(&mag, rate250Hz, false);
-  sense.addTask(&lineManager, rate250Hz, false);
-  sense.addTask(&buttMan, rate250Hz, false);
+  sense.addTask(&mag, rate250Hz, 0);
+  sense.addTask(&lineManager, rate250Hz, 0);
+  sense.addTask(&buttMan, rate100Hz, 3, "Button Manager");
 
   /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());
