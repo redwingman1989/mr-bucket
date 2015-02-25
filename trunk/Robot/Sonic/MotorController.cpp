@@ -1,9 +1,8 @@
 /*
 This module will implement the omniwheel motor command mixing
 */
-
 #include "MotorController.h"
- HardwareSerial * temp = &Serial;
+
 MotorController::MotorController()
 {
   this->motorFrontBack = SabertoothPWM();
@@ -15,17 +14,51 @@ MotorController::MotorController()
   this->actualOutput[M_FRONT] = 0;
   this->actualOutput[M_BACK] = 0;
 
-//  this->init();
+  this->prevOutputCmds[M_LEFT] = 0;
+  this->prevOutputCmds[M_RIGHT] = 0;
+  this->prevOutputCmds[M_FRONT] = 0;
+  this->prevOutputCmds[M_BACK] = 0;
 }
 
-bool MotorController::RunTick()
+//Inputs are in percentage of max command -100% to +100%
+//Forward = +
+//Backward = -
+//Right = +
+//Left = -
+//Clockwise = +
+//Counter-Clockwise = -
+void MotorController::updateCommand(float fwdBack, float leftRight, float rotation)
 {
-   this->exec();
+  //apply power limiting to inputs and save locally
+  if (this->fwdBack < -outputPowerLimit) this->fwdBack = -outputPowerLimit;
+  else if (this->fwdBack > outputPowerLimit) this->fwdBack = outputPowerLimit;
+  else this->fwdBack = fwdBack;
+
+  if (this->leftRight < -outputPowerLimit) this->leftRight = -outputPowerLimit;
+  else if (this->leftRight > outputPowerLimit) this->leftRight = outputPowerLimit;
+  else this->leftRight = leftRight;
+
+  if (this->rotation < -outputPowerLimit) this->rotation = -outputPowerLimit;
+  else if (this->rotation > outputPowerLimit) this->rotation = outputPowerLimit;
+  else this->rotation = rotation;
+}
+
+void MotorController::KillMotors(void) {
+  this->motorLeftRight.killMotors();
+  this->motorFrontBack.killMotors();
 }
 
 void MotorController::DebugOutput(HardwareSerial *serialPort)
 {
-  serialPort->print("DEBUG OUTPUT\n");
+  int8_t motor;
+
+  serialPort->print("Output: ");
+  for (motor = M_LEFT ; motor < M_NUM_OF_MOTORS ; motor++) {
+    serialPort->print(this->outputCmds[motor]);
+    serialPort->print(" ");
+  }
+  serialPort->println();
+
 }
 
 void MotorController::init(void)
@@ -37,28 +70,43 @@ void MotorController::init(void)
 	this->motorFrontBack.init(frontMotorPin, backMotorPin);
 	this->motorFrontBack.killMotors();
 
-	this->timeDelta = 0;
-	this->currentTime = micros();
+  this->prevTime = micros();
+  this->currentTime = micros();
 }
 
-void MotorController::exec(void)
+bool MotorController::RunTick()
 {
-  float temp; //Used for calculations below
-  float delta;
-  char i; //Iterator
+  int8_t motor;
 
-  //GET TIME AND CALC EXEC RATE
-  unsigned long tempTime = micros();
-  this->timeDelta = tempTime - this->currentTime;
-  this->currentTime = tempTime;
-
-  //UPDATE OUTPUT COMMAND SHADOWS
-  this->prevOutputCmds[M_LEFT] = this->outputCmds[M_LEFT];
-  this->prevOutputCmds[M_RIGHT] = this->outputCmds[M_RIGHT];
-  this->prevOutputCmds[M_FRONT] = this->outputCmds[M_FRONT];
-  this->prevOutputCmds[M_BACK] = this->outputCmds[M_BACK];
+  //Update time shadow and grab current time
+  this->prevTime = this->currentTime;
+  this->currentTime = micros();
 
   //MIXING INPUT TO OUTPUT
+  this->mixInputToOutput();
+
+  //LOOP THROUGH ALL THE MOTORS
+  for (motor = M_LEFT; motor < M_NUM_OF_MOTORS; motor++) {
+    //OUTPUT COMMMAND RATELIMIT
+    this->commandRateLimit(motor);
+
+    //REMOVE DEADBAND
+    this->removeDeadband(motor);
+
+    //CONVERT TO ACTUAL OUTPUT COMMANDS
+    this->calculatePWMTimes(motor);
+
+    //UPDATE OUTPUT COMMAND SHADOWS
+    this->updateShadows(motor);
+  }
+
+  //UPDATE AND SEND MOTOR COMMANDS
+  this->motorLeftRight.updateBothMotors(this->actualOutput[M_LEFT], this->actualOutput[M_RIGHT]);
+  this->motorFrontBack.updateBothMotors(this->actualOutput[M_FRONT], this->actualOutput[M_BACK]);
+}
+
+void MotorController::mixInputToOutput(void) {
+  float temp;
   temp = abs(this->rotation) + abs(this->fwdBack);
 
   if (temp > outputPowerLimit) {
@@ -82,46 +130,33 @@ void MotorController::exec(void)
       this->outputCmds[M_FRONT] = this->rotation + this->leftRight;
       this->outputCmds[M_BACK] = -this->rotation + this->leftRight;
   }
-
-//  //OUTPUT COMMMAND RATELIMIT
-//  temp = this->timeDelta * outputRateLimit;
-//  for (i=M_LEFT; i<M_NUM_OF_MOTORS; i++) {
-//    delta = this->outputCmds[i] - this->prevOutputCmds[i];
-//    if (abs(delta) > temp)
-//      if (delta > 0) this->outputCmds[i] = this->prevOutputCmds[i] + temp;
-//      else this->outputCmds[i] = this->prevOutputCmds[i] - temp;
-//  }
-
-  //CONVERT TO ACTUAL OUTPUT COMMANDS
-  this->actualOutput[M_LEFT] = ((int) (this->outputCmds[M_LEFT] * outputCountConvert)) + outputOffset;
-  this->actualOutput[M_RIGHT] = ((int) (this->outputCmds[M_RIGHT] * outputCountConvert)) + outputOffset;
-  this->actualOutput[M_FRONT] = ((int) (this->outputCmds[M_FRONT] * outputCountConvert)) + outputOffset;
-  this->actualOutput[M_BACK] = ((int) (this->outputCmds[M_BACK] * outputCountConvert)) + outputOffset;
-
-  //UPDATE AND SEND MOTOR COMMANDS
-  this->motorLeftRight.updateBothMotors(this->actualOutput[M_LEFT], this->actualOutput[M_RIGHT]);
-  this->motorFrontBack.updateBothMotors(this->actualOutput[M_FRONT], this->actualOutput[M_BACK]);
 }
 
-//Inputs are in percentage of max command -100% to +100%
-//Forward = +
-//Backward = -
-//Right = +
-//Left = -
-//Clockwise = +
-//Counter-Clockwise = -
-void MotorController::updateCommand(float fwdBack, float leftRight, float rotation)
-{
-  //copy commands locally
-  this->fwdBack = fwdBack;
-  this->leftRight = leftRight;
-  this->rotation = rotation;
+void MotorController::commandRateLimit(int8_t motor) {
+  unsigned long timeDelta;
+  float cmdDelta;
+  float outputLimit;
 
-  //apply command limits of +/- 100%
-  if (this->fwdBack < -outputPowerLimit) this->fwdBack = -outputPowerLimit;
-  if (this->fwdBack > outputPowerLimit) this->fwdBack = outputPowerLimit;
-  if (this->leftRight < -outputPowerLimit) this->leftRight = -outputPowerLimit;
-  if (this->leftRight > outputPowerLimit) this->leftRight = outputPowerLimit;
-  if (this->rotation < -outputPowerLimit) this->rotation = -outputPowerLimit;
-  if (this->rotation > outputPowerLimit) this->rotation = outputPowerLimit;
+  timeDelta = this->currentTime - this->prevTime;
+  cmdDelta = this->outputCmds[motor] - this->prevOutputCmds[motor];
+  outputLimit = timeDelta * outputRateLimit;
+
+  if (abs(cmdDelta) > outputLimit) {
+    if (cmdDelta > 0) this->outputCmds[motor] = this->prevOutputCmds[motor] + outputLimit;
+    else this->outputCmds[motor] = this->prevOutputCmds[motor] - outputLimit;
+  }
+}
+
+void MotorController::removeDeadband(int8_t motor) {
+  this->outputDeadbandCmds[motor] = this->outputCmds[motor] * deadBandScaleFactor;
+  if (this->outputCmds[motor] > 0) this->outputDeadbandCmds[motor] += outputDeadband;
+  else this->outputDeadbandCmds[motor] -= outputDeadband;
+}
+
+void MotorController::calculatePWMTimes(int8_t motor) {
+  this->actualOutput[motor] = ((int) (this->outputDeadbandCmds[motor] * outputCountConvert)) + outputOffset;
+}
+
+void MotorController::updateShadows(int8_t motor) {
+  this->prevOutputCmds[motor] = this->outputCmds[motor];
 }

@@ -669,6 +669,9 @@
 		</Compiler>
 		<Unit filename="Buttons.cpp" />
 		<Unit filename="Buttons.h" />
+		<Unit filename="Globals.h" />
+		<Unit filename="Heartbeat.cpp" />
+		<Unit filename="Heartbeat.h" />
 		<Unit filename="LineSensor.cpp" />
 		<Unit filename="LineSensor.h" />
 		<Unit filename="LineSensorManager.cpp" />
