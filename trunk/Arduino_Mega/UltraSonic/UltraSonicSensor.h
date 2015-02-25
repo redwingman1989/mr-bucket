@@ -1,28 +1,7 @@
 #ifndef _ULTRASONICSENSOR_H
 #define _ULTRASONICSENSOR_H
 
-#include "System\RunableModule.h"
-
-/* Macros */
-
-/* Front Facing UltraSonic */
-#define ULTRA_FRONT_TRIG_PIN          (7)
-#define ULTRA_FRONT_ECHO_PIN          (18) /* PD3 = INT3 */
-
-/* Left Facing UltraSonic */
-#define ULTRA_LEFT_TRIG_PIN          (8)
-#define ULTRA_LEFT_ECHO_PIN          (19) /* PD2 = INT2 */
-
-/* Right Facing UltraSonic */
-#define ULTRA_RIGHT_TRIG_PIN          (9)
-#define ULTRA_RIGHT_ECHO_PIN          (2) /* PE4 = INT4 */
-
 /* Enumerations */
-enum ultraSonicPins {
-  TRIGGER_PIN,
-  ECHO_PIN,
-  NUM_ULTRA_PINS
-};
 
 enum readings {
   READING_1,
@@ -33,36 +12,24 @@ enum readings {
   NUM_ULTRA_FILT_READINGS
 };
 
-enum sensors {
+typedef enum {
   FRONT,
   LEFT,
   RIGHT,
   NUM_ULTRA_SENSORS
-};
-
-/* Front Facing UltraSonic Sensor Pin Mappings */
-static const uint8_t frontUltraSonic[NUM_ULTRA_PINS] = {ULTRA_FRONT_TRIG_PIN, ULTRA_FRONT_ECHO_PIN};
-
-/* Left Facing UltraSonic Sensor Pin Mappings */
-static const uint8_t leftUltraSonic[NUM_ULTRA_PINS] = {ULTRA_LEFT_TRIG_PIN, ULTRA_LEFT_ECHO_PIN};
-
-/* Right Facing UltraSonic Sensor Pin Mappings */
-static const uint8_t rightUltraSonic[NUM_ULTRA_PINS] = {ULTRA_RIGHT_TRIG_PIN, ULTRA_RIGHT_ECHO_PIN};
+} sensor_t;
 
 
 class UltraSonicSensor {
   public:
     /* Constructor */
-    UltraSonicSensor(const uint8_t * inPinMap);
+    UltraSonicSensor(uint8_t trigPin, uint8_t echPin);
 
     /* Deconstructor */
     ~UltraSonicSensor();
 
-//    /* Initialize Echo Interrupt */
-//    void initEchoInterrupt();
 
-//    /* Configure External Interrupt Control Register */
-//    void configureExtIntCtrlRegister(uint8_t * ptrRegister);
+    /* SETTERS */
 
     /* Set the echo pulse start time */
     void setFirstEchoTime(uint32_t timeInMicroseconds);
@@ -79,11 +46,14 @@ class UltraSonicSensor {
     /* Set a flag indicating the sensor is invalid */
     void setInvalidSensorFlag(bool invalid);
 
+
+    /* GETTERS */
+
+    /* Get the last echo pulse rx time */
+    uint32_t getLastEchoTime();
+
     /* Get the echo pulse start time */
     uint32_t getFirstEchoTime();
-
-    /* Get the duration of time the Trigger Pin was high */
-    uint32_t getTrigPinHighDuration();
 
     /* Get the Trigger Pin */
     uint8_t getTriggerPin();
@@ -98,39 +68,29 @@ class UltraSonicSensor {
     bool getReadingInProgress();
 
     /* Get whether or not the sensor has been marked as invalid */
-    bool getInvalidStatus();
+    bool sensorInvalid();
 
-//    /* The ISR called when the Echo pin interrupts the Mega */
-//    void echoISR();
 
-    /* Set the trigger pin */
+    /* OTHER FUNCTIONALITY */
+
+    /* Trigger a pulse */
     void triggerAPulse(void);
 
     /* Calculate the distance to reflected surface */
     float calculateDistance();
 
-    /* Implement functions from the parent class */
-//    bool RunTick(uint16_t time, RobotState state);
-//    void DebugOutput(HardwareSerial * hwSerialPort);
-
   private:
-    /* Sensor Pin Numbers */
-    const uint8_t * pinMap;
+    /* Trigger Pin */
+    uint8_t triggerPin;
+
+    /* Echo Pin */
+    uint8_t echoPin;
 
     /* Raw Data Array */
     uint8_t rawDataArray[NUM_ULTRA_FILT_READINGS];
 
     /* Current Raw Data Array Index */
     uint8_t rawDataArrayIdx;
-
-    /* Trigger Pin set high at this time in us */
-    uint32_t triggerStartTime;
-
-    /* Time duration the trigger pin was set high in us*/
-    uint32_t trigPinHighDuration;
-
-//    /* External Interrupt Number for this UltraSonic Sensor */
-//    uint8_t extInterruptNumber;
 
     /* Echo 1st Pulse Receive time */
     volatile uint32_t rxFirstEchoTime;
