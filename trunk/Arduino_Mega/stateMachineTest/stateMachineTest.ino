@@ -1,18 +1,24 @@
 #include <Arduino.h>
 #include "StateMachine.h"
+#include "System/CycleUnit.h"
 
-LEDWrapper wrapper;
+CycleUnit doTheThing;
+
+//Make a state machine - note that LEDStateMachine was created inside LEDWrapper
+LEDWrapper wrapperSM;
 
 void setup()
 {
-  delay(15);
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("START");
+
+  //Add state machine as a task at 50HZ (period 20K us)
+  doTheThing.addTask(&wrapperSM, 20000, true);
 }
 
 void loop()
 {
-  delay(500);
-  wrapper.RunTick();
+  //Run state machine as a task
+  doTheThing.RunTasks(0,RS_LoadRings);
 }
 
