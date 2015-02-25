@@ -9,6 +9,7 @@
 #include "System\CycleUnit.h"
 #include "LineSensorManager.h"
 #include "Heartbeat.h"
+#include "ServoArmController.h"
 #include <math.h>
 
 /* I2C Address Constants */
@@ -44,6 +45,7 @@ Magnetometer mag(magI2CAddr);
 /* Global Runable Modules (Outputs) */
 Heartbeat heart(pinHbLed);
 MotorController wheels;
+ServoArmController arm;
 
 #endif // _GLOBALS_H
 

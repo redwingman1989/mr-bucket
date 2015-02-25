@@ -67,9 +67,11 @@ void setup()
 
   /* Outputs */
   wheels.init();
+  arm.init();
 
   /*--- Add Runable Modules to Cycle Units ---*/
   act.addTask(&wheels, rate50Hz, 1);
+  act.addTask(&arm, rate50Hz, 1);
   act.addTask(&heart, rate2Hz, 0);
 
   sense.addTask(&mag, rate250Hz, 0);
