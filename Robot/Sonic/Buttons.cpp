@@ -87,7 +87,28 @@ bool ButtonManager::RunTick() {
 };
 
 void ButtonManager::DebugOutput(HardwareSerial *serialPort) {
-  serialPort->println(buttPoses);
+  char dbStr[120] = "\0";
+
+  switch (debugLevel) {
+    case 1:
+      sprintf(dbStr,
+        "Button Positions: 0x%02X\n",
+        buttPoses);
+      break;
+    case 2:
+      sprintf(dbStr,
+        "High to Low: 0x%02X\nLow to High: 0x%02X\n\n",
+        buttH2LTrans, buttL2HTrans );
+      break;
+    case 3:
+      sprintf(dbStr,
+        "Button Positions: 0x%02X\nHigh to Low: 0x%02X\nLow to High: 0x%02X\n\n",
+        buttPoses, buttH2LTrans, buttL2HTrans );
+      break;
+    default:
+      break;
+  }
+  serialPort->print(dbStr);
 };
 
 uint8_t ButtonManager::getButtons(){

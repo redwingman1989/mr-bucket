@@ -8,7 +8,8 @@ enum RobotState{
 class RunableModule
 {
 public:
-    bool debugEnable;
+    char nameStr[20];
+    uint8_t debugLevel;
 
     RunableModule(void);
     ~RunableModule(void);
