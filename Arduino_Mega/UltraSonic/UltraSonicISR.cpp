@@ -10,13 +10,15 @@
 *************************************************************/
 void frontUltraSonicISR()
 {
-    if (digitalRead(ultraSonicFront.getEchoPin()))
-        ultraSonicFront.setFirstEchoTime((uint32_t) micros());
-    else {
-        ultraSonicFront.setLastEchoTime((uint32_t) micros());
-        ultraSonicFront.setReadyForDistanceCalc(true);
-        ultraSonicFront.setReadingInProgress(false);
-    } /* else */
+  UltraSonicSensor * sensor = ultraSonicMgr.getSensor(FRONT);
+
+  if (digitalRead(sensor->getEchoPin()))
+    sensor->setFirstEchoTime((uint32_t) micros());
+  else {
+    sensor->setLastEchoTime((uint32_t) micros());
+    sensor->setReadyForDistanceCalc(true);
+    sensor->setReadingInProgress(false);
+  } /* else */
 } /* frontUltraSonicISR() */
 
 
@@ -28,13 +30,15 @@ void frontUltraSonicISR()
 *************************************************************/
 void leftUltraSonicISR()
 {
-    if (digitalRead(ultraSonicLeft.getTriggerPin()))
-        ultraSonicLeft.setFirstEchoTime((uint32_t) micros());
-    else {
-        ultraSonicLeft.setLastEchoTime((uint32_t) micros());
-        ultraSonicLeft.setReadyForDistanceCalc(true);
-        ultraSonicLeft.setReadingInProgress(false);
-    } /* else */
+  UltraSonicSensor * sensor = ultraSonicMgr.getSensor(LEFT);
+
+  if (digitalRead(sensor->getEchoPin()))
+    sensor->setFirstEchoTime((uint32_t) micros());
+  else {
+    sensor->setLastEchoTime((uint32_t) micros());
+    sensor->setReadyForDistanceCalc(true);
+    sensor->setReadingInProgress(false);
+  } /* else */
 } /* frontUltraSonicISR() */
 
 
@@ -46,11 +50,13 @@ void leftUltraSonicISR()
 *************************************************************/
 void rightUltraSonicISR()
 {
-    if (digitalRead(ultraSonicRight.getTriggerPin()))
-        ultraSonicRight.setFirstEchoTime((uint32_t) micros());
-    else {
-        ultraSonicRight.setLastEchoTime((uint32_t) micros());
-        ultraSonicRight.setReadyForDistanceCalc(true);
-        ultraSonicRight.setReadingInProgress(false);
-    } /* else */
+  UltraSonicSensor * sensor = ultraSonicMgr.getSensor(RIGHT);
+
+  if (digitalRead(sensor->getEchoPin()))
+    sensor->setFirstEchoTime((uint32_t) micros());
+  else {
+    sensor->setLastEchoTime((uint32_t) micros());
+    sensor->setReadyForDistanceCalc(true);
+    sensor->setReadingInProgress(false);
+  } /* else */
 } /* frontUltraSonicISR() */

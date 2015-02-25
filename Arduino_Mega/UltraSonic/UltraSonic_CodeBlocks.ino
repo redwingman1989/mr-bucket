@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include "Globals.h"
 #include "System\CycleUnit.h"
 #include "Setup.h"
 #include "UltraSonicManager.h"
@@ -12,11 +12,8 @@ CycleUnit act;
 UltraSonicSensor ultraSonicFront(frontUltraSonic);
 UltraSonicSensor ultraSonicLeft(leftUltraSonic);
 UltraSonicSensor ultraSonicRight(rightUltraSonic);
-UltraSonicSensor * ultraSonicArr[NUM_ULTRA_SENSORS];
-UltraSonicManager ultraSonicMgr(ultraSonicArr);
+UltraSonicManager ultraSonicMgr();
 
-
-#define LED_PIN (13)
 
 /*******************************************************************
  Function: void setup(void)
@@ -27,12 +24,9 @@ void setup() {
   setupPinModes();
   setupUltraSonicInterrupts();
 
-  ultraSonicArr[FRONT] = &ultraSonicFront;
-  ultraSonicArr[LEFT]  = &ultraSonicLeft;
-  ultraSonicArr[RIGHT] = &ultraSonicRight;
-
-  sense.addTask(&ultraSonicMgr);
-
+  ultraSonicMgr.addSensor(pinFUltraTrig, pinFUltraEcho);
+  ultraSonicMgr.addSensor(pinLUltraTrig, pinLUltraEcho);
+  ultraSonicMgr.addSensor(pinRUltraTrig, pinRUltraEcho);
 }
 
 
@@ -66,6 +60,20 @@ void loop() {
 //  }
 //
 //  ++loopCount;
+//  Serial.print("front reading in progress: ");
+//  Serial.println(ultraSonicFront.getReadingInProgress());
+//  Serial.print("left reading in progress: ");
+//  Serial.println(ultraSonicLeft.getReadingInProgress());
+//  Serial.print("right reading in progress: ");
+//  Serial.println(ultraSonicRight.getReadingInProgress());
+  if (ultraSonicFront.getTimeForCalcFlag() == true) {
+    Serial.print("Start Echo: ");
+    Serial.println(ultraSonicFront.getFirstEchoTime());
+    Serial.print("End Echo: ");
+    Serial.println(ultraSonicFront.getLastEchoTime());
+    ultraSonicFront.setReadyForDistanceCalc(false);
+  }
+  delay(80);
   //Sense
   sense.RunTasks(millis(),RS_LoadRings);
 }

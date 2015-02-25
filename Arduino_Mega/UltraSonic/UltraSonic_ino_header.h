@@ -4,9 +4,7 @@
 #include "UltraSonicSensor.h"
 
 /* Global Variables */
-extern UltraSonicSensor ultraSonicFront;
-extern UltraSonicSensor ultraSonicLeft;
-extern UltraSonicSensor ultraSonicRight;
+extern UltraSonicManager ultraSonicMgr;
 
 /* Function Prototypes */
 void cycle();
