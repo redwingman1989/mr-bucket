@@ -12,6 +12,7 @@ This module will implement the omniwheel motor command mixing
 const float outputMax = 100.0;
 const float outputPowerLimit = 100.0;
 const float outputDeadband = 30.0;
+const float zeroDeadband = 1.0;
 const float deadBandScaleFactor = (outputPowerLimit - outputDeadband) / outputMax;
 
 const float outputCountConvert = (PWMmaxCmd - PWMminCmd) / 200.0;
