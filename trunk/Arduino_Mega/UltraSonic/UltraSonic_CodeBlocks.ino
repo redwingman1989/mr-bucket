@@ -5,15 +5,9 @@
 #include "UltraSonicSensor.h"
 #include "UltraSonic_ino_header.h"
 
-CycleUnit sense;
-CycleUnit plan;
-CycleUnit act;
-
-UltraSonicSensor ultraSonicFront(frontUltraSonic);
-UltraSonicSensor ultraSonicLeft(leftUltraSonic);
-UltraSonicSensor ultraSonicRight(rightUltraSonic);
-UltraSonicManager ultraSonicMgr();
-
+UltraSonicManager ultraSonicMgr = UltraSonicManager();
+UltraSonicSensor * ptrSensor;
+static float distance = 0;
 
 /*******************************************************************
  Function: void setup(void)
@@ -24,9 +18,15 @@ void setup() {
   setupPinModes();
   setupUltraSonicInterrupts();
 
+  /* Add UltraSonic Sensors to the manager */
   ultraSonicMgr.addSensor(pinFUltraTrig, pinFUltraEcho);
   ultraSonicMgr.addSensor(pinLUltraTrig, pinLUltraEcho);
   ultraSonicMgr.addSensor(pinRUltraTrig, pinRUltraEcho);
+
+  /* Add the UltraSonic Manager to the list of tasks to run. */
+  sense.addTask(&ultraSonicMgr, rate16Hz, false);
+
+  ptrSensor = ultraSonicMgr.getSensor(FRONT);
 }
 
 
@@ -37,45 +37,21 @@ void setup() {
   dirven functions.
 ********************************************************************/
 void loop() {
-  /* Debug Varibales*/
-//  static uint32_t loopCount = 0;
-//  static bool lockOutPulse = false;
-//  static UltraSonicSensor * ptrSensor = &ultraSonicFront;
-//
-//  if (lockOutPulse  == false) {
-//    Serial.println("Dbg Flag 1");
-//    ptrSensor->triggerAPulse();
-//    lockOutPulse = true;
-//  }
-//  if (loopCount % 100000) {
-//    digitalWrite(LED_PIN, digitalRead(LED_PIN) ^ 1);
-//  }
-//
-//  if (ptrSensor->getTimeForCalcFlag() == true) {
-//    Serial.println("Dbg Flag 2");
-//    ptrSensor->setReadyForDistanceCalc(false);
-//    lockOutPulse = false;
-//    Serial.print("Reading: ");
-//    Serial.println(ptrSensor->calculateDistance());
-//  }
-//
-//  ++loopCount;
-//  Serial.print("front reading in progress: ");
-//  Serial.println(ultraSonicFront.getReadingInProgress());
-//  Serial.print("left reading in progress: ");
-//  Serial.println(ultraSonicLeft.getReadingInProgress());
-//  Serial.print("right reading in progress: ");
-//  Serial.println(ultraSonicRight.getReadingInProgress());
-  if (ultraSonicFront.getTimeForCalcFlag() == true) {
-    Serial.print("Start Echo: ");
-    Serial.println(ultraSonicFront.getFirstEchoTime());
-    Serial.print("End Echo: ");
-    Serial.println(ultraSonicFront.getLastEchoTime());
-    ultraSonicFront.setReadyForDistanceCalc(false);
-  }
-  delay(80);
   //Sense
   sense.RunTasks(millis(),RS_LoadRings);
+
+  /* Calculate distance and display it */
+
+  if (ptrSensor->getTimeForCalcFlag() == true) {
+    Serial.print("Start: ");
+    Serial.println(ptrSensor->getFirstEchoTime());
+    Serial.print("End: ");
+    Serial.println(ptrSensor->getLastEchoTime());
+    distance = ptrSensor->calculateDistance();
+    Serial.print("Distance: ");
+    Serial.println(distance);
+    ptrSensor->setReadyForDistanceCalc(false);
+  }
 }
 
 

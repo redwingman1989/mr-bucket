@@ -2,6 +2,32 @@
 #include "UltraSonicSensor.h"
 #include "Interrupts.h"
 
+
+ /*************************************************************
+ * Function:     UltraSonicSensor Constructor
+ * Input:        uint8_t * inPinMap
+ * Return:       void
+ * Description:  This is the constructor for an UltraSonicSensor
+ *                 object. The constructor takes a pointer to an
+ *                 array that contains the Trigger pin and the
+ *                 Echo pin values for the UltraSonicSensor object.
+ *************************************************************/
+ UltraSonicSensor::UltraSonicSensor():
+                                    triggerPin(0),
+                                    echoPin(0),
+                                    rawDataArrayIdx(0),
+                                    rxFirstEchoTime(0),
+                                    rxLastEchoTime(0),
+                                    timeToCalculateDistance(false),
+                                    invalidFlag(false),
+                                    readingInProgress(false)
+
+{
+    /* Initialize the Raw Data Array */
+    memset(this->rawDataArray, 0, sizeof(uint8_t) * NUM_ULTRA_FILT_READINGS);
+}
+
+
  /*************************************************************
  * Function:     UltraSonicSensor Constructor
  * Input:        uint8_t * inPinMap

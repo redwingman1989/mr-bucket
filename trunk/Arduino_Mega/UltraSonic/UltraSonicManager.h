@@ -8,14 +8,14 @@
 
 class UltraSonicManager : public RunableModule {
     public:
-        UltraSonicManager(UltraSonicSensor ** ptrUltraSonicObjArray);
+        UltraSonicManager();
         ~UltraSonicManager();
 
         /* Add an UltraSonic Sensor to the manager */
         void addSensor(uint8_t trigPin, uint8_t echoPin);
 
         /* Get the pointer to a requested sensor */
-        UltraSonicSensor * getSensor(sensor_t sensor);
+        UltraSonicSensor * getSensor(ultSensor_t sensor);
 
         /* Implement functions from the parent class */
         bool RunTick();
@@ -30,7 +30,7 @@ class UltraSonicManager : public RunableModule {
       UltraSonicSensor arrManagedSensors[NUM_ULTRA_SENSORS];
 
       /* Which sensor should we exec next */
-      uint8_t sensorToExec;
+      ultSensor_t sensorToExec;
 
 
 };

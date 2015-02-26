@@ -2,6 +2,7 @@
 #define _LINESENSOR_INO_HEADER_H
 
 #include "UltraSonicSensor.h"
+#include "UltraSonicManager.h"
 
 /* Global Variables */
 extern UltraSonicManager ultraSonicMgr;

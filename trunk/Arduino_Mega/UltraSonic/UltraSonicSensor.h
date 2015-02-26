@@ -1,6 +1,8 @@
 #ifndef _ULTRASONICSENSOR_H
 #define _ULTRASONICSENSOR_H
 
+#include "Arduino.h"
+
 /* Enumerations */
 
 enum readings {
@@ -17,12 +19,13 @@ typedef enum {
   LEFT,
   RIGHT,
   NUM_ULTRA_SENSORS
-} sensor_t;
+} ultSensor_t;
 
 
 class UltraSonicSensor {
   public:
-    /* Constructor */
+    /* Constructors */
+    UltraSonicSensor();
     UltraSonicSensor(uint8_t trigPin, uint8_t echPin);
 
     /* Deconstructor */
