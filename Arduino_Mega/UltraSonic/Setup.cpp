@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Interrupts.h"
+#include "Pins.h"
 #include "UltraSonicISR.h"
 #include "UltraSonic_ino_header.h"
 #include "UltraSonicSensor.h"
@@ -28,14 +29,14 @@ void setupUltraSonicInterrupts() {
     /* This is hard coded and I do not like it but for now I don't have much of
      *   an option, since I cannot set an ISR to a class method. */
 //     Serial.println(ultraSonicFront.getTriggerPin());
-  pinMode(ultraSonicFront.getTriggerPin(), OUTPUT);
-  pinMode(ultraSonicLeft.getTriggerPin(), OUTPUT);
-  pinMode(ultraSonicRight.getTriggerPin(), OUTPUT);
+  pinMode(pinFUltraTrig, OUTPUT);
+  pinMode(pinLUltraTrig, OUTPUT);
+  pinMode(pinRUltraTrig, OUTPUT);
 
 //  Serial.println(ultraSonicFront.getEchoPin());
-  pinMode(ultraSonicFront.getEchoPin(), INPUT);
-  pinMode(ultraSonicLeft.getEchoPin(), INPUT);
-  pinMode(ultraSonicRight.getEchoPin(), INPUT);
+  pinMode(pinFUltraEcho, INPUT);
+  pinMode(pinLUltraEcho, INPUT);
+  pinMode(pinRUltraEcho, INPUT);
 
 //  Serial.println(ULTRA_FRONT_EXT_INTERRUPT_NUM);
 
