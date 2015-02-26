@@ -44,6 +44,20 @@ void MotorController::updateCommand(float fwdBack, float leftRight, float rotati
 }
 
 void MotorController::KillMotors(void) {
+  this->fwdBack = 0;
+  this->leftRight = 0;
+  this->rotation = 0;
+
+  this->actualOutput[M_LEFT] = 0;
+  this->actualOutput[M_RIGHT] = 0;
+  this->actualOutput[M_FRONT] = 0;
+  this->actualOutput[M_BACK] = 0;
+
+  this->prevOutputCmds[M_LEFT] = 0;
+  this->prevOutputCmds[M_RIGHT] = 0;
+  this->prevOutputCmds[M_FRONT] = 0;
+  this->prevOutputCmds[M_BACK] = 0;
+
   this->motorLeftRight.killMotors();
   this->motorFrontBack.killMotors();
 }
@@ -148,9 +162,12 @@ void MotorController::commandRateLimit(int8_t motor) {
 }
 
 void MotorController::removeDeadband(int8_t motor) {
-  this->outputDeadbandCmds[motor] = this->outputCmds[motor] * deadBandScaleFactor;
-  if (this->outputCmds[motor] > 0) this->outputDeadbandCmds[motor] += outputDeadband;
-  else this->outputDeadbandCmds[motor] -= outputDeadband;
+  if (abs(this->outputCmds[motor]) < zeroDeadband) outputDeadbandCmds[motor] = 0;
+  else {
+    this->outputDeadbandCmds[motor] = this->outputCmds[motor] * deadBandScaleFactor;
+    if (this->outputCmds[motor] > 0) this->outputDeadbandCmds[motor] += outputDeadband;
+    else this->outputDeadbandCmds[motor] -= outputDeadband;
+  }
 }
 
 void MotorController::calculatePWMTimes(int8_t motor) {
