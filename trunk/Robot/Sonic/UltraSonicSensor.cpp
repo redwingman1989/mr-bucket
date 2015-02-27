@@ -226,6 +226,20 @@ bool UltraSonicSensor::getReadingInProgress()
 
 
  /*************************************************************
+ * Function:     getCalculatedDistanceValue()
+ * Parameter:    void
+ * Return:       void
+ * Description:  Sets the trigger pin high for 10 microseconds.
+ *                 This triggers an ultrasonic wave to be produced
+ *                 by the ultrasonic sensor.
+ *************************************************************/
+float UltraSonicSensor::getCalculatedDistanceValue()
+{
+  return calcDist;
+}
+
+
+ /*************************************************************
  * Function:     sensorInvalid
  * Input:        void
  * Return:       bool

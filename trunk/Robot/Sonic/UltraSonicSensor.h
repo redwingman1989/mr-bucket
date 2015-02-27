@@ -73,6 +73,9 @@ class UltraSonicSensor {
     /* Get whether or not the sensor has been marked as invalid */
     bool sensorInvalid();
 
+    /* Get the last calculated distance */
+    float getCalculatedDistanceValue();
+
 
     /* OTHER FUNCTIONALITY */
 
@@ -110,6 +113,9 @@ class UltraSonicSensor {
     /* Flag indicating that the sensor is invalid due to some issue */
     bool invalidFlag;
 
+    /* Calculated Distance */
+    float calcDist;
+
 };
 
      /*************************************************************
@@ -133,10 +139,9 @@ inline float UltraSonicSensor::calculateDistance()
     float timeDeltaFloat = (float) timeDelta;
     float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
 
-    Serial.print("calcDist delta float: ");
-    Serial.println(finalVal);
+    calcDist = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
 
-    return finalVal;
+    //return finalVal;
 
     #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
 }
