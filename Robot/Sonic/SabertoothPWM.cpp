@@ -8,7 +8,6 @@ Implements the packetized PWM method of control
 #include "Servo.h"
 
 const int startupDelay = 1000;
-const int startupCycleTime = 40;
 
 //Local function
 inline int pwmLimit(int command);
@@ -31,19 +30,11 @@ void SabertoothPWM::init(int motorOnePin, int motorTwoPin)
 
   killMotors();
 
-  //NEW INIT ROUTINE IDEA
-  for (i = 0; i<=startupDelay ; i+=startupCycleTime) {
-    delay(startupCycleTime);
-    flag = !flag;
-    if (flag) updateBothMotors(2000, 2000);
-    else updateBothMotors(1000, 1000);
-  }
-
-//  delay(startupDelay);
-//  updateBothMotors(2000, 2000);
-//  delay(startupDelay);
-//  updateBothMotors(1000, 1000);
-//  delay(startupDelay);
+  delay(startupDelay);
+  updateBothMotors(2000, 2000);
+  delay(startupDelay);
+  updateBothMotors(1000, 1000);
+  delay(startupDelay);
 
   killMotors();
 }

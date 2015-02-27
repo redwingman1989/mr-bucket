@@ -155,9 +155,11 @@ void MotorController::commandRateLimit(int8_t motor) {
   cmdDelta = this->outputCmds[motor] - this->prevOutputCmds[motor];
   outputLimit = timeDelta * outputRateLimit;
 
-  if (abs(cmdDelta) > outputLimit) {
-    if (cmdDelta > 0) this->outputCmds[motor] = this->prevOutputCmds[motor] + outputLimit;
-    else this->outputCmds[motor] = this->prevOutputCmds[motor] - outputLimit;
+  if (abs(this->outputCmds[motor]) > abs(this->prevOutputCmds[motor])) {
+    if (abs(cmdDelta) > outputLimit) {
+      if (cmdDelta > 0) this->outputCmds[motor] = this->prevOutputCmds[motor] + outputLimit;
+      else this->outputCmds[motor] = this->prevOutputCmds[motor] - outputLimit;
+    }
   }
 }
 
