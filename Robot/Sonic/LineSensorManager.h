@@ -119,8 +119,14 @@ const point_t sensorPositions[NUM_OF_LINESENSORS][NUM_SENSORS_PER_ARRAY] = {
 //Reference geometry of the center of the line sensor along the sensor array axis
 //Same coordinate system as individual sensor geometry
 const point_t sensorCenters[NUM_OF_LINESENSORS] = {
-{-.50, 2.9},
-{3.5, 2.9},
-{-.5, -1.57192},
-{3.5, -1.57192}
+{-.50, 2.9}, //CENTER FRONT
+{3.5, 2.9}, //RIGHT FRONT
+{-.5, -1.57192}, //CENTER BACK
+{3.5, -1.57192} //RIGHT BACK
+};
+
+const point_t pairCenters[NUM_OF_SENSORPAIRS] = {
+{-0.5, 0.66404}, //CENTER
+{3.5, 0.66404}, //RIGHT
+{1.5, -1.57192} //BACK
 };
