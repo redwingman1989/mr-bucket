@@ -10,6 +10,8 @@
 #include "LineSensorManager.h"
 #include "Heartbeat.h"
 #include "ServoArmController.h"
+#include "UltraSonicManager.h"
+#include "UltraSonicISR.h"
 #include <math.h>
 
 /* I2C Address Constants */
@@ -17,6 +19,7 @@ static const uint8_t magI2CAddr = (0x1E);
 
 /* Rates in Period of Micro Seconds */
 static const uint32_t rate2Hz   = (500000); // 2Hz Period In micro Seconds
+static const uint32_t rate16Hz  = (62500); // 16Hz Period in microseconds
 static const uint32_t rate50Hz  = (20000); // 50Hz Period In micro Seconds
 static const uint32_t rate100Hz = (10000); // 50Hz Period In micro Seconds
 static const uint32_t rate250Hz = (4000); // 250Hz Period In micro Seconds
@@ -46,6 +49,8 @@ Magnetometer mag(magI2CAddr);
 Heartbeat heart(pinHbLed);
 MotorController wheels;
 ServoArmController arm;
+UltraSonicManager ultraSonicMgr;
+
 
 #endif // _GLOBALS_H
 
