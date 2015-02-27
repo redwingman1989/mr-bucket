@@ -83,7 +83,7 @@ class UltraSonicSensor {
     void triggerAPulse(void);
 
     /* Calculate the distance to reflected surface */
-    float calculateDistance();
+    void calculateDistance();
 
   private:
     /* Trigger Pin */
@@ -118,32 +118,32 @@ class UltraSonicSensor {
 
 };
 
-     /*************************************************************
- * Function:     calculateDistance
- * Input:        void
- * Return:       void
- * Description:  This function calculates the disatance to the
- *                 reflected object/surface, based on the duration
- *                 of time the Trigger pin was set high.
- *           According to the datasheet:
- *             range = high level time * velocity of Ultrasonic Wave / 2
- *
- *           - Velocity of the UltraSonic Wave = ~ 340 meters/second
- *                                             = ~ 13,386 inches/second
- *                                             = ~ 0.013386 inches/microsecond
- *************************************************************/
-inline float UltraSonicSensor::calculateDistance()
-{
-    #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.013386)
-    uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
-    float timeDeltaFloat = (float) timeDelta;
-    float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
-
-    calcDist = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
-
-    //return finalVal;
-
-    #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
-}
+//     /*************************************************************
+// * Function:     calculateDistance
+// * Input:        void
+// * Return:       void
+// * Description:  This function calculates the disatance to the
+// *                 reflected object/surface, based on the duration
+// *                 of time the Trigger pin was set high.
+// *           According to the datasheet:
+// *             range = high level time * velocity of Ultrasonic Wave / 2
+// *
+// *           - Velocity of the UltraSonic Wave = ~ 340 meters/second
+// *                                             = ~ 13,386 inches/second
+// *                                             = ~ 0.013386 inches/microsecond
+// *************************************************************/
+//inline void UltraSonicSensor::calculateDistance()
+//{
+//    #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.013386)
+//    uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
+//    float timeDeltaFloat = (float) timeDelta;
+//    float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
+//
+//    calcDist = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5);
+//
+//    //return finalVal;
+//
+//    #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
+//}
 
 #endif // _ULTRASONICSENSOR_H

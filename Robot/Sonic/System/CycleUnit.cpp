@@ -20,8 +20,8 @@ void CycleUnit::RunTasks(uint16_t time,RobotState state)
         if (tasks[i]->decTimer(deltaMicro)) {
           tasks[i]->RunTick();
           if (tasks[i]->debugLevel) {
-//            sprintf(dbHead,"%s\nFOM: %ld\n",tasks[i]->nameStr,tasks[i]->getTimer());
-//            Serial.print(dbHead);
+            sprintf(dbHead,"%s\nFOM: %ld\n",tasks[i]->nameStr,tasks[i]->getTimer());
+            Serial.print(dbHead);
             tasks[i]->DebugOutput(&Serial);
           }
         }
