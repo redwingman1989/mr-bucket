@@ -3,22 +3,45 @@
 
 MainExecMachine::MainExecMachine() {
   currentState = (state) &MainExecMachine::loadLandR;
+  stateNum = MEST_LOAD_LR_RINGS;
 }
 
 
-void MainExecMachine::loadLandR(bool firstTime) {
+void MainExecMachine::load(bool firstTime) {
   static bool buttonsDetected = 0;
-
+  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
   /* Move Forward Till we hit Buttons */
 
   /* Buttons Detected */
-  if (buttMan.getButtons() & 0x03 == 0x03) {
+  if (!buttonsDetected && ((buttMan.getButtons() & 0x03) && distanceToFront < 1)) {
     timeOut = micros();
     buttonsDetected = true;
+    wheels.KillMotors();
   }
-  /* Command left and right servos to lift rings */
+  else {
+    wheels.updateCommand(15,0,0);
+  }
 
-  /* Wait for top Servos to lift Rings on LEft and Right Pegs */
+  if (buttonsDetected) {
+    switch(stateNum) {
+      case MEST_LOAD_LR_RINGS:
+        /* Command left and right Top Servos to Loading Position */
+        arm.commandPickupServo(PU_LEFT, pickupStates_t.PS_GRAB);
+        arm.commandPickupServo(PU_RIGHT, pickupStates_t.PS_GRAB);
+        StateNum = MEST_BACKUP_ONE;
+        break;
+      case MEST_LOAD_CENTER_RINGS:
+        /* Command center top servo to Loading Position */
+        arm.commandPickupServo(PU_CENTER, pickupStates_t.PS_GRAB);
+        StateNum = MEST_BACKUP_TWO;
+
+      default:
+        // Still Waiting, determin desired heading
+        currentHeading = mag->getFiltHead();
+        desiredHeading = currentHeading - 180;
+        break;
+    }
+  }
 
   /* We waited long enough, change state to back up */
   if (micros() - timeOut > ringLoadTime) {
@@ -28,45 +51,64 @@ void MainExecMachine::loadLandR(bool firstTime) {
 }
 
 void MainExecMachine::backUp(bool firstTime) {
+  bool exit = 0;
+
   /* if we just transistioned to this state*/
 
-  /* If previous state was loadLandR */
-  /* Back up until the two back sensors are on the line */
-  /* Double Check ultrasonic is within tolerable range */
-  /* Tansistion to ShiftForCenter */
+  wheels.updateCommand(-15,0,0);
 
-  /* If Previous state was loadCenter */
-  /* Backup based on ultrasonic up to 12 inches +/- */
-  /* make sure back line sensors do not detect any lines */
-  /* Transistion to flipABitch */
+  switch (stateNum) {
+    case MEST_BACKUP_ONE:
+      if (lineManager.getLineDriveCommand(lineSensorPairs.LSP_BACK).valid ||
+          ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 7.5)
+      {
+        wheels.KillMotors();
+        stateNum = MEST_SHIFT_FOR_CENTER;
+        currentState = (state) &MainExecMachine::shiftForCenter;
+      }
+      break;
+    case MEST_BACKUP_TWO:
+      if (ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 16)
+      {
+        wheels.KillMotors();
+        stateNum = MEST_FLIP_ONE;
+        currentState = (state) &MainExecMachine::flipABitch;
+      }
+      break;
+    case MEST_BACKUP_THREE:
+      if (ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 16)
+      {
+        wheels.KillMotors();
+        stateNum = MEST_FLIP_TWO;
+        currentState = (state) &MainExecMachine::flipABitch;
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 void MainExecMachine::shiftForCenter(bool firstTime) {
-  /* shift to the right until the front center detects line on center front for the second time */
+  static bool centerSensorCount;
+  static bool rightSensorCount;
 
-  /* once the front Center, and two back line censors are centered up, transition to loadCenter() */
-}
+  wheels.updateCommand(0,5,0);
 
-void MainExecMachine::loadCenter(bool firstTime) {
-    static bool buttonsDetected = 0;
-
-  /* Move Forward Till we hit Buttons */
-
-  /* Buttons Detected */
-  if (buttMan.getButtons() & 0x03 == 0x03) {
-    timeOut = micros();
-    buttonsDetected = true;
-    /* Command Center servos to lift rings */
+  if(lineManager.getLineDriveCommand(lineSensorPairs.LSP_CENTER).valid) {
+    centerSensorCount = true;
   }
 
-  // Save off Heading from magnetometer for later 180 flip
+  if(centerSensorCount && lineManager.getLineDriveCommand(lineSensorPairs.LSP_RIGHT).valid)) {
+    rightSensorCount = true;
+  }
 
-  /* Wait for top Servos to lift Rings on Center Peg */
-
-  /* We waited long enough, change state to back up */
-  if (micros() - timeOut > ringLoadTime) {
-    currentState = (state) &MainExecMachine::backUp;
-    buttonsDetected = false;
+  if (centerSensorCount && rightSensorCount &&
+      lineManager.getLineDriveCommand(lineSensorPairs.LSP_CENTER) {
+    wheels.KillMotors();
+    stateNum = MEST_LOAD_CENTER_RINGS;
+    currentState = (state) &MainExecMachine::load;
+    centerSensorCount = false;
+    rightSensorCount = false;
   }
 }
 
@@ -76,5 +118,15 @@ void MainExecMachine::flipABitch(bool firstTime) {
   // rotate till current heading is within tollerance of desired heading
 
   // once the desired heading is reached
-  //   transition to haulAss
+  //   transition to findCenterLin
+}
+
+void MainExecMachine::findCenterLine(bool firstTime) {
+  // Check Ultrasonic Sensors and Magnetometer to move to the center line
+
+  // If found centerline on Right Line Sensors, transition to haulAss
+}
+
+void MainExecMachine::haulAss() {
+
 }

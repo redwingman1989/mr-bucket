@@ -2,23 +2,39 @@
 
 #include "StateMachine.h"
 
+typedef enum {
+  MEST_LOAD_LR_RINGS,
+  MEST_BACKUP_ONE,
+  MEST_SHIFT_FOR_CENTER,
+  MEST_LOAD_CENTER_RINGS,
+  MEST_BACKUP_TWO,
+  MEST_FLIP_ONE,
+  MEST_HAUL_TOSCORE,
+  MEST_SCORE,
+  MEST_BACKUP_THREE,
+  MEST_FLIP_TWO,
+  MEST_HAUL_TOLOAD,
+
+  MEST_NUM_STATES,
+} StateNum;
+
 class MainExecMachine: public StateMachine <MainExecMachine> {
   public:
     MainExecMachine();
 
   private:
+    StateNum stateNum;
     uint32_t timeOut;
     uint16_t currentHeading;
     uint16_t desiredHeading;
 
     /* States */
-    void loadLandR(bool);
+    void load(bool);
     void backUp(bool);
     void shiftForCenter(bool);
-    void loadCenter(bool);
     void flipABitch(bool);
-    void haulAssToLoad(bool);
-    void haulAssToScore(bool);
+    void findCenterLine(bool);
+    void haulAss(bool);
     void score(bool);
 
     /* Sub-Machines */
