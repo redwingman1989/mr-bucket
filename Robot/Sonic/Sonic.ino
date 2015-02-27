@@ -37,6 +37,11 @@ void setup()
   linesensors[LSL_RIGHT_FRONT]  = &linesensorRightFront;
   linesensors[LSL_RIGHT_BACK]   = &linesensorRightBack;
 
+  /* Add UltraSonic Sensors to the manager */
+  ultraSonicMgr.addSensor(pinFUltraTrig, pinFUltraEcho);
+  ultraSonicMgr.addSensor(pinLUltraTrig, pinLUltraEcho);
+  ultraSonicMgr.addSensor(pinRUltraTrig, pinRUltraEcho);
+
   mag.init();
 
   /* Outputs */
@@ -51,6 +56,7 @@ void setup()
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
   sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
+  sense.addTask(&ultraSonicMgr, rate16Hz, 0);
 
   /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());
