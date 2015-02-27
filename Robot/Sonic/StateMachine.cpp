@@ -17,14 +17,15 @@ template <class T> void StateMachine<T>::DebugOutput(HardwareSerial *serialPort)
 
 //Run the current state and update state machine members
 template <class T> void StateMachine<T>::runCurrentState() {
+  state temp = currentState;
   //Determine if the state just changed
   stateChanged = (prevState != currentState);
 
-  //Update state shadow
-  prevState = currentState;
-
   //Execute the current state and pass in if the state just changed
   (this->*currentState)(stateChanged);
+
+  //Update state shadow
+  prevState = temp;
 }
 
 
