@@ -268,26 +268,41 @@ void UltraSonicSensor::triggerAPulse()
 }
 
 
-// /*************************************************************
-// * Function:     calculateDistance
-// * Input:        void
-// * Return:       void
-// * Description:  This function calculates the disatance to the
-// *                 reflected object/surface, based on the duration
-// *                 of time the Trigger pin was set high.
-// *           According to the datasheet:
-// *             range = high level time * velocity of Ultrasonic Wave / 2
-// *
-// *           - Velocity of the UltraSonic Wave = ~ 340 meters/second
-// *                                             = ~ 13,386 inches/second
-// *                                             = ~ 0.013386 inches/microsecond
-// *************************************************************/
-//inline uint8_t UltraSonicSensor::calculateDistance()
-//{
-//    #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.013386)
-//
-//    return (uint8_t)((float)(this->rxLastEchoTime - this->rxFirstEchoTime)) *
-//                      (float) VELOCITY_ULTRA_WAVE_IN_MICROSECONDS * 0.5;
-//
-//    #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
-//}
+ /*************************************************************
+ * Function:     calculateDistance
+ * Input:        void
+ * Return:       void
+ * Description:  This function calculates the disatance to the
+ *                 reflected object/surface, based on the duration
+ *                 of time the Trigger pin was set high.
+ *           According to the datasheet:
+ *             range = high level time * velocity of Ultrasonic Wave / 2
+ *
+ *           - Velocity of the UltraSonic Wave = ~ 340 meters/second
+ *                                             = ~ 13,386 inches/second
+ *                                             = ~ 0.013386 inches/microsecond
+ *************************************************************/
+void UltraSonicSensor::calculateDistance()
+{
+    #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.0066929134)
+
+    Serial.print("1st Eco: ");
+    Serial.println(rxFirstEchoTime);
+    Serial.print("2nd Eco: ");
+    Serial.println(rxLastEchoTime);
+
+    uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
+
+    float timeDeltaFloat = (float) timeDelta;
+    Serial.print("timeDeltaFloat: ");
+    Serial.println(timeDeltaFloat);
+
+    float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS);
+
+    Serial.print("finalVal: ");
+    Serial.println(finalVal);
+
+    calcDist = finalVal;
+
+    #undef VELOCITY_ULTRA_WAVE_IN_MICROSECONDS
+}
