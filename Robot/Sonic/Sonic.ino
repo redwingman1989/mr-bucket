@@ -17,8 +17,8 @@ int prevState = 0;
 int stateChange = true;
 uint16_t desiredHeading;
 
-float convertRadToPercent(float rad){
-    return rad / PI * 50.0 * 4.0;
+float convertRadToPercent(float rad, float speed){
+    return rad / PI * speed * 4.0;
 }
 
 void setup()
@@ -54,7 +54,7 @@ void setup()
   act.addTask(&heart, rate2Hz, 0);
 
   sense.addTask(&mag, rate250Hz, 0);
-  sense.addTask(&lineManager, rate250Hz, 0);
+  sense.addTask(&lineManager, rate250Hz, 1);
   sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
   sense.addTask(&ultraSonicMgr, rate16Hz, 0);
 
@@ -101,6 +101,8 @@ void bullShitDemoCode(void) {
     prevState = state;
 }
 
+float driveSpeed = 15;
+
 void followRightLine(void) {
     static bool buttFlag = false;
     static unsigned long buttTime = 0;
@@ -108,33 +110,40 @@ void followRightLine(void) {
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
 
-    if(rightPair.valid){
-            //Serial.println("rightpair is valid");
-        if(! backPair.valid){
-            float driveSpeed = 30;
+    if(backPair.valid){
+        wheels.updateCommand(0,0,0);
+    }
+     else if(rightPair.valid){
             float adjustedAngleRad = rightPair.angle - PI / 2.0;
-            adjustedAngleRad = convertRadToPercent(adjustedAngleRad);
+            float distanceToRight = 1.5;
+            adjustedAngleRad = convertRadToPercent(adjustedAngleRad,driveSpeed);
             //Serial.println(adjustedAngleRad , 4);
-            float xDistance = (rightPair.offset.x -  sensorCenters[LSL_RIGHT_FRONT].x ) / 1.5 * 30;
+            float xDistance = - 1 *(rightPair.offset.x - sensorCenters[LSL_RIGHT_FRONT].x );
+            if(abs(xDistance) < distanceToRight * .5)
+                xDistance = xDistance * .5 / distanceToRight;
+            else {
+                if(xDistance > 0)
+                    xDistance = driveSpeed * .5;
+                else
+                    xDistance = -1 * driveSpeed * .5;
+            }
             //float maxScale = xDistance + adjustedAngleRad;
             wheels.updateCommand(driveSpeed,xDistance,adjustedAngleRad);
-        }
-        else {
-            wheels.updateCommand(0,0,0);
-            //delay(2000);
-        }
-    }
-    else wheels.updateCommand(0,0,0);
-
+            }
+    else {
+                wheels.updateCommand(0,0,0);
+            }
 
     if (buttMan.getButtons() == 0b11) {
         if (!buttFlag) buttTime = millis();
         wheels.updateCommand(0,0,0);
+        driveSpeed = driveSpeed + 10;
+        delay(200);
         buttFlag = true;
     }
 
     if (buttFlag && (millis()-buttTime > 2000)) {
-       state = REVERSE_IT;
+       //state = REVERSE_IT;
        buttFlag = false;
     }
 

@@ -27,15 +27,15 @@ startCapChargeTime(0)
   /* Map the PORT to the member */
   if ((uint8_t)(*this->pinMap) == pinLineCF_0) {
     /* Pin 0 Value matches to PORTA */
-    this->ptrPortDataReg    = (uint8_t *)PORTA_DATA_REG;
-    this->ptrPortDataDirReg = (uint8_t *)PORTA_DATA_DIR_REG;
-    this->ptrPortInputPins  = (uint8_t *)PORTA_IN_PINS_REG;
-  }
-  else if ((uint8_t) (*this->pinMap) == pinLineCB_0) {
-    /* Pin 0 Value matches to PORTB */
     this->ptrPortDataReg    = (uint8_t *)PORTB_DATA_REG;
     this->ptrPortDataDirReg = (uint8_t *)PORTB_DATA_DIR_REG;
     this->ptrPortInputPins  = (uint8_t *)PORTB_IN_PINS_REG;
+  }
+  else if ((uint8_t) (*this->pinMap) == pinLineCB_0) {
+    /* Pin 0 Value matches to PORTB */
+    this->ptrPortDataReg    = (uint8_t *)PORTA_DATA_REG;
+    this->ptrPortDataDirReg = (uint8_t *)PORTA_DATA_DIR_REG;
+    this->ptrPortInputPins  = (uint8_t *)PORTA_IN_PINS_REG;
   }
   else if ((uint8_t)(*this->pinMap) == pinLineRF_0) {
     /* Pin 0 Value matches to PORTC */
