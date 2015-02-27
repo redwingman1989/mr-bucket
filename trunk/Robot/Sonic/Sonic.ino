@@ -4,18 +4,8 @@ void bullShitDemoCode(void);
 void followRightLine(void);
 void reverseIt(void);
 void uTurn(void);
-
-
-enum states{
-    FOLLOW_RIGHT_LINE,
-    REVERSE_IT,
-    U_TURN
-};
-
-int state = FOLLOW_RIGHT_LINE;
-int prevState = 0;
-int stateChange = true;
-uint16_t desiredHeading;
+void moveToGetRings1(void);
+void findLine(void);
 
 float convertRadToPercent(float rad, float speed){
     return rad / PI * speed * 4.0;
@@ -49,12 +39,12 @@ void setup()
   arm.init();
 
   /*--- Add Runable Modules to Cycle Units ---*/
-  act.addTask(&wheels, rate50Hz, 1);
+  act.addTask(&wheels, rate50Hz, 0);
   act.addTask(&arm, rate50Hz, 0);
   act.addTask(&heart, rate2Hz, 0);
 
   sense.addTask(&mag, rate250Hz, 0);
-  sense.addTask(&lineManager, rate250Hz, 1);
+  sense.addTask(&lineManager, rate250Hz, 0);
   sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
   sense.addTask(&ultraSonicMgr, rate16Hz, 0);
 
@@ -80,14 +70,36 @@ void loop()
     bullShitDemoCode();
 }
 
+enum states{
+    FOLLOW_RIGHT_LINE,
+    MOVE_TO_GET_RINGS1,
+    REVERSE_IT,
+    U_TURN,
+    FINDLINE
+};
+
+
+int state = FOLLOW_RIGHT_LINE;
+int prevState = 0;
+int stateChange = true;
+uint16_t desiredHeading;
+
 void bullShitDemoCode(void) {
   switch (state) {
     case FOLLOW_RIGHT_LINE:
         followRightLine();
         //Serial.println("follow");
         break;
+    case MOVE_TO_GET_RINGS1:
+        moveToGetRings1();
+        //Serial.println("reverse");
+        break;
     case REVERSE_IT:
         reverseIt();
+        //Serial.println("reverse");
+        break;
+    case FINDLINE:
+        findLine();
         //Serial.println("reverse");
         break;
     case U_TURN:
@@ -101,80 +113,109 @@ void bullShitDemoCode(void) {
     prevState = state;
 }
 
-float driveSpeed = 15;
+void findLine(void){
+    lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
+    wheels.updateCommand(0,-5,0);
+    if(rightPair.valid){
+        state = FOLLOW_RIGHT_LINE;
+    }
+}
 
 void followRightLine(void) {
-    static bool buttFlag = false;
-    static unsigned long buttTime = 0;
-
+    static int nextStatecounter = 0;
+    float driveSpeed = 25;
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
 
-    if(backPair.valid){
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+
+    if((backPair.valid && distanceToFront < 30) || distanceToFront < 5){
         wheels.updateCommand(0,0,0);
+        nextStatecounter ++;
+        if(nextStatecounter > 100){
+           state =  MOVE_TO_GET_RINGS1;
+           nextStatecounter = 0;
+        }
     }
      else if(rightPair.valid){
             float adjustedAngleRad = rightPair.angle - PI / 2.0;
-            float distanceToRight = 1.5;
+            float distanceToRight = 1.2;
             adjustedAngleRad = convertRadToPercent(adjustedAngleRad,driveSpeed);
             //Serial.println(adjustedAngleRad , 4);
             float xDistance = - 1 *(rightPair.offset.x - sensorCenters[LSL_RIGHT_FRONT].x );
-            if(abs(xDistance) < distanceToRight * .5)
-                xDistance = xDistance * .5 / distanceToRight;
+            //Serial.println(xDistance , 4);
+            if(abs(xDistance) < distanceToRight * .5){
+              xDistance = xDistance * .5 / distanceToRight * 15;
+            }
             else {
                 if(xDistance > 0)
-                    xDistance = driveSpeed * .5;
+                    xDistance = 15 * .25;
                 else
-                    xDistance = -1 * driveSpeed * .5;
+                    xDistance = -1 * 15 * .25;
             }
-            //float maxScale = xDistance + adjustedAngleRad;
-            wheels.updateCommand(driveSpeed,xDistance,adjustedAngleRad);
+
+            if(distanceToFront < 30)
+                wheels.updateCommand(driveSpeed * distanceToFront / 94 + 5 ,xDistance,adjustedAngleRad);
+            else
+                wheels.updateCommand(driveSpeed ,xDistance,adjustedAngleRad);
             }
-    else {
+            else {
                 wheels.updateCommand(0,0,0);
             }
 
-    if (buttMan.getButtons() == 0b11) {
-        if (!buttFlag) buttTime = millis();
-        wheels.updateCommand(0,0,0);
-        driveSpeed = driveSpeed + 10;
-        delay(200);
-        buttFlag = true;
-    }
 
-    if (buttFlag && (millis()-buttTime > 2000)) {
-       //state = REVERSE_IT;
-       buttFlag = false;
+}
+
+
+void moveToGetRings1(){
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+
+    if(buttMan.getButtons() == 0b10 || buttMan.getButtons() == 0b01 || distanceToFront < 1){
+        wheels.updateCommand(0,0,0);
+        desiredHeading = mag.getRawHead() - 180;
+        delay(200);
+        state = REVERSE_IT;
+    }
+    else {
+        wheels.updateCommand(15,0,0);
     }
 
 }
 
 void reverseIt(void) {
-    static unsigned long stateChangeTime = 0;
-    if (stateChange) {
-        desiredHeading = mag.getFiltHead() + 180;
-        if (desiredHeading > 360) desiredHeading -= 360;
-        stateChangeTime = millis();
+     static int nextStatecounter = 0;
+    lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+
+    wheels.updateCommand(-25,0,0);
+    if ( distanceToFront > 15){
+        if(nextStatecounter++ > 100){
+           state = U_TURN;
+           nextStatecounter = 0;
+        }
     }
-    wheels.updateCommand(-50,0,0);
-    if (millis() - stateChangeTime > 500) state = U_TURN;
 }
 
 void uTurn(void) {
     int16_t heading = mag.getRawHead();
     int16_t delta;
+    static int16_t lastDelta = 0;
+    int16_t deltaDelta;
 
 
     delta = desiredHeading - heading;
     if (delta > 180) delta -= 360;
     if (delta < -180) delta += 360;
+    deltaDelta = delta - lastDelta;
 
-    if (abs(delta) <= 3) {
-        state = FOLLOW_RIGHT_LINE;
+
+    if (abs(delta) <= 3 && abs(deltaDelta) < 3) {
+        state = FINDLINE;
         wheels.updateCommand(0,0,0);
     }
     else {
-        if (delta>0) wheels.updateCommand(0,0,(0.2*delta)+25);
-        else wheels.updateCommand(0,0,-25 + (0.2*delta));
+        if (delta>0) wheels.updateCommand(0,0,(0.2*delta));
+        else wheels.updateCommand(0,0,(0.2*delta));
     }
+    lastDelta = delta;
 }
