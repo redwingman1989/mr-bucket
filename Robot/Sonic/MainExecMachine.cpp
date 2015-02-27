@@ -2,14 +2,14 @@
 #include "Globals.h"
 
 MainExecMachine::MainExecMachine() {
-  currentState = (state) &MainExecMachine::loadLandR;
+  currentState = (state) &MainExecMachine::load;
   stateNum = MEST_LOAD_LR_RINGS;
 }
 
 
 void MainExecMachine::load(bool firstTime) {
   static bool buttonsDetected = 0;
-  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
 
   /* Buttons Detected */
@@ -26,18 +26,18 @@ void MainExecMachine::load(bool firstTime) {
     switch(stateNum) {
       case MEST_LOAD_LR_RINGS:
         /* Command left and right Top Servos to Loading Position */
-        arm.commandPickupServo(PU_LEFT, pickupStates_t.PS_GRAB);
-        arm.commandPickupServo(PU_RIGHT, pickupStates_t.PS_GRAB);
-        StateNum = MEST_BACKUP_ONE;
+        arm.commandPickupServo(PU_LEFT, PS_GRAB);
+        arm.commandPickupServo(PU_RIGHT, PS_GRAB);
+        stateNum = MEST_BACKUP_ONE;
         break;
       case MEST_LOAD_CENTER_RINGS:
         /* Command center top servo to Loading Position */
-        arm.commandPickupServo(PU_CENTER, pickupStates_t.PS_GRAB);
-        StateNum = MEST_BACKUP_TWO;
+        arm.commandPickupServo(PU_CENTER, PS_GRAB);
+        stateNum = MEST_BACKUP_TWO;
 
       default:
         // Still Waiting, determin desired heading
-        currentHeading = mag->getFiltHead();
+        currentHeading = mag.getFiltHead();
         desiredHeading = currentHeading - 180;
         break;
     }
@@ -59,8 +59,8 @@ void MainExecMachine::backUp(bool firstTime) {
 
   switch (stateNum) {
     case MEST_BACKUP_ONE:
-      if (lineManager.getLineDriveCommand(lineSensorPairs.LSP_BACK).valid ||
-          ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 7.5)
+      if (lineManager.getLineDriveCommand(LSP_BACK).valid ||
+          ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 7.5)
       {
         wheels.KillMotors();
         stateNum = MEST_SHIFT_FOR_CENTER;
@@ -68,7 +68,7 @@ void MainExecMachine::backUp(bool firstTime) {
       }
       break;
     case MEST_BACKUP_TWO:
-      if (ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 16)
+      if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.KillMotors();
         stateNum = MEST_FLIP_ONE;
@@ -76,7 +76,7 @@ void MainExecMachine::backUp(bool firstTime) {
       }
       break;
     case MEST_BACKUP_THREE:
-      if (ultraSonicMgr.getSensor(FRONT)->calculateDistance() > 16)
+      if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.KillMotors();
         stateNum = MEST_FLIP_TWO;
@@ -94,16 +94,16 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
 
   wheels.updateCommand(0,5,0);
 
-  if(lineManager.getLineDriveCommand(lineSensorPairs.LSP_CENTER).valid) {
+  if(lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     centerSensorCount = true;
   }
 
-  if(centerSensorCount && lineManager.getLineDriveCommand(lineSensorPairs.LSP_RIGHT).valid)) {
+  if(centerSensorCount && lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     rightSensorCount = true;
   }
 
   if (centerSensorCount && rightSensorCount &&
-      lineManager.getLineDriveCommand(lineSensorPairs.LSP_CENTER) {
+      lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     wheels.KillMotors();
     stateNum = MEST_LOAD_CENTER_RINGS;
     currentState = (state) &MainExecMachine::load;
@@ -127,6 +127,6 @@ void MainExecMachine::findCenterLine(bool firstTime) {
   // If found centerline on Right Line Sensors, transition to haulAss
 }
 
-void MainExecMachine::haulAss() {
+void MainExecMachine::haulAss(bool firstTime) {
 
 }
