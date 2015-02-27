@@ -146,7 +146,7 @@ void followRightLine(void) {
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
 
-    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
     if((backPair.valid && distanceToFront < 30) || distanceToFront < 5){
         wheels.updateCommand(0,0,0);
@@ -187,7 +187,7 @@ void followRightLine(void) {
 
 
 void moveToGetRings1(){
-    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
     if(buttMan.getButtons() == 0b10 || buttMan.getButtons() == 0b01 || distanceToFront < 1){
         wheels.updateCommand(0,0,0);
@@ -201,7 +201,7 @@ void moveToGetRings1(){
 }
 
 void moveToGetRings2(){
-    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
     if(buttMan.getButtons() & 0x3  || distanceToFront < 1){
         wheels.updateCommand(0,0,0);
@@ -221,7 +221,7 @@ void moveToRightRecieve(void){
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
 
-    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
     if(rightPair.valid ){
         wheels.updateCommand(0,0,0);
@@ -269,7 +269,7 @@ void reverseItFork(void){
 
 void reverseIt(void) {
     static int nextStatecounter = 0;
-    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
     wheels.updateCommand(-25,0,0);
     if ( distanceToFront > 15){
