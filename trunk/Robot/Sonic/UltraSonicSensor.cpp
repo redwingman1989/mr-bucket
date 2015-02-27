@@ -1,7 +1,8 @@
 #include <Arduino.h>
-#include "UltraSonicSensor.h"
+#include "Pins.h"
 #include "Interrupts.h"
-
+#include "UltraSonicISR.h"
+#include "UltraSonicSensor.h"
 
  /*************************************************************
  * Function:     UltraSonicSensor Constructor
@@ -50,6 +51,22 @@
 {
     /* Initialize the Raw Data Array */
     memset(this->rawDataArray, 0, sizeof(uint8_t) * NUM_ULTRA_FILT_READINGS);
+
+    /* Set the Triger Pin to an output */
+    pinMode(triggerPin, OUTPUT);
+
+    /* Set the Echo Pin to an input */
+    pinMode(echoPin, INPUT);
+
+    /* Attach the Interrupts to the Echo Pins */
+    if (echoPin == pinFUltraEcho)
+        attachInterrupt((uint8_t)ULTRA_FRONT_EXT_INTERRUPT_NUM, frontUltraSonicISR, CHANGE);
+    else if (echoPin == pinLUltraEcho)
+      attachInterrupt((uint8_t)ULTRA_LEFT_EXT_INTERRUPT_NUM, leftUltraSonicISR, CHANGE);
+    else if (echoPin == pinRUltraEcho)
+      attachInterrupt((uint8_t)ULTRA_RIGHT_EXT_INTERRUPT_NUM, rightUltraSonicISR, CHANGE);
+    else
+      Serial.println("Error Initializing UltraSonic Interrupt!");
 }
 
 
