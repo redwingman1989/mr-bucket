@@ -21,32 +21,6 @@ float convertRadToPercent(float rad){
     return rad / PI * 50.0 * 4.0;
 }
 
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-class motorTester : public RunableModule {
-public:
-  motorTester() {
-    plan.addTask(this, (rate2Hz * 10), true);
-  };
-  bool RunTick() {
-    state = !state;
-    if (state) wheels.updateCommand(100,100,0);
-    else wheels.updateCommand(-100, -100, 0);
-  };
-  void DebugOutput(HardwareSerial *serialPort) {
-    serialPort->print("MOTORTESTER = ");
-    serialPort->println(state);
-  };
-private:
-  bool state;
-};
-motorTester mTester;
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-
-
 void setup()
 {
   Serial.begin(serialBaud);
@@ -71,12 +45,12 @@ void setup()
 
   /*--- Add Runable Modules to Cycle Units ---*/
   act.addTask(&wheels, rate50Hz, 1);
-  act.addTask(&arm, rate50Hz, 1);
+  act.addTask(&arm, rate50Hz, 0);
   act.addTask(&heart, rate2Hz, 0);
 
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
-  sense.addTask(&buttMan, rate100Hz, 3, "Button Manager");
+  sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
 
   /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());
@@ -97,7 +71,7 @@ void loop()
     act.RunTasks(millis(),RS_LoadRings);
 
     //Act
-    //bullShitDemoCode();
+    bullShitDemoCode();
 }
 
 void bullShitDemoCode(void) {
