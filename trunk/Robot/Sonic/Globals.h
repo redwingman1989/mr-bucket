@@ -24,32 +24,37 @@ static const uint32_t rate50Hz  = (20000); // 50Hz Period In micro Seconds
 static const uint32_t rate100Hz = (10000); // 50Hz Period In micro Seconds
 static const uint32_t rate250Hz = (4000); // 250Hz Period In micro Seconds
 
+/* Competition Time */
+static const uint32_t minutes_3 = (180000000); // Competition Timout of 3 minutes
+
+/* Ring Load Time */
+static const uint32_t ringLoadTime = (4 * 1000000); // Load Ring Time
 
 /* Other Global Constants */
 static const uint32_t serialBaud = (115200); // Debug Serial Baud Rate
 
 /* Global Cycle Units */
-CycleUnit sense;
-CycleUnit plan;
-CycleUnit act;
+extern CycleUnit sense;
+extern CycleUnit plan;
+extern CycleUnit act;
 
 /* Global Sub-components of Runable Modules (not sure why these are global??)*/
-LineSensor linesensorCenterFront(centerFront);
-LineSensor linesensorCenterBack(centerBack);
-LineSensor linesensorRightFront(sideFront);
-LineSensor linesensorRightBack(sideBack);
-LineSensor * linesensors[4];
+extern LineSensor linesensorCenterFront;
+extern LineSensor linesensorCenterBack;
+extern LineSensor linesensorRightFront;
+extern LineSensor linesensorRightBack;
+extern LineSensor * linesensors[4];
 
 /* Global Runable Modules (Inputs) */
-ButtonManager buttMan;
-LineSensorManager lineManager(linesensors);
-Magnetometer mag(magI2CAddr);
+extern ButtonManager buttMan;
+extern LineSensorManager lineManager;
+extern Magnetometer mag;
 
 /* Global Runable Modules (Outputs) */
-Heartbeat heart(pinHbLed);
-MotorController wheels;
-ServoArmController arm;
-UltraSonicManager ultraSonicMgr;
+extern Heartbeat heart;
+extern MotorController wheels;
+extern ServoArmController arm;
+extern UltraSonicManager ultraSonicMgr;
 
 
 #endif // _GLOBALS_H
