@@ -19,7 +19,7 @@ class UltraSonicManager : public RunableModule {
 
         /* Implement functions from the parent class */
         bool RunTick();
-//        void DebugOutput(HardwareSerial * hwSerialPort);
+        void DebugOutput(HardwareSerial * hwSerialPort);
 
 
     private:

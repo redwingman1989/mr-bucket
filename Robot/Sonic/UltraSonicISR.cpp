@@ -18,6 +18,7 @@ void frontUltraSonicISR()
     sensor->setLastEchoTime((uint32_t) micros());
     sensor->setReadyForDistanceCalc(true);
     sensor->setReadingInProgress(false);
+    ultraSonicMgr.setTimeOut(0);
   } /* else */
 } /* frontUltraSonicISR() */
 
