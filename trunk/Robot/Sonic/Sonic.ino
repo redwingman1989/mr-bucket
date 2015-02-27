@@ -1,11 +1,15 @@
 #include "Globals.h"
 
+
 void bullShitDemoCode(void);
 void followRightLine(void);
 void reverseIt(void);
 void uTurn(void);
 void moveToGetRings1(void);
 void findLine(void);
+void reverseItFork(void);
+void moveToRightRecieve(void);
+void moveToGetRings2(void);
 
 float convertRadToPercent(float rad, float speed){
     return rad / PI * speed * 4.0;
@@ -75,7 +79,10 @@ enum states{
     MOVE_TO_GET_RINGS1,
     REVERSE_IT,
     U_TURN,
-    FINDLINE
+    FINDLINE,
+    MOVETORIGHT_RECIEVE,
+    REVERSE_IT_TO_FORK,
+    MOVE_TO_GET_RINGS2
 };
 
 
@@ -88,23 +95,35 @@ void bullShitDemoCode(void) {
   switch (state) {
     case FOLLOW_RIGHT_LINE:
         followRightLine();
-        //Serial.println("follow");
+        Serial.println("1");
         break;
     case MOVE_TO_GET_RINGS1:
         moveToGetRings1();
-        //Serial.println("reverse");
+        Serial.println("2");
+        break;
+    case MOVE_TO_GET_RINGS2:
+        moveToGetRings2();
+        Serial.println("3");
         break;
     case REVERSE_IT:
         reverseIt();
-        //Serial.println("reverse");
+        Serial.println("4");
+        break;
+    case REVERSE_IT_TO_FORK:
+        reverseItFork();
+        Serial.println("5");
+        break;
+    case MOVETORIGHT_RECIEVE:
+        moveToRightRecieve();
+        Serial.println("6");
         break;
     case FINDLINE:
         findLine();
-        //Serial.println("reverse");
+        Serial.println("7");
         break;
     case U_TURN:
         uTurn();
-        //Serial.println("uturn");
+        Serial.println("8");
         break;
   }
 
@@ -174,6 +193,20 @@ void moveToGetRings1(){
         wheels.updateCommand(0,0,0);
         desiredHeading = mag.getRawHead() - 180;
         delay(200);
+        state = REVERSE_IT_TO_FORK;
+    }
+    else {
+        wheels.updateCommand(15,0,0);
+    }
+}
+
+void moveToGetRings2(){
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+
+    if(buttMan.getButtons() & 0x3  || distanceToFront < 1){
+        wheels.updateCommand(0,0,0);
+        desiredHeading = mag.getRawHead() - 180;
+        delay(200);
         state = REVERSE_IT;
     }
     else {
@@ -182,9 +215,60 @@ void moveToGetRings1(){
 
 }
 
-void reverseIt(void) {
-     static int nextStatecounter = 0;
+void moveToRightRecieve(void){
+    static int nextStatecounter = 0;
+    float driveSpeed = 15;
+    lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
+
+    float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
+
+    if(rightPair.valid ){
+        wheels.updateCommand(0,0,0);
+        nextStatecounter ++;
+        if(nextStatecounter > 10){
+           state =  MOVE_TO_GET_RINGS2;
+           nextStatecounter = 0;
+        }
+    }
+     else if(backPair.valid){
+            float adjustedAngleRad = backPair.angle - PI / 2.0;
+            float distanceToBack = 1.02;
+            adjustedAngleRad = convertRadToPercent(adjustedAngleRad,driveSpeed);
+            //Serial.println(adjustedAngleRad , 4);
+            float yDistance = - 1 *(backPair.offset.y - sensorCenters[LSL_CENTER_BACK].y );
+            //Serial.println(xDistance , 4);
+            if(abs(yDistance) < distanceToBack * .5){
+              yDistance = yDistance * .5 / distanceToBack * 15;
+            }
+            else {
+                if(yDistance > 0)
+                    yDistance = 15 * .25;
+                else
+                    yDistance = -1 * 15 * .25;
+            }
+            wheels.updateCommand(yDistance ,driveSpeed,adjustedAngleRad);
+     }
+}
+
+void reverseItFork(void){
+    static int nextStatecounter = 0;
+    lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
+    wheels.updateCommand(-25,0,0);
+
+    if(backPair.valid){
+    wheels.updateCommand(0,0,0);
+       nextStatecounter++;
+        if(nextStatecounter > 10){
+            state = MOVETORIGHT_RECIEVE;
+            nextStatecounter = 0;
+        }
+    }
+
+}
+
+void reverseIt(void) {
+    static int nextStatecounter = 0;
     float distanceToFront = ultraSonicMgr.getSensor(FRONT)->calculateDistance();
 
     wheels.updateCommand(-25,0,0);
