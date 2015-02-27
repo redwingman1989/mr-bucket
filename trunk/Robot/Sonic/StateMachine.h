@@ -1,5 +1,4 @@
-#ifndef STATEMACHINE_H
-#define STATEMACHINE_H
+#pragma once
 
 #include "System/RunableModule.h"
 
@@ -27,8 +26,6 @@ protected:
   state currentState;
   state prevState;
 };
-
-#endif // STATEMACHINE_H
 
 //Example usages of the state machine class
 
