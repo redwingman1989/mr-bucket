@@ -14,6 +14,13 @@ void MainExecMachine::loadRings(bool firstTime) {
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
   static uint8_t buttShadow = 0;
+  float sideSpeed = 0;
+  float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  if((stateNum != MEST_LOAD_CENTER_RINGS) && (stateNum != MEST_BACKUP_TWO))
+    sideSpeed = 2*(rightError - leftError);
 
   buttShadow |= buttMan.getButtons();
 
@@ -21,13 +28,13 @@ void MainExecMachine::loadRings(bool firstTime) {
     forwardSpeed += 2;
 
   /* Buttons Detected */
-  if (!buttonsDetected && (buttShadow & 0x03 == 0x03) && (distanceToFront < 1)) {
+  if (!buttonsDetected && ((buttShadow & 0x03) == 0x03) && (distanceToFront < 1)) {
     timeOut = micros();
     buttonsDetected = true;
     wheels.updateCommand(0,0,0);
   }
   else if (!buttonsDetected) {
-    wheels.updateCommand(forwardSpeed,0,0);
+    wheels.updateCommand(forwardSpeed,sideSpeed,0);
   }
 
   if (buttonsDetected) {
@@ -103,7 +110,7 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
   static bool centerSensorCount;
   static bool rightSensorCount;
 
-  wheels.updateCommand(0,5,0);
+  wheels.updateCommand(0,3,0);
 
   if(lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     centerSensorCount = true;
@@ -129,6 +136,11 @@ void MainExecMachine::flipABitch(bool firstTime) {
   //   transition to findCenterLin
   delta = getToHeading(desiredHeading);
 
+  if(delta > 2)
+    delta = 2;
+  else if (delta < -2)
+    delta = -2;
+
   if(delta == 0){
     if (stateNum == MEST_FLIP_ONE)
       stateNum = MEST_FIND_CENTER_LINE_ONE;
@@ -142,7 +154,7 @@ void MainExecMachine::flipABitch(bool firstTime) {
 }
 
 void MainExecMachine::findCenterLine(bool firstTime) {
-  int8_t forwardSpeed = 25;
+  int8_t forwardSpeed = 15;
 
   // Check Ultrasonic Sensors and Magnetometer to move to the center line
   if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() < 18)
@@ -151,10 +163,10 @@ void MainExecMachine::findCenterLine(bool firstTime) {
 
   if(ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue() >
      (ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue() + 9)) {
-       wheels.updateCommand(forwardSpeed,15,0);
+       wheels.updateCommand(forwardSpeed,5,0);
      }
   else
-    wheels.updateCommand(forwardSpeed, -15,0);
+    wheels.updateCommand(forwardSpeed, -5,0);
 
   // If found centerline on Right Line Sensors, transition to haulAss
   if (lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
@@ -182,23 +194,24 @@ void MainExecMachine::haulAss(bool firstTime) {
   float forwardSpeed;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
-  sideSpeed = (rightError - leftError)/2;
+  sideSpeed = 2*(rightError - leftError);
 
-  if (forwardSpeed > 35) {
-    forwardSpeed = 40;
+  if (frontDist > 35) {
+    forwardSpeed = 30;
   }
-  else if (forwardSpeed > 5) {
-      forwardSpeed = frontDist;
+  else if (frontDist > 10) {
+    forwardSpeed = frontDist;
   }
-  else {
+  else if (frontDist <= 10) {
     forwardSpeed = 0;
-    sideSpeed = 0;
-    rot = 0;
-    if (stateNum == MEST_HAUL_TOSCORE)
-      stateNum = MEST_SCORE;
-    else if (stateNum == MEST_HAUL_TOLOAD)
-      stateNum = MEST_LOAD_LR_RINGS;
-    currentState = (state) &MainExecMachine::loadRings;
+    forwardSpeed = 0;
+    if (lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
+      if (stateNum == MEST_HAUL_TOSCORE)
+        stateNum = MEST_SCORE;
+      else if (stateNum == MEST_HAUL_TOLOAD)
+        stateNum = MEST_LOAD_LR_RINGS;
+      currentState = (state) &MainExecMachine::loadRings;
+    }
   }
   wheels.updateCommand(forwardSpeed, sideSpeed, rot);
 }
