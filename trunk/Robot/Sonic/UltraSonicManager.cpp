@@ -67,41 +67,45 @@ UltraSonicSensor * UltraSonicManager::getSensor(ultSensor_t sensor)
  *************************************************************/
 bool UltraSonicManager::RunTick()
 {
-//  /* Initialize the last sensor executed to a known good value, then update it */
-//  ultSensor_t lastSensorExec = sensorToExec;
+  /* Initialize the last sensor executed to a known good value, then update it */
+  ultSensor_t lastSensorExec = sensorToExec;
 
-//  /* Rollover */
-//  if (lastSensorExec == FRONT)
-//    lastSensorExec = (ultSensor_t)((uint8_t)NUM_ULTRA_SENSORS - 1);
-//  else
-//    lastSensorExec = (ultSensor_t)((uint8_t)sensorToExec - 1);
+  /* Rollover */
+  if (lastSensorExec == FRONT)
+    lastSensorExec = (ultSensor_t)((uint8_t)NUM_ULTRA_SENSORS - 1);
+  else
+    lastSensorExec = (ultSensor_t)((uint8_t)sensorToExec - 1);
 
-//  /* Get a pointer to the UltraSonic Sensor that was last executed */
-//  UltraSonicSensor * lastSensor = this->getSensor(lastSensorExec);
+  /* Get a pointer to the UltraSonic Sensor that was last executed */
+  UltraSonicSensor * lastSensor = this->getSensor(lastSensorExec);
 
   /* Get a pointer to the UltraSonic Sensor to exec */
   UltraSonicSensor * sensor = this->getSensor(sensorToExec);
 
-
   /* Check to see if the last sensor finished it's readings. It should have by now. */
-//  if (sensor->getReadingInProgress() == true) {
-//    Serial.println("Still in Progress");
-//  }
-  if(sensor->getTimeForCalcFlag() == true) {
-//    Serial.println("Calculating Dist");
-    sensor->calculateDistance();
-//    sensor->triggerAPulse();
+  if (lastSensor->getReadingInProgress() == true) {
+    Serial.println("Still in Progress");
+
+    /* Need to be careful here...This code is probably going to change */
+    lastSensor->setReadingInProgress(false);
+    /* TO DO: Figure out how to prevent the state machine from getting stuck */
+    return false;
+  }
+
+  if(lastSensor->getTimeForCalcFlag() == true) {
+    lastSensor->calculateDistance();
   }
 
   /* Trigger a pulse on the sensor to exec */
-  if (sensor->getReadingInProgress() == false)
+  if (sensor->getReadingInProgress() == false) {
     sensor->triggerAPulse();
 
-//  /* Move on to the next sensor */
-//  if (sensorToExec == (NUM_ULTRA_SENSORS - 1))
-//    sensorToExec = (ultSensor_t)0;
-//  else
-//    sensorToExec = ultSensor_t((uint8_t)sensorToExec+1);
+  /* Move on to the next sensor */
+  if (sensorToExec == (NUM_ULTRA_SENSORS - 1))
+    sensorToExec = (ultSensor_t)0;
+  else
+    sensorToExec = ultSensor_t((uint8_t)sensorToExec+1);
+  }
 
   return true;
 
@@ -120,16 +124,16 @@ void UltraSonicManager::DebugOutput(HardwareSerial *serialPort) {
   else
     lastSensorExec = (ultSensor_t)((uint8_t)sensorToExec - 1);
 
-  UltraSonicSensor * sensor     = this->getSensor(sensorToExec);
-  UltraSonicSensor * lastSensor = this->getSensor(lastSensorExec);
-  UltraSonicSensor * frontSen   = this->getSensor(FRONT);
-  UltraSonicSensor * leftSen    = this->getSensor(LEFT);
-  UltraSonicSensor * rightSen   = this->getSensor(RIGHT);
+  UltraSonicSensor * sensor     = getSensor(sensorToExec);
+  UltraSonicSensor * lastSensor = getSensor(lastSensorExec);
+  UltraSonicSensor * frontSen   = getSensor(FRONT);
+  UltraSonicSensor * leftSen    = getSensor(LEFT);
+  UltraSonicSensor * rightSen   = getSensor(RIGHT);
 
   switch (debugLevel) {
     case 1:
       sprintf(dbStr,
-        "SenToEx: %d\nIn Prog: %d\n1st Time: %lu\n2nd Time: %lu\nDist: %f\n",
+        "SenToEx: %d\nIn Prog: %d\n1st Time: %ul\n2nd Time: %ul\nDist: %0.2f\n",
         sensorToExec,
         sensor->getReadingInProgress(),
         sensor->getFirstEchoTime(),
@@ -139,7 +143,7 @@ void UltraSonicManager::DebugOutput(HardwareSerial *serialPort) {
       break;
     case 2:
       sprintf(dbStr,
-        "LastSenEx: %d\nIn Prog: %d\n1st Time: %lu\n2nd Time: %lu\nDist: %f\n",
+        "LastSenEx: %d\nIn Prog: %d\n1st Time: %ul\n2nd Time: %ul\nDist: %0.2f\n",
         lastSensorExec,
         lastSensor->getReadingInProgress(),
         lastSensor->getFirstEchoTime(),

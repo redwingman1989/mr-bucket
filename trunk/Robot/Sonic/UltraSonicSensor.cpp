@@ -286,21 +286,11 @@ void UltraSonicSensor::calculateDistance()
 {
     #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.0066929134)
 
-    Serial.print("1st Eco: ");
-    Serial.println(rxFirstEchoTime);
-    Serial.print("2nd Eco: ");
-    Serial.println(rxLastEchoTime);
-
     uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
 
     float timeDeltaFloat = (float) timeDelta;
-    Serial.print("timeDeltaFloat: ");
-    Serial.println(timeDeltaFloat);
 
     float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS);
-
-    Serial.print("finalVal: ");
-    Serial.println(finalVal);
 
     calcDist = finalVal;
 
