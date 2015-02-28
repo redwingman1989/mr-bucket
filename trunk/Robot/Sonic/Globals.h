@@ -12,6 +12,8 @@
 #include "ServoArmController.h"
 #include "UltraSonicManager.h"
 #include "UltraSonicISR.h"
+#include "MainExecMachine.h"
+#include "primaryStateMachine.h"
 #include <math.h>
 
 /* I2C Address Constants */
@@ -56,6 +58,8 @@ extern MotorController wheels;
 extern ServoArmController arm;
 extern UltraSonicManager ultraSonicMgr;
 
+//extern PrimaryStateMachine masterCheif;
+extern MainExecMachine mainExec;
 
 #endif // _GLOBALS_H
 

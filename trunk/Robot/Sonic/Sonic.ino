@@ -43,24 +43,25 @@ void setup()
   arm.init();
 
   /*--- Add Runable Modules to Cycle Units ---*/
-  act.addTask(&wheels, rate50Hz, 0);
-  act.addTask(&arm, rate50Hz, 0);
-  act.addTask(&heart, rate2Hz, 0);
-
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
   sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
   sense.addTask(&ultraSonicMgr, rate16Hz, 0);
 
+  plan.addTask(&mainExec, rate100Hz, 1);
+
+  act.addTask(&wheels, rate50Hz, 0);
+  act.addTask(&arm, rate50Hz, 0);
+  act.addTask(&heart, rate2Hz, 0);
+
   /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());
+  plan.setPrevMicro(micros());
   act.setPrevMicro(micros());
 }
 
 void loop()
 {
-    static bool light = true;
-
     //Sense
     sense.RunTasks(millis(),RS_LoadRings);
 
@@ -71,7 +72,7 @@ void loop()
     act.RunTasks(millis(),RS_LoadRings);
 
     //Act
-    bullShitDemoCode();
+    //bullShitDemoCode();
 }
 
 enum states{

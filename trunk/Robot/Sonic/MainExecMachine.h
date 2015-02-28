@@ -9,18 +9,22 @@ typedef enum {
   MEST_LOAD_CENTER_RINGS,
   MEST_BACKUP_TWO,
   MEST_FLIP_ONE,
+  MEST_FIND_CENTER_LINE_ONE,
   MEST_HAUL_TOSCORE,
   MEST_SCORE,
   MEST_BACKUP_THREE,
   MEST_FLIP_TWO,
+  MEST_FIND_CENTER_LINE_TWO,
   MEST_HAUL_TOLOAD,
 
   MEST_NUM_STATES,
 } StateNum;
 
-class MainExecMachine: public StateMachine <MainExecMachine> {
+class MainExecMachine: public StateMachine<MainExecMachine> {
   public:
     MainExecMachine();
+
+    void DebugOutput(HardwareSerial *);
 
   private:
     StateNum stateNum;
@@ -29,7 +33,7 @@ class MainExecMachine: public StateMachine <MainExecMachine> {
     uint16_t desiredHeading;
 
     /* States */
-    void load(bool);
+    void loadRings(bool);
     void backUp(bool);
     void shiftForCenter(bool);
     void flipABitch(bool);

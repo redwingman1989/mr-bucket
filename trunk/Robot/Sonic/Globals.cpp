@@ -22,3 +22,7 @@ Heartbeat heart(pinHbLed);
 MotorController wheels;
 ServoArmController arm;
 UltraSonicManager ultraSonicMgr;
+
+/* Global State Machine */
+
+MainExecMachine mainExec;
