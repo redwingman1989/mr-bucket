@@ -48,7 +48,6 @@ template <class T> void StateMachine<T>::runCurrentState() {
   //Execute the current state and pass in if the state just changed
   (this->*currentState)(stateChanged);
 
-  Serial.print("Made It Here 3\n");
 }
 //Constructor
 
