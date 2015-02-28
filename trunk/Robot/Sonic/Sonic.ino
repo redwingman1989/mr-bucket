@@ -46,8 +46,8 @@ void setup()
   /*--- Add Runable Modules to Cycle Units ---*/
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
-  sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
-  sense.addTask(&ultraSonicMgr, rate16Hz, 0);
+  sense.addTask(&buttMan, rate100Hz, 1, "Button Manager");
+  sense.addTask(&ultraSonicMgr, rate50Hz, 0);
 
   plan.addTask(&mainExec, rate100Hz, 1);
 
