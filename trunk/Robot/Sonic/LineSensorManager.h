@@ -131,4 +131,4 @@ const point_t pairCenters[NUM_OF_SENSORPAIRS] = {
 {1.5, -1.57192} //BACK
 };
 
-const float pairAngleOffset[NUM_OF_SENSORPAIRS] = {M_PI_2, M_PI_2, 0};
+const float pairAngleOffset[NUM_OF_SENSORPAIRS] = {PI * .5 , PI * .5, 0};

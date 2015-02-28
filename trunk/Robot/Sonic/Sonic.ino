@@ -95,35 +95,35 @@ void bullShitDemoCode(void) {
   switch (state) {
     case FOLLOW_RIGHT_LINE:
         followRightLine();
-        Serial.println("1");
+        //Serial.println("1");
         break;
     case MOVE_TO_GET_RINGS1:
         moveToGetRings1();
-        Serial.println("2");
+        //Serial.println("2");
         break;
     case MOVE_TO_GET_RINGS2:
         moveToGetRings2();
-        Serial.println("3");
+        //Serial.println("3");
         break;
     case REVERSE_IT:
         reverseIt();
-        Serial.println("4");
+        //Serial.println("4");
         break;
     case REVERSE_IT_TO_FORK:
         reverseItFork();
-        Serial.println("5");
+        //Serial.println("5");
         break;
     case MOVETORIGHT_RECIEVE:
         moveToRightRecieve();
-        Serial.println("6");
+        //Serial.println("6");
         break;
     case FINDLINE:
         findLine();
-        Serial.println("7");
+        //Serial.println("7");
         break;
     case U_TURN:
         uTurn();
-        Serial.println("8");
+        //Serial.println("8");
         break;
   }
 
@@ -138,6 +138,32 @@ void findLine(void){
     if(rightPair.valid){
         state = FOLLOW_RIGHT_LINE;
     }
+}
+
+
+void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
+    static float xLast = 0;
+    static float yLast = 0;
+
+    lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
+    float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
+    adjustedAngleRad = convertRadToPercent(adjustedAngleRad,max(abs(speedx),abs(speedy)));
+    //Serial.println(adjustedAngleRad , 4);
+    float xDistance = - 1 *(linePair.offset.x - pairCenters[linePairEnum].x );
+    float yDistance = - 1 *(linePair.offset.y - pairCenters[linePairEnum].y );
+    xLast = xDistance;
+    yLast = yLast;
+    //Serial.println(xDistance , 4);
+    float speedConst = 15 * .25;
+    if(xDistance > 0)
+        xDistance = speedConst;
+    else
+        xDistance = -1 * speedConst;
+    if(yDistance > 0)
+        yDistance = speedConst;
+    else
+        yDistance = -1 * speedConst;
+    wheels.updateCommand(speedy + yDistance,speedx + xDistance,adjustedAngleRad);
 }
 
 void followRightLine(void) {
@@ -220,20 +246,26 @@ void moveToRightRecieve(void){
     float driveSpeed = 15;
     lineDriveCommand_t rightPair = lineManager.getLineDriveCommand(LSP_RIGHT);
     lineDriveCommand_t backPair = lineManager.getLineDriveCommand(LSP_BACK);
+    static bool CrossLineFlag = false;
 
     float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
-    if(rightPair.valid ){
+    if(rightPair.valid && CrossLineFlag ){
         wheels.updateCommand(0,0,0);
         nextStatecounter ++;
         if(nextStatecounter > 10){
            state =  MOVE_TO_GET_RINGS2;
            nextStatecounter = 0;
+           CrossLineFlag = false;
         }
     }
      else if(backPair.valid){
+            if(!rightPair.valid){
+                CrossLineFlag = true;
+            }
+
             float adjustedAngleRad = backPair.angle - PI / 2.0;
-            float distanceToBack = 1.02;
+            float distanceToBack = 1;
             adjustedAngleRad = convertRadToPercent(adjustedAngleRad,driveSpeed);
             //Serial.println(adjustedAngleRad , 4);
             float yDistance = - 1 *(backPair.offset.y - sensorCenters[LSL_CENTER_BACK].y );
