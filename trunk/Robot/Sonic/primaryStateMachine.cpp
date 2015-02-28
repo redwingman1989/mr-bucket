@@ -8,15 +8,13 @@ PrimaryStateMachine::PrimaryStateMachine() {
 
 void PrimaryStateMachine::waitForStart(bool firstTime) {
 
-  if(buttMan.getH2LTrans() & 0x04) {
+  if(buttMan.getH2LTrans() & 0x01) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
+    runTimeStart = micros();
   }
 }
 
 void PrimaryStateMachine::kickSomeAss(bool firstTime) {
-  if (firstTime) {
-    runTimeStart = micros();
-  }
 
   goToWork.RunTick();
 
@@ -26,7 +24,6 @@ void PrimaryStateMachine::kickSomeAss(bool firstTime) {
 }
 
 void PrimaryStateMachine::youWon(bool firstTime) {
-  if (firstTime) {
+    wheels.KillMotors();
     while (1);
-  }
 }

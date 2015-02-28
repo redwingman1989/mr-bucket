@@ -25,4 +25,4 @@ UltraSonicManager ultraSonicMgr;
 
 /* Global State Machine */
 
-MainExecMachine mainExec;
+PrimaryStateMachine masterChief;

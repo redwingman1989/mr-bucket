@@ -2,7 +2,7 @@
 #define _MAGNETOMETER_H
 #include "System/RunableModule.h"
 
-#define MAG_FILTER_SIZE (3)
+#define MAG_FILTER_SIZE (5)
 
 class Magnetometer: public RunableModule {
   private:
@@ -126,8 +126,8 @@ class Magnetometer: public RunableModule {
     int16_t    data_z;
     double     filter[MAG_FILTER_SIZE];
     uint8_t    index;
-    uint16_t   rawHeading;
-    uint16_t   filteredHeading;
+    float   rawHeading;
+    float   filteredHeading;
 
     /* Register Structure */
     union {
@@ -167,8 +167,8 @@ class Magnetometer: public RunableModule {
     Magnetometer(uint8_t);
     void init(void);
     uint16_t calcHeading(void);
-    uint16_t getRawHead(void);
-    uint16_t getFiltHead(void);
+    float getRawHead(void);
+    float getFiltHead(void);
     bool RunTick();
     void DebugOutput(HardwareSerial *serialPort);
 };

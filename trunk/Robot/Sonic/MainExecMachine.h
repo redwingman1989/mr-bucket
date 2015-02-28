@@ -29,8 +29,8 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
   private:
     StateNum stateNum;
     uint32_t timeOut;
-    uint16_t currentHeading;
-    uint16_t desiredHeading;
+    float currentHeading;
+    float desiredHeading;
 
     /* States */
     void loadRings(bool);

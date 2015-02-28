@@ -63,7 +63,7 @@ uint16_t Magnetometer::calcHeading() {
 
   result /= MAG_FILTER_SIZE;
 
-  filteredHeading = (uint16_t) result;
+  filteredHeading = result;
 
 };
 
@@ -84,7 +84,7 @@ void Magnetometer::readMagnetometer(uint8_t startReg,uint8_t dataSize) {
   };
 };
 
-void Magnetometer::updateXYZ(void) {
+void Magnetometer::updateXYZ(void)                    {
   readMagnetometer(MR_DATA_START_REG, 6);
 
   data_x = x_msb;
@@ -115,11 +115,11 @@ void Magnetometer::sendByte(uint8_t reg,uint8_t data) {
   Wire.endTransmission();
 };
 
-uint16_t Magnetometer::getFiltHead() {
+float Magnetometer::getFiltHead() {
   return filteredHeading;
 };
 
-uint16_t Magnetometer::getRawHead() {
+float Magnetometer::getRawHead() {
   return rawHeading;
 };
 

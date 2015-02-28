@@ -58,8 +58,8 @@ extern MotorController wheels;
 extern ServoArmController arm;
 extern UltraSonicManager ultraSonicMgr;
 
-//extern PrimaryStateMachine masterCheif;
-extern MainExecMachine mainExec;
+extern PrimaryStateMachine masterChief;
+//extern MainExecMachine mainExec;
 
 #endif // _GLOBALS_H
 

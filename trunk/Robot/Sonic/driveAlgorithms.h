@@ -38,11 +38,11 @@ void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
     yLast = yLast;
 }
 
-float getToHeading(int16_t desiredHeading) {
-  int16_t heading = mag.getRawHead();
-  int16_t delta;
-  static int16_t lastDelta = 0;
-  int16_t deltaDelta;
+float getToHeading(float desiredHeading) {
+  float heading = mag.getFiltHead();
+  float delta;
+  static float lastDelta = 0;
+  float deltaDelta;
   float returnVal;
 
   delta = desiredHeading - heading;
@@ -52,7 +52,7 @@ float getToHeading(int16_t desiredHeading) {
     delta += 360;
   deltaDelta = delta - lastDelta;
 
-  if (abs(delta) <= 3 && abs(deltaDelta) < 1) {
+  if (abs(delta) <= 2 && abs(deltaDelta) < 0.25) {
     returnVal = 0;
   }
   else {
