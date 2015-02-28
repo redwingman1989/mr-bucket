@@ -10,15 +10,10 @@ MainExecMachine::MainExecMachine() {
 
 void MainExecMachine::loadRings(bool firstTime) {
   static bool buttonsDetected = 0;
-  static uint8_t forwardSpeed;
+  static uint8_t forwardSpeed = 3;
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
-  static uint8_t buttShadow;
-
-  if (firstTime) {
-    buttShadow = 0;
-    forwardSpeed = 5;
-  }
+  static uint8_t buttShadow = 0;
 
   buttShadow |= buttMan.getButtons();
 
@@ -60,6 +55,8 @@ void MainExecMachine::loadRings(bool firstTime) {
     /* We waited long enough, change state to back up */
     if (micros() - timeOut > ringLoadTime) {
       currentState = (state) &MainExecMachine::backUp;
+      buttShadow = 0;
+      forwardSpeed = 3;
       buttonsDetected = false;
     }
   }
@@ -69,7 +66,7 @@ void MainExecMachine::backUp(bool firstTime) {
   bool exit = 0;
   /* if we just transistioned to this state*/
 
-  wheels.updateCommand(-5,0,0);
+  wheels.updateCommand(-3,0,0);
 
   switch (stateNum) {
     case MEST_BACKUP_ONE:
@@ -127,33 +124,21 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
 }
 
 void MainExecMachine::flipABitch(bool firstTime) {
-  int16_t heading = mag.getRawHead();
-  int16_t delta;
-  static int16_t lastDelta = 0;
-  int16_t deltaDelta;
-
-  delta = desiredHeading - heading;
-  if (delta > 180)
-    delta -= 360;
-  if (delta < -180)
-    delta += 360;
-  deltaDelta = delta - lastDelta;
-
-    if (abs(delta) <= 3 && abs(deltaDelta) < 1) {
-      wheels.updateCommand(0,0,0);
-      if (stateNum == MEST_FLIP_ONE)
-        stateNum = MEST_FIND_CENTER_LINE_ONE;
-      else if (stateNum == MEST_FLIP_TWO)
-        stateNum = MEST_FIND_CENTER_LINE_TWO;
-      currentState = (state) &MainExecMachine::findCenterLine;
-    }
-    else {
-        if (delta>0) wheels.updateCommand(0,0,(0.2*delta));
-        else wheels.updateCommand(0,0,(0.2*delta));
-    }
-    lastDelta = delta;
+  float delta;
   // once the desired heading is reached
   //   transition to findCenterLin
+  delta = getToHeading(desiredHeading);
+
+  if(delta == 0){
+    if (stateNum == MEST_FLIP_ONE)
+      stateNum = MEST_FIND_CENTER_LINE_ONE;
+    else if (stateNum == MEST_FLIP_TWO)
+      stateNum = MEST_FIND_CENTER_LINE_TWO;
+    currentState = (state) &MainExecMachine::findCenterLine;
+  }
+  else {
+    wheels.updateCommand(0,0,delta);
+  }
 }
 
 void MainExecMachine::findCenterLine(bool firstTime) {
@@ -190,16 +175,32 @@ void MainExecMachine::findCenterLine(bool firstTime) {
 }
 
 void MainExecMachine::haulAss(bool firstTime) {
+  static int8_t sideSpeed;
+  float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  float rot = getToHeading(desiredHeading);
+  float forwardSpeed;
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
-  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 24) {
-    FollowLine(0,15,LSP_RIGHT);
+  sideSpeed = (rightError - leftError)/2;
+
+  if (forwardSpeed > 35) {
+    forwardSpeed = 40;
+  }
+  else if (forwardSpeed > 5) {
+      forwardSpeed = frontDist;
   }
   else {
-    wheels.updateCommand(0,0,0);
-    stateNum = MEST_SCORE;
+    forwardSpeed = 0;
+    sideSpeed = 0;
+    rot = 0;
+    if (stateNum == MEST_HAUL_TOSCORE)
+      stateNum = MEST_SCORE;
+    else if (stateNum == MEST_HAUL_TOLOAD)
+      stateNum = MEST_LOAD_LR_RINGS;
     currentState = (state) &MainExecMachine::loadRings;
   }
-
+  wheels.updateCommand(forwardSpeed, sideSpeed, rot);
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
