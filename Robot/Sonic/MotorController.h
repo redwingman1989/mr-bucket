@@ -8,6 +8,7 @@ This module will implement the omniwheel motor command mixing
 #include "SabertoothPWM.h"
 #include "System/RunableModule.h"
 #include "Pins.h"
+#include "LineSensorManager.h"
 
 const float outputMax = 100.0;
 const float outputPowerLimit = 100.0;
@@ -18,9 +19,11 @@ const float deadBandScaleFactor = (outputPowerLimit - outputDeadband) / outputMa
 const float outputCountConvert = (PWMmaxCmd - PWMminCmd) / 200.0;
 const int outputOffset = (PWMmaxCmd + PWMminCmd) / 2;
 
+const float motorOffset = 4.75; //Distance from center to wheel centerline in inches
+
 //Rate limit in percent per microsecond
-//One second to ramp 0 to 100
-const float outputRateLimit = outputMax / (1000000.0);
+//0.5 seconds to ramp 0 to 100
+const float outputRateLimit = outputMax / (500000.0);
 
 const int leftMotorPin = pinLMotorPWM;
 const int rightMotorPin = pinRMotorPWM;
@@ -42,6 +45,7 @@ class MotorController : public RunableModule {
 
     //Public methods
     void updateCommand(float fwdBack, float leftRight, float rotation);
+    void updateCommand(float fwdBack, float leftRight, float rotation, point_t p);
 
     bool RunTick();
     void DebugOutput(HardwareSerial *serialPort);
@@ -61,6 +65,8 @@ class MotorController : public RunableModule {
     float leftRight;
     float rotation;
 
+    float individualRotation[M_NUM_OF_MOTORS];
+
     //Array of output motor commands with range -127 (full reverse) to 127 (full forward)
     float outputCmds[M_NUM_OF_MOTORS];
     float prevOutputCmds[M_NUM_OF_MOTORS];
@@ -68,10 +74,12 @@ class MotorController : public RunableModule {
     int actualOutput[M_NUM_OF_MOTORS];
 
     void mixInputToOutput(void);
+    void mixInputToOutputRotatePoint(void);
     void commandRateLimit(int8_t);
     void removeDeadband(int8_t);
     void calculatePWMTimes(int8_t);
     void updateShadows(int8_t);
+    bool rotatePoint;
 
     unsigned long currentTime; //in microseconds
     unsigned long prevTime; //in microseconds
