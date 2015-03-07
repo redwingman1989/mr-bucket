@@ -19,7 +19,7 @@ const float deadBandScaleFactor = (outputPowerLimit - outputDeadband) / outputMa
 const float outputCountConvert = (PWMmaxCmd - PWMminCmd) / 200.0;
 const int outputOffset = (PWMmaxCmd + PWMminCmd) / 2;
 
-const float motorOffset = 4.75; //Distance from center to wheel centerline in inches
+const float motorOffset = 4.5; //Distance from center to wheel centerline in inches
 
 //Rate limit in percent per microsecond
 //0.5 seconds to ramp 0 to 100
