@@ -33,7 +33,7 @@ void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
         adjustedAngleRad = convertRadToPercent(adjustedAngleRad,turnConstant);
 
         float speed = 0;
-        if(speedx < speedy){
+        if(abs(speedx) < abs(speedy)){
             speed =  getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
             wheels.updateCommand(speedy ,speed ,adjustedAngleRad);
         } else{

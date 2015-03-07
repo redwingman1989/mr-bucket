@@ -10,22 +10,22 @@ MainExecMachine::MainExecMachine() {
 
 void MainExecMachine::loadRings(bool firstTime) {
   static bool buttonsDetected = 0;
-  static uint8_t forwardSpeed = 3;
+  static int8_t rotation = 0;
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
   static uint8_t buttShadow = 0;
-  float sideSpeed = 0;
-  float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
-  float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  lineSensorPairs linePair = LSP_RIGHT;
 
-  if((stateNum != MEST_LOAD_CENTER_RINGS) && (stateNum != MEST_BACKUP_TWO))
-    sideSpeed = 2*(rightError - leftError);
+  if(stateNum == MEST_LOAD_CENTER_RINGS)
+    linePair = LSP_CENTER;
 
   buttShadow |= buttMan.getButtons();
 
-  if(!buttonsDetected && (buttShadow & 0x03))
-    forwardSpeed += 2;
+  if(!buttonsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = -2;
+  else if(!buttonsDetected && (buttShadow & 0x03 == 0x02))
+    rotation = 2;
 
   /* Buttons Detected */
   if (!buttonsDetected && ((buttShadow & 0x03) == 0x03) && (distanceToFront < 1)) {
@@ -33,8 +33,11 @@ void MainExecMachine::loadRings(bool firstTime) {
     buttonsDetected = true;
     wheels.updateCommand(0,0,0);
   }
+  else if (!buttonsDetected && rotation != 0) {
+    wheels.updateCommand(0 ,0,rotation);
+  }
   else if (!buttonsDetected) {
-    wheels.updateCommand(forwardSpeed,sideSpeed,0);
+    FollowLine(0, 2,  linePair);
   }
 
   if (buttonsDetected) {
@@ -63,7 +66,6 @@ void MainExecMachine::loadRings(bool firstTime) {
     if (micros() - timeOut > ringLoadTime) {
       currentState = (state) &MainExecMachine::backUp;
       buttShadow = 0;
-      forwardSpeed = 3;
       buttonsDetected = false;
     }
   }
@@ -73,7 +75,7 @@ void MainExecMachine::backUp(bool firstTime) {
   bool exit = 0;
   /* if we just transistioned to this state*/
 
-  wheels.updateCommand(-3,0,0);
+  FollowLine(0, -3,  LSP_RIGHT);
 
   switch (stateNum) {
     case MEST_BACKUP_ONE:
@@ -110,7 +112,7 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
   static bool centerSensorCount;
   static bool rightSensorCount;
 
-  wheels.updateCommand(0,3,0);
+  FollowLine(3, 0,  LSP_BACK);
 
   if(lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     centerSensorCount = true;
