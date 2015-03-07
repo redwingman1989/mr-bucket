@@ -195,16 +195,14 @@ void MainExecMachine::haulAss(bool firstTime) {
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
   sideSpeed = 2*(rightError - leftError);
-
-  if (frontDist > 35) {
-    forwardSpeed = 30;
+  if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
+    wheels.updateCommand(forwardSpeed, sideSpeed, rot);
   }
   else if (frontDist > 10) {
-    forwardSpeed = frontDist;
+    FollowLine(0,50 * frontDist / 95.0 ,  LSP_RIGHT);
   }
-  else if (frontDist <= 10) {
-    forwardSpeed = 0;
-    forwardSpeed = 0;
+  else {
+    wheels.updateCommand(0, 0, 0);
     if (lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
       if (stateNum == MEST_HAUL_TOSCORE)
         stateNum = MEST_SCORE;
@@ -213,7 +211,6 @@ void MainExecMachine::haulAss(bool firstTime) {
       currentState = (state) &MainExecMachine::loadRings;
     }
   }
-  wheels.updateCommand(forwardSpeed, sideSpeed, rot);
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
