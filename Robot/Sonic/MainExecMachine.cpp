@@ -37,7 +37,7 @@ void MainExecMachine::loadRings(bool firstTime) {
     wheels.updateCommand(0 ,0,rotation);
   }
   else if (!buttonsDetected) {
-    FollowLine(0, 2,  linePair);
+    wheels.updateCommand(2, 0, 0);
   }
 
   if (buttonsDetected) {
@@ -75,7 +75,7 @@ void MainExecMachine::backUp(bool firstTime) {
   bool exit = 0;
   /* if we just transistioned to this state*/
 
-  FollowLine(0, -3,  LSP_RIGHT);
+  wheels.updateCommand(-2, 0, 0);
 
   switch (stateNum) {
     case MEST_BACKUP_ONE:
@@ -112,7 +112,7 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
   static bool centerSensorCount;
   static bool rightSensorCount;
 
-  FollowLine(3, 0,  LSP_BACK);
+  wheels.updateCommand(0, 3, 0);
 
   if(lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     centerSensorCount = true;
@@ -201,8 +201,11 @@ void MainExecMachine::haulAss(bool firstTime) {
   if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
     wheels.updateCommand(forwardSpeed, sideSpeed, rot);
   }
-  else if (frontDist > 10) {
-    FollowLine(0,50 * frontDist / 95.0 ,  LSP_RIGHT);
+  else if (frontDist > 15) {
+    forwardSpeed = (frontDist-15) + 2;
+    forwardSpeed = forwardSpeed > 50 ? 50 : forwardSpeed;
+    forwardSpeed = forwardSpeed < 2 ? 2 : forwardSpeed;
+    FollowLine(0, forwardSpeed ,  LSP_RIGHT);
   }
   else {
     wheels.updateCommand(0, 0, 0);
