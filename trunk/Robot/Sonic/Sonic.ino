@@ -18,14 +18,13 @@ void findLineRight(void);
 
 void setup()
 {
-  Serial.begin(serialBaud);
+  Serial2.begin(serialBaud);
 
   /*--- Initialize Runable Modules ---*/
   /* Inputs */
   buttMan.init();
   buttMan.addButton(pinLButton); // Button 0
   buttMan.addButton(pinRButton); // Button 1
-  buttMan.addButton(pinGrnButton); // Button 2
 
   linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
   linesensors[LSL_CENTER_BACK]  = &linesensorCenterBack;
@@ -46,14 +45,13 @@ void setup()
   /*--- Add Runable Modules to Cycle Units ---*/
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
-  sense.addTask(&buttMan, rate100Hz, 1, "Button Manager");
-  sense.addTask(&ultraSonicMgr, rate50Hz, 0);
+  sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
+  sense.addTask(&ultraSonicMgr, rate16Hz, 4);
 
-  plan.addTask(&masterChief, rate100Hz, 1);
+  plan.addTask(&masterChief, rate100Hz, 0);
 
   act.addTask(&wheels, rate50Hz, 0);
   act.addTask(&arm, rate50Hz, 0);
-  act.addTask(&heart, rate2Hz, 0);
 
   /*--- Initialize Cycle Units ---*/
   sense.setPrevMicro(micros());

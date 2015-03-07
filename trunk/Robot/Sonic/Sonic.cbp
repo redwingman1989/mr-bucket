@@ -669,15 +669,19 @@
 		</Compiler>
 		<Unit filename="Buttons.cpp" />
 		<Unit filename="Buttons.h" />
+		<Unit filename="Globals.cpp" />
 		<Unit filename="Globals.h" />
 		<Unit filename="Heartbeat.cpp" />
 		<Unit filename="Heartbeat.h" />
+		<Unit filename="Interrupts.h" />
 		<Unit filename="LineSensor.cpp" />
 		<Unit filename="LineSensor.h" />
 		<Unit filename="LineSensorManager.cpp" />
 		<Unit filename="LineSensorManager.h" />
 		<Unit filename="Magnetometer.cpp" />
 		<Unit filename="Magnetometer.h" />
+		<Unit filename="MainExecMachine.cpp" />
+		<Unit filename="MainExecMachine.h" />
 		<Unit filename="MotorController.cpp" />
 		<Unit filename="MotorController.h" />
 		<Unit filename="Pins.h" />
@@ -689,10 +693,21 @@
 			<Option compile="1" />
 			<Option link="1" />
 		</Unit>
+		<Unit filename="StateMachine.cpp" />
+		<Unit filename="StateMachine.h" />
 		<Unit filename="System/CycleUnit.cpp" />
 		<Unit filename="System/CycleUnit.h" />
 		<Unit filename="System/RunableModule.cpp" />
 		<Unit filename="System/RunableModule.h" />
+		<Unit filename="UltraSonicISR.cpp" />
+		<Unit filename="UltraSonicISR.h" />
+		<Unit filename="UltraSonicManager.cpp" />
+		<Unit filename="UltraSonicManager.h" />
+		<Unit filename="UltraSonicSensor.cpp" />
+		<Unit filename="UltraSonicSensor.h" />
+		<Unit filename="driveAlgorithms.h" />
+		<Unit filename="primaryStateMachine.cpp" />
+		<Unit filename="primaryStateMachine.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

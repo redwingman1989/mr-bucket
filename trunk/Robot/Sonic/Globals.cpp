@@ -18,7 +18,6 @@ LineSensorManager lineManager(linesensors);
 Magnetometer mag(magI2CAddr);
 
 /* Global Runable Modules (Outputs) */
-Heartbeat heart(pinHbLed);
 MotorController wheels;
 ServoArmController arm;
 UltraSonicManager ultraSonicMgr;

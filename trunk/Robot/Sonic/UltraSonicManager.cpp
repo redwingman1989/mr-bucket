@@ -168,6 +168,13 @@ void UltraSonicManager::DebugOutput(HardwareSerial *serialPort) {
         rightSen->getLastEchoTime(),
         rightSen->getCalculatedDistanceValue());
       break;
+    case 4:
+      serialPort->print("Center: ");
+      serialPort->println(frontSen->getCalculatedDistanceValue());
+      serialPort->print("Left:   ");
+      serialPort->println(leftSen->getCalculatedDistanceValue());
+      serialPort->print("Right:  ");
+      serialPort->println(rightSen->getCalculatedDistanceValue());
     default:
       break;
   }
