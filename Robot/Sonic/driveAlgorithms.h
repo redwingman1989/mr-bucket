@@ -25,24 +25,97 @@ float getSpeedHelper(float offset,float lineCenter){
    return speed;
 }
 
-void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
-    float turnConstant = 10;
+float speedBuild(float *integral,float speed){
+        float returnfloat = 0;
+        if(abs(speed) < 1){
+            *integral += speed;
+        }
+        if(abs(*integral) > 1){
+            returnfloat =  *integral;
+            *integral = 0;
+        }else{
+            returnfloat = speed;
+        }
+    return returnfloat;
+}
+
+bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
+    float turnConstant = 8;
+    static float totalAngle = 0;
+    static float totalOff = 0;
     lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
     if(linePair.valid){
         float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
         adjustedAngleRad = convertRadToPercent(adjustedAngleRad,turnConstant);
+        adjustedAngleRad = speedBuild(&totalAngle,adjustedAngleRad);
 
         float speed = 0;
-        if(abs(speedx) < abs(speedy)){
-            speed =  getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
+        if(linePairEnum != LSP_BACK){
+            speed = getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
+            speed = speedBuild(&totalOff,speed);
             wheels.updateCommand(speedy ,speed ,adjustedAngleRad);
         } else{
-            speed =  getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
+            speed = getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
+            speed = speedBuild(&totalOff,speed);
             wheels.updateCommand(speed , speedx ,adjustedAngleRad);
         }
     }else{
         wheels.updateCommand(0,0,0);
     }
+    return false;
+}
+
+bool lineUpOneLine(lineSensorPairs linePairEnum){
+    static float totalAngle = 0;
+    static float totalOff = 0;
+    float turnConstant = 8;
+    lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
+    if(linePair.valid){
+        float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
+        adjustedAngleRad = convertRadToPercent(adjustedAngleRad,turnConstant);
+
+        if(abs(adjustedAngleRad) < 1){
+            totalAngle += adjustedAngleRad;
+        }
+        if(abs(totalAngle) > 1){
+            wheels.updateCommand(0 , 0 ,totalAngle);
+            totalAngle = 0;
+        }else{
+            wheels.updateCommand(0 , 0 ,adjustedAngleRad);
+        }
+        /////
+        float speed = 0;
+        if(linePairEnum != LSP_BACK ){
+            speed =  getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
+            if(abs(speed) < 1){
+            totalOff += adjustedAngleRad;
+            }
+            if(abs(totalOff) > 1){
+                wheels.updateCommand(0 ,totalOff ,adjustedAngleRad);
+                totalOff = 0;
+                return true;
+            }
+            else
+               wheels.updateCommand(0 ,speed ,adjustedAngleRad);
+        }
+         else{
+            speed =  getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
+            if(abs(speed) < 1){
+                totalOff += adjustedAngleRad;
+            }
+            if(abs(totalOff) > 1){
+                wheels.updateCommand(totalOff ,0 ,adjustedAngleRad);
+                totalOff = 0;
+                return true;
+            }
+            else
+                wheels.updateCommand(speed , 0 ,adjustedAngleRad);
+        }
+
+    }else{
+        wheels.updateCommand(0,0,0);
+        }
+        return false;
 }
 
 float getToHeading(float desiredHeading) {
