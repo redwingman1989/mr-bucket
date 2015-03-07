@@ -149,7 +149,8 @@ void MainExecMachine::flipABitch(bool firstTime) {
     currentState = (state) &MainExecMachine::findCenterLine;
   }
   else {
-    wheels.updateCommand(0,0,delta);
+        point_t point= {3.5,3};
+        wheels.updateCommand(0,0,delta,point);
   }
 }
 
