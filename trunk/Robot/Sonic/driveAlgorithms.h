@@ -6,28 +6,42 @@ float convertRadToPercent(float rad, float speed){
     return rad / PI * speed * 4.0;
 }
 
-void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
-
-    lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
-    float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
-    adjustedAngleRad = convertRadToPercent(adjustedAngleRad,max(abs(speedx),abs(speedy)));
-
-    float speedConst = 15 * .25;
-    float speedConstCenter = 1;
+float getSpeedHelper(float offset,float lineCenter){
+    float speedConst = 10;
+    float speedConstCenter = 5;
     float centerThreshhold = .7;
-    float speed = 0;
-    if(speedy > speedx){
-       speed = - 1 *(linePair.offset.x - pairCenters[linePairEnum].x );
-       if(abs(speed) > centerThreshhold)
-        wheels.updateCommand(speedy ,speedConst ,adjustedAngleRad);
-       else
-        wheels.updateCommand(speedy ,speed * speedConstCenter ,adjustedAngleRad);
-    } else{
-       speed = - 1 *(linePair.offset.y - pairCenters[linePairEnum].y );
-       if(abs(speed) > centerThreshhold)
-        wheels.updateCommand(speedConst , speedx ,adjustedAngleRad);
-       else
-         wheels.updateCommand(speed * speedConstCenter , speedx ,adjustedAngleRad);
+    float speed = - 1 *(offset - lineCenter );
+
+    if(speed < 0){
+        speedConst *= -1;
+    }
+
+   if(abs(speed) > centerThreshhold){
+        speed = speedConst;
+   }
+   else{
+        speed *= speedConstCenter;
+   }
+   return speed;
+}
+
+void FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
+    float turnConstant = 10;
+    lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
+    if(linePair.valid){
+        float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
+        adjustedAngleRad = convertRadToPercent(adjustedAngleRad,turnConstant);
+
+        float speed = 0;
+        if(speedx < speedy){
+            speed =  getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
+            wheels.updateCommand(speedy ,speed ,adjustedAngleRad);
+        } else{
+            speed =  getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
+            wheels.updateCommand(speed , speedx ,adjustedAngleRad);
+        }
+    }else{
+        wheels.updateCommand(0,0,0);
     }
 }
 
