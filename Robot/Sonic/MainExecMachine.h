@@ -25,12 +25,16 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     MainExecMachine();
 
     void DebugOutput(HardwareSerial *);
+    void setScoreHead(float heading) {scoreHeading = heading;};
+    void setLoadHead(float heading) {loadHeading = heading;};
 
   private:
     StateNum stateNum;
     uint32_t timeOut;
     float currentHeading;
     float desiredHeading;
+    float scoreHeading;
+    float loadHeading;
 
     /* States */
     void loadRings(bool);

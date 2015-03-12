@@ -47,19 +47,19 @@ void MainExecMachine::loadRings(bool firstTime) {
         arm.commandPickupServo(PU_LEFT, PS_GRAB);
         arm.commandPickupServo(PU_RIGHT, PS_GRAB);
         stateNum = MEST_BACKUP_ONE;
+        desiredHeading = scoreHeading;
         break;
       case MEST_LOAD_CENTER_RINGS:
         /* Command center top servo to Loading Position */
         arm.commandPickupServo(PU_CENTER, PS_GRAB);
         stateNum = MEST_BACKUP_TWO;
+        desiredHeading = scoreHeading;
         break;
       case MEST_SCORE:
         stateNum = MEST_BACKUP_THREE;
+        desiredHeading = loadHeading;
         break;
       default:
-       // Still Waiting, determin desired heading
-        currentHeading = mag.getFiltHead();
-        desiredHeading = currentHeading - 180;
         break;
   }
     /* We waited long enough, change state to back up */
