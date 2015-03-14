@@ -37,7 +37,8 @@ void MainExecMachine::loadRings(bool firstTime) {
     wheels.updateCommand(0 ,0,rotation);
   }
   else if (!buttonsDetected) {
-    wheels.updateCommand(2, 0, 0);
+    FollowLine(0,2,linePair);
+    //wheels.updateCommand(2, 0, 0);
   }
 
   if (buttonsDetected) {
@@ -47,17 +48,14 @@ void MainExecMachine::loadRings(bool firstTime) {
         arm.commandPickupServo(PU_LEFT, PS_GRAB);
         arm.commandPickupServo(PU_RIGHT, PS_GRAB);
         stateNum = MEST_BACKUP_ONE;
-        desiredHeading = scoreHeading;
         break;
       case MEST_LOAD_CENTER_RINGS:
         /* Command center top servo to Loading Position */
         arm.commandPickupServo(PU_CENTER, PS_GRAB);
         stateNum = MEST_BACKUP_TWO;
-        desiredHeading = scoreHeading;
         break;
       case MEST_SCORE:
         stateNum = MEST_BACKUP_THREE;
-        desiredHeading = loadHeading;
         break;
       default:
         break;
@@ -68,19 +66,32 @@ void MainExecMachine::loadRings(bool firstTime) {
       buttShadow = 0;
       buttonsDetected = false;
     }
+    else {
+      if (stateNum < MEST_BACKUP_THREE) {
+        loadHeading = mag.getFiltHead();
+        desiredHeading = scoreHeading;
+      }
+      else {
+        scoreHeading = mag.getFiltHead();
+        desiredHeading = loadHeading;
+      }
+    }
   }
 }
 
 void MainExecMachine::backUp(bool firstTime) {
   bool exit = 0;
+
   /* if we just transistioned to this state*/
 
   wheels.updateCommand(-2, 0, 0);
 
+
   switch (stateNum) {
     case MEST_BACKUP_ONE:
+      FollowLine(0, -2, LSP_RIGHT);
       if (lineManager.getLineDriveCommand(LSP_BACK).valid ||
-          ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 7.5)
+          ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 5)
       {
         wheels.updateCommand(0,0,0);
         stateNum = MEST_SHIFT_FOR_CENTER;
@@ -111,6 +122,7 @@ void MainExecMachine::backUp(bool firstTime) {
 void MainExecMachine::shiftForCenter(bool firstTime) {
   static bool centerSensorCount;
   static bool rightSensorCount;
+  static bool needToCenter = false;
 
   wheels.updateCommand(0, 3, 0);
 
@@ -124,11 +136,17 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
 
   if (centerSensorCount && rightSensorCount &&
       lineManager.getLineDriveCommand(LSP_CENTER).valid) {
-    wheels.updateCommand(0,0,0);
-    stateNum = MEST_LOAD_CENTER_RINGS;
-    currentState = (state) &MainExecMachine::loadRings;
-    centerSensorCount = false;
-    rightSensorCount = false;
+    needToCenter = true;
+  }
+  if (needToCenter) {
+    if(lineUpOneLine(LSP_CENTER)) {
+      wheels.updateCommand(0,0,0);
+      stateNum = MEST_LOAD_CENTER_RINGS;
+      currentState = (state) &MainExecMachine::loadRings;
+      centerSensorCount = false;
+      rightSensorCount = false;
+      needToCenter = false;
+    }
   }
 }
 
@@ -194,7 +212,7 @@ void MainExecMachine::haulAss(bool firstTime) {
   float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float rot = getToHeading(desiredHeading);
-  float forwardSpeed;
+  float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
   sideSpeed = 2*(rightError - leftError);
