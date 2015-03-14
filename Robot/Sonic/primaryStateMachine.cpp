@@ -18,6 +18,7 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
     goToWork.setScoreHead(mag.getFiltHead());
   }
   if(buttMan.getH2LTrans() & 0x02) {
+
     calibrated = true;
   }
   if(buttMan.getH2LTrans() & 0x01 && calibrated) {
