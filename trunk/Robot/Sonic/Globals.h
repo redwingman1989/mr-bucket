@@ -30,7 +30,10 @@ static const uint32_t rate250Hz = (4000); // 250Hz Period In micro Seconds
 static const uint32_t minutes_3 = (180000000); // Competition Timout of 3 minutes
 
 /* Ring Load Time */
-static const uint32_t ringLoadTime = (4 * 1000000); // Load Ring Time
+static const uint32_t ringLoadTime = (2 * 1000000); // Load Ring Time
+
+/* Ring Load Time */
+static const uint32_t armSwingTime = (4 * 1000000); // Arm Swing Ring Time
 
 /* Other Global Constants */
 static const uint32_t serialBaud = (115200); // Debug Serial Baud Rate
