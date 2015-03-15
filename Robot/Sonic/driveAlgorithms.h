@@ -61,8 +61,9 @@ bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
         }
     }else{
         wheels.updateCommand(0,0,0);
+        return false;
     }
-    return false;
+    return true;
 }
 
 bool lineUpOneLine(lineSensorPairs linePairEnum){
@@ -89,11 +90,11 @@ bool lineUpOneLine(lineSensorPairs linePairEnum){
             speed =  getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
             if(abs(speed) < 1){
             totalOff += adjustedAngleRad;
+            return true;
             }
             if(abs(totalOff) > 1){
                 wheels.updateCommand(0 ,totalOff ,adjustedAngleRad);
                 totalOff = 0;
-                return true;
             }
             else
                wheels.updateCommand(0 ,speed ,adjustedAngleRad);
@@ -102,11 +103,11 @@ bool lineUpOneLine(lineSensorPairs linePairEnum){
             speed =  getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
             if(abs(speed) < 1){
                 totalOff += adjustedAngleRad;
+                return true;
             }
             if(abs(totalOff) > 1){
                 wheels.updateCommand(totalOff ,0 ,adjustedAngleRad);
                 totalOff = 0;
-                return true;
             }
             else
                 wheels.updateCommand(speed , 0 ,adjustedAngleRad);
