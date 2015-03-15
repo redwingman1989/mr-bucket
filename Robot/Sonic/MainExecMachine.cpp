@@ -23,9 +23,9 @@ void MainExecMachine::loadRings(bool firstTime) {
   buttShadow |= buttMan.getButtons();
 
   if(!buttonsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = -2;
+    rotation = -4;
   else if(!buttonsDetected && (buttShadow & 0x03 == 0x02))
-    rotation = 2;
+    rotation = 4;
 
   /* Buttons Detected */
   if (!buttonsDetected && ((buttShadow & 0x03) == 0x03) && (distanceToFront < 1)) {
@@ -37,7 +37,7 @@ void MainExecMachine::loadRings(bool firstTime) {
     wheels.updateCommand(0 ,0,rotation);
   }
   else if (!buttonsDetected) {
-    FollowLine(0,2,linePair);
+    FollowLine(0,4,linePair);
     //wheels.updateCommand(2, 0, 0);
   }
 
@@ -55,6 +55,9 @@ void MainExecMachine::loadRings(bool firstTime) {
         stateNum = MEST_BACKUP_TWO;
         break;
       case MEST_SCORE:
+        arm.commandPickupServo(PU_LEFT, PS_LETGO);
+        arm.commandPickupServo(PU_RIGHT, PS_LETGO);
+        arm.commandPickupServo(PU_CENTER, PS_LETGO);
         stateNum = MEST_BACKUP_THREE;
         break;
       default:
@@ -102,21 +105,47 @@ void MainExecMachine::backUp(bool firstTime) {
       if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.updateCommand(0,0,0);
-        stateNum = MEST_FLIP_ONE;
-        currentState = (state) &MainExecMachine::flipABitch;
+        stateNum = MEST_RAISE_ARM;
+        currentState = (state) &MainExecMachine::mainArm;
+        arm.commandSwingArm(SA_UP);
       }
       break;
     case MEST_BACKUP_THREE:
       if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.updateCommand(0,0,0);
-        stateNum = MEST_FLIP_TWO;
-        currentState = (state) &MainExecMachine::flipABitch;
+        stateNum = MEST_LOWER_ARM;
+        currentState = (state) &MainExecMachine::mainArm;
+        arm.commandSwingArm(SA_DOWN);
       }
       break;
     default:
       break;
   }
+}
+
+void MainExecMachine::mainArm(bool firstTime) {
+  static bool setTimeout = true;
+
+  if (setTimeout) {
+    if (stateNum == MEST_RAISE_ARM)
+      arm.commandSwingArm(SA_UP);
+    else
+      arm.commandSwingArm(SA_DOWN);
+    timeOut = micros();
+    setTimeout = false;
+  }
+  else if (micros() - timeOut > armSwingTime){
+     if (stateNum == MEST_RAISE_ARM) {
+       stateNum = MEST_FLIP_ONE;
+     }
+     else {
+       stateNum = MEST_FLIP_TWO;
+     }
+     currentState = (state) &MainExecMachine::flipABitch;
+     setTimeout = true;
+  }
+
 }
 
 void MainExecMachine::shiftForCenter(bool firstTime) {
