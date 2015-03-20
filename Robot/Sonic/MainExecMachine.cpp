@@ -14,11 +14,12 @@ void MainExecMachine::loadRings(bool firstTime) {
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
   static uint8_t buttShadow = 0;
-  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  lineSensorPairs linePair = LSP_RIGHT;
+  static uint8_t buttTimeout = 0;
+
+  lineSensorLocations lineLocation = LSL_RIGHT_FRONT;
 
   if(stateNum == MEST_LOAD_CENTER_RINGS)
-    linePair = LSP_CENTER;
+    lineLocation = LSL_CENTER_FRONT;
 
   buttShadow |= buttMan.getButtons();
 
@@ -27,8 +28,11 @@ void MainExecMachine::loadRings(bool firstTime) {
   else if(!buttonsDetected && (buttShadow & 0x03 == 0x02))
     rotation = 4;
 
+  // Keep going if it has been half a second since a single button was pressed
+  if (buttShadow && (buttTimeout < 25)) buttTimeout++;
+
   /* Buttons Detected */
-  if (!buttonsDetected && ((buttShadow & 0x03) == 0x03) && (distanceToFront < 1)) {
+  if (!buttonsDetected && (((buttShadow & 0x03) == 0x03) || (buttTimeout >= 25)) && (distanceToFront < 1)) {
     timeOut = micros();
     buttonsDetected = true;
     wheels.updateCommand(0,0,0);
@@ -37,8 +41,9 @@ void MainExecMachine::loadRings(bool firstTime) {
     wheels.updateCommand(0 ,0,rotation);
   }
   else if (!buttonsDetected) {
-    FollowLine(0,4,linePair);
-    //wheels.updateCommand(2, 0, 0);
+    //Use the single front sensor to follow the line so there is not rotation
+    //This assumes we are rotationally aligned when entering loadRings
+    FollowLineSingle(4,true,lineLocation);
   }
 
   if (buttonsDetected) {
@@ -63,22 +68,26 @@ void MainExecMachine::loadRings(bool firstTime) {
       default:
         break;
   }
-    /* We waited long enough, change state to back up */
-    if (micros() - timeOut > ringLoadTime) {
-      currentState = (state) &MainExecMachine::backUp;
-      buttShadow = 0;
-      buttonsDetected = false;
-    }
-    else {
-      if (stateNum < MEST_BACKUP_THREE) {
-        loadHeading = mag.getFiltHead();
-        desiredHeading = scoreHeading;
-      }
-      else {
-        scoreHeading = mag.getFiltHead();
-        desiredHeading = loadHeading;
-      }
-    }
+  /* We waited long enough, change state to back up */
+  if (micros() - timeOut > ringLoadTime) {
+    currentState = (state) &MainExecMachine::backUp;
+    //Reset all the statics for next time function is run
+    buttShadow = 0;
+    buttonsDetected = false;
+    buttTimeout = 0;
+  }
+
+//commenting out since we are calibrating the load/score headings at startup
+//    else {
+//      if (stateNum < MEST_BACKUP_THREE) {
+//        loadHeading = mag.getFiltHead();
+//        desiredHeading = scoreHeading;
+//      }
+//      else {
+//        scoreHeading = mag.getFiltHead();
+//        desiredHeading = loadHeading;
+//      }
+//    }
   }
 }
 
@@ -149,8 +158,8 @@ void MainExecMachine::mainArm(bool firstTime) {
 }
 
 void MainExecMachine::shiftForCenter(bool firstTime) {
-  static bool centerSensorCount;
-  static bool rightSensorCount;
+  static bool centerSensorCount = false;
+  static bool rightSensorCount = false;
   static bool needToCenter = false;
 
   wheels.updateCommand(0, 3, 0);
@@ -167,8 +176,9 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
       lineManager.getLineDriveCommand(LSP_CENTER).valid) {
     needToCenter = true;
   }
+
   if (needToCenter) {
-    if(lineUpOneLine(LSP_CENTER)) {
+    if(FollowLineSingle(0,true,LSL_CENTER_FRONT)) {
       wheels.updateCommand(0,0,0);
       stateNum = MEST_LOAD_CENTER_RINGS;
       currentState = (state) &MainExecMachine::loadRings;
