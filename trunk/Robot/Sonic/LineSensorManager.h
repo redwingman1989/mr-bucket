@@ -63,6 +63,7 @@ class LineSensorManager : public RunableModule {
   bool RunTick();
   void DebugOutput(HardwareSerial *serialPort);
   lineDriveCommand_t getLineDriveCommand(lineSensorPairs sensorPair);
+  lineDriveCommand_t getSingleCommand(lineSensorLocations location);
 
   private:
   void determineSensorHits(lineSensorLocations sensor);
