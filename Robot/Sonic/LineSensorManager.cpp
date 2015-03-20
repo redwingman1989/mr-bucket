@@ -222,3 +222,15 @@ void LineSensorManager::pollLineSensors(void) {
 lineDriveCommand_t LineSensorManager::getLineDriveCommand(lineSensorPairs sensorPair) {
   return this->driveCommands[sensorPair];
 }
+
+//Get the drive command for a single sensor
+lineDriveCommand_t LineSensorManager::getSingleCommand(lineSensorLocations location) {
+  lineDriveCommand_t output;
+
+  output.angle = 0;
+  output.offset.x = sensorHits[location].center.x;
+  output.offset.y = sensorHits[location].center.y;
+  output.valid = sensorHits[location].hit;
+
+  return output;
+}
