@@ -7,7 +7,7 @@ float convertRadToPercent(float rad, float speed){
 }
 
 float getSpeedHelper(float offset,float lineCenter){
-    float speedConst = 10;
+    float speedConst = 8;
     float speedConstCenter = 5;
     float centerThreshhold = .7;
     float speed = - 1 *(offset - lineCenter );
