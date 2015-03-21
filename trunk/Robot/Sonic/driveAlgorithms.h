@@ -177,7 +177,7 @@ float getDeltaHeading(float desiredHeading){
     delta = desiredHeading - heading;
       if (delta > 180)
         delta -= 360;
-      if (delta < -180)
+      else if (delta < -180)
         delta += 360;
     return delta;
 }
