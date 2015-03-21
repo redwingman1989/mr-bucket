@@ -7,9 +7,9 @@ float convertRadToPercent(float rad, float speed){
 }
 
 float getSpeedHelper(float offset,float lineCenter){
-    float speedConst = 8;
+    float speedConst = 2.5;
     float speedConstCenter = 5;
-    float centerThreshhold = .7;
+    float centerThreshhold = .5;
     float speed = - 1 *(offset - lineCenter );
 
     if(speed < 0){
@@ -156,51 +156,57 @@ bool lineUpOneLine(lineSensorPairs linePairEnum){
 float getToHeading(float desiredHeading) {
   float heading = mag.getFiltHead();
   float delta;
-  static float lastDelta = 0;
-  float deltaDelta;
   float returnVal;
+  static float integralMotion=0;
 
   delta = desiredHeading - heading;
   if (delta > 180)
     delta -= 360;
   if (delta < -180)
     delta += 360;
-  deltaDelta = delta - lastDelta;
 
-  if (abs(delta) <= 2 && abs(deltaDelta) < 0.25) {
-    returnVal = 0;
-  }
-  else {
-    returnVal = (0.6 * delta);
-  }
-
-  lastDelta = delta;
+  returnVal = (0.6 * delta);
+  returnVal = speedBuild(&integralMotion,returnVal );
 
   return returnVal;
 }
-//Gets us to a heading going a direction unless +- 10 degress
+
+float getDeltaHeading(float desiredHeading){
+    float delta;
+    float heading = mag.getFiltHead();
+    delta = desiredHeading - heading;
+      if (delta > 180)
+        delta -= 360;
+      if (delta < -180)
+        delta += 360;
+    return delta;
+}
+
+//Gets us to a heading going a direction unless +- 10 thresholdGap
 float getToHeadingDirection(float desiredHeading,bool clockwise) {
-  float heading = mag.getFiltHead();
   float delta;
   const float thresholdGap = 10;
-  float returnVal;
+  const float forceDirectionGap = 50;
+  const float rotationSpeed = 4;
+  const float smallRotationDivider = .3;
+  static float integralMotion=0;
 
-  delta = desiredHeading - heading;
-  if(abs(delta) < 10){
-    return getToHeading(desiredHeading);
+  delta = getDeltaHeading(desiredHeading);
+  if( abs(delta) < forceDirectionGap){
+    if(abs(delta) < thresholdGap){
+        return speedBuild(&integralMotion, smallRotationDivider * delta );
+    } else {
+        if(delta < 0){
+            return -rotationSpeed;
+        } else{
+            return rotationSpeed;
+        }
+    }
   }
 
   if( clockwise){
-    if(delta < 0){
-        delta += 360;
-    }
+    return rotationSpeed;
   } else {
-    if(delta > 0){
-        delta -= 360;
-    }
+    return -rotationSpeed;
   }
-
-returnVal = (0.2 * delta);
-
-  return returnVal;
 }
