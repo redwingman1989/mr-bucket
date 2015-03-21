@@ -39,15 +39,20 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     float loadHeading;
 
     /* States */
-    void loadRings(bool);
-    void backUp(bool);
-    void mainArm(bool);
-    void shiftForCenter(bool);
-    void flipABitch(bool);
-    void findCenterLine(bool);
-    void haulAss(bool);
-    void score(bool);
-
-    /* Sub-Machines */
+    void loadLeftRightRings(bool);
+    void backupFromLeftRightRings(bool);
+    void shiftForCenterRings(bool);
+    void loadCenterRings(bool);
+    void backupFromCenterRings(bool);
+    void raiseArm(bool);
+    void flipToScore(bool);
+    void findCenterLineToScore(bool);
+    void haulToScore(bool);
+    void scoreRings(bool);
+    void backupFromScoring(bool);
+    void lowerArm(bool);
+    void flipToLoad(bool);
+    void findCenterLineToLoad(bool);
+    void haulToLoad(bool);
 
 };
