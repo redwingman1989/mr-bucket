@@ -1,3 +1,4 @@
+#include "Pins.h"
 #include "UltraSonicSensor.h"
 #include "UltraSonicManager.h"
 
@@ -42,7 +43,17 @@ void UltraSonicManager::addSensor(uint8_t trigPin, uint8_t echoPin)
   UltraSonicSensor sensor = UltraSonicSensor(trigPin, echoPin);
 
   /* Add to the array of UltraSonic Sensors */
-  arrManagedSensors[numManagedSensors++] = sensor;
+  if (trigPin == pinFUltraTrig)
+    arrManagedSensors[FRONT] = sensor;
+  else if (trigPin == pinLUltraTrig)
+    arrManagedSensors[LEFT] = sensor;
+  else if (trigPin == pinRUltraTrig)
+    arrManagedSensors[RIGHT] = sensor;
+  else
+    Serial.println("Error Init. UltraSonic sen. in array of sensors.");
+
+  /* Keep track of the number of UltraSonic Sensors that are managed. May be useful later. */
+  numManagedSensors++;
 }
 
 
@@ -92,6 +103,7 @@ bool UltraSonicManager::RunTick()
     return false;
   }
 
+  /* Check to see if it is time to perform a distance calculation on the previous sensor */
   if(lastSensor->getTimeForCalcFlag() == true) {
     lastSensor->calculateDistance();
   }
