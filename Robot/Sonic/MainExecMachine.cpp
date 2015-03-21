@@ -160,6 +160,7 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
   static bool centerSensorCount = false;
   static bool rightSensorCount = false;
   static bool needToCenter = false;
+  static int lineUpCount = 0;
 
   wheels.updateCommand(0, 3, 0);
 
@@ -178,12 +179,17 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
 
   if (needToCenter) {
     if(FollowLineSingle(0,true,LSL_CENTER_FRONT)) {
-      wheels.updateCommand(0,0,0);
-      stateNum = MEST_LOAD_CENTER_RINGS;
-      currentState = (state) &MainExecMachine::loadRings;
-      centerSensorCount = false;
-      rightSensorCount = false;
-      needToCenter = false;
+            if(lineUpCount++ > 10){
+                wheels.updateCommand(0,0,0);
+                stateNum = MEST_LOAD_CENTER_RINGS;
+                currentState = (state) &MainExecMachine::loadRings;
+                centerSensorCount = false;
+                rightSensorCount = false;
+                needToCenter = false;
+                lineUpCount=0;
+            }
+    } else{
+        lineUpCount = 0;
     }
   }
 }
@@ -207,8 +213,8 @@ void MainExecMachine::flipABitch(bool firstTime) {
     currentState = (state) &MainExecMachine::findCenterLine;
   }
   else {
-        point_t point= {3.5,3};
-        wheels.updateCommand(0,0,delta,point);
+        point_t point= {3.5,0};
+        wheels.updateCommand(0,0,delta * 2,point);
   }
 }
 
@@ -249,7 +255,7 @@ void MainExecMachine::haulAss(bool firstTime) {
   static int8_t sideSpeed;
   float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
-  float rot = getToHeading(desiredHeading);
+  float rot = 0;
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
