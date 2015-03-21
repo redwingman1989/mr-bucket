@@ -225,17 +225,30 @@ void MainExecMachine::findCenterLine(bool firstTime) {
   float sidewaysSpeed = 5;
   float rotSpeed = 4;
   static bool goRight = true;
+  static bool first = true;
+
+  float rightUltra = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  float leftUltra = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+
+  // If first time then set goRight to the short way to prevent zig-zag
+  if (first) {
+    first = false;
+    if ((leftUltra + 7) < (rightUltra + 1.5)) goRight = true;
+    else goRight = false;
+  }
 
   // Stop going forward if getting too close to wall
   if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() < 24)
     forwardSpeed = 0;
 
   // Check if we need to switch the sideways direction
-  if(ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue() < 12) goRight = false;
-  else if (ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue() < 12) goRight = true;
+  if(rightUltra < 12) goRight = false;
+  else if (leftUltra < 12) goRight = true;
 
   // When the right pair is valid, exit criteria has been met
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
+    first = true;
+
     switch (stateNum) {
       case MEST_FIND_CENTER_LINE_ONE:
         stateNum = MEST_HAUL_TOSCORE;
