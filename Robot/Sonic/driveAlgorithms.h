@@ -171,10 +171,36 @@ float getToHeading(float desiredHeading) {
     returnVal = 0;
   }
   else {
-    returnVal = (0.2 * delta);
+    returnVal = (0.6 * delta);
   }
 
   lastDelta = delta;
+
+  return returnVal;
+}
+//Gets us to a heading going a direction unless +- 10 degress
+float getToHeadingDirection(float desiredHeading,bool clockwise) {
+  float heading = mag.getFiltHead();
+  float delta;
+  const float thresholdGap = 10;
+  float returnVal;
+
+  delta = desiredHeading - heading;
+  if(abs(delta) < 10){
+    return getToHeading(desiredHeading);
+  }
+
+  if( clockwise){
+    if(delta < 0){
+        delta += 360;
+    }
+  } else {
+    if(delta > 0){
+        delta -= 360;
+    }
+  }
+
+returnVal = (0.2 * delta);
 
   return returnVal;
 }
