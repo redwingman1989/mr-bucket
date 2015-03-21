@@ -10,6 +10,7 @@ MainExecMachine::MainExecMachine() {
 
 void MainExecMachine::loadRings(bool firstTime) {
   static bool buttonsDetected = 0;
+  const int timeBeforeButtonIgnore = 50;
   static int8_t rotation = 0;
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Move Forward Till we hit Buttons */
@@ -24,15 +25,15 @@ void MainExecMachine::loadRings(bool firstTime) {
   buttShadow |= buttMan.getButtons();
 
   if(!buttonsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = -4;
+    rotation = -8;
   else if(!buttonsDetected && (buttShadow & 0x03 == 0x02))
-    rotation = 4;
+    rotation = 8;
 
   // Keep going if it has been half a second since a single button was pressed
-  if (buttShadow && (buttTimeout < 25)) buttTimeout++;
+  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore)) buttTimeout++;
 
   /* Buttons Detected */
-  if (!buttonsDetected && (((buttShadow & 0x03) == 0x03) || (buttTimeout >= 25)) && (distanceToFront < 1)) {
+  if (!buttonsDetected && (((buttShadow & 0x03) == 0x03) || (buttTimeout >= timeBeforeButtonIgnore)) && (distanceToFront < 1)) {
     timeOut = micros();
     buttonsDetected = true;
     wheels.updateCommand(0,0,0);
@@ -77,7 +78,7 @@ void MainExecMachine::loadRings(bool firstTime) {
     buttTimeout = 0;
   }
 
-    else {
+    else if (buttShadow & 0x3 == 0x3){
       if (stateNum < MEST_BACKUP_THREE) {
         loadHeading = mag.getFiltHead();
         desiredHeading = scoreHeading;
@@ -253,15 +254,15 @@ void MainExecMachine::findCenterLine(bool firstTime) {
 
 void MainExecMachine::haulAss(bool firstTime) {
   static int8_t sideSpeed;
-  float leftError = 8.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float leftError = 4.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
-  float rot = 0;
+  float rot = getToHeading(desiredHeading);
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
 
   sideSpeed = 2*(rightError - leftError);
   if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
-    wheels.updateCommand(forwardSpeed, sideSpeed, rot);
+    wheels.updateCommand(0, sideSpeed, rot);
   }
   else if (frontDist > 15) {
     forwardSpeed = (frontDist-15) + 2;
