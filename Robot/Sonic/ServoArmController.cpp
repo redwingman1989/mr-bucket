@@ -16,8 +16,8 @@ inline int rateLimit(int command, int current, int rate);
 ServoArmController::ServoArmController()
 {
   //Setup servo constants
-  this->swingArmConstants[SA_DOWN] = 670;
-  this->swingArmConstants[SA_UP] = 1540;
+  this->swingArmConstants[SA_DOWN] = 660;
+  this->swingArmConstants[SA_UP] = 1560;
 
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1505;
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1690;
@@ -25,14 +25,14 @@ ServoArmController::ServoArmController()
   this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1782;
 
   this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = 1420;
-  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1595;
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1605;
   this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = 1507;
   this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1682;
 
-  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1620;
-  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1790;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1705;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1875;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1665;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1840;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1760;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 192;
 
   this->swingArmCommand = this->swingArmConstants[SA_DOWN];
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
