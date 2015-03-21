@@ -96,11 +96,10 @@ void MainExecMachine::backUp(bool firstTime) {
 
   /* if we just transistioned to this state*/
 
-  wheels.updateCommand(-2, 0, 0);
-
 
   switch (stateNum) {
     case MEST_BACKUP_ONE:
+      wheels.updateCommand(-2, 0, 0);
       FollowLine(0, -2, LSP_RIGHT);
       if (lineManager.getLineDriveCommand(LSP_BACK).valid ||
           ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 5)
@@ -111,6 +110,7 @@ void MainExecMachine::backUp(bool firstTime) {
       }
       break;
     case MEST_BACKUP_TWO:
+      wheels.updateCommand(-20, 0, 0);
       if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.updateCommand(0,0,0);
@@ -120,6 +120,7 @@ void MainExecMachine::backUp(bool firstTime) {
       }
       break;
     case MEST_BACKUP_THREE:
+      wheels.updateCommand(-20, 0, 0);
       if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
       {
         wheels.updateCommand(0,0,0);
@@ -196,26 +197,27 @@ void MainExecMachine::shiftForCenter(bool firstTime) {
 }
 
 void MainExecMachine::flipABitch(bool firstTime) {
-  float delta;
+  float rotationSpeed;
+  static int lineUpCount = 0;
+  float delta = getDeltaHeading(desiredHeading);
   // once the desired heading is reached
   //   transition to findCenterLin
-  delta =  getToHeadingDirection(desiredHeading,true);
+  rotationSpeed =  getToHeadingDirection(desiredHeading,true);
 
-  if(delta > 2)
-    delta = 2;
-  else if (delta < -2)
-    delta = -2;
-
-  if(delta == 0){
-    if (stateNum == MEST_FLIP_ONE)
-      stateNum = MEST_FIND_CENTER_LINE_ONE;
-    else if (stateNum == MEST_FLIP_TWO)
-      stateNum = MEST_FIND_CENTER_LINE_TWO;
-    currentState = (state) &MainExecMachine::findCenterLine;
+  if(abs(rotationSpeed) < 1 || abs(delta) < 3){
+    if(lineUpCount++ > 10){
+        if (stateNum == MEST_FLIP_ONE)
+          stateNum = MEST_FIND_CENTER_LINE_ONE;
+        else if (stateNum == MEST_FLIP_TWO)
+          stateNum = MEST_FIND_CENTER_LINE_TWO;
+        currentState = (state) &MainExecMachine::findCenterLine;
+        lineUpCount = 0;
+    }
   }
   else {
         point_t point= {3.5,0};
-        wheels.updateCommand(0,0,delta * 2,point);
+        wheels.updateCommand(0,0,rotationSpeed,point);
+        lineUpCount = 0;
   }
 }
 
