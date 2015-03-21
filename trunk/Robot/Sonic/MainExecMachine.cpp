@@ -77,17 +77,16 @@ void MainExecMachine::loadRings(bool firstTime) {
     buttTimeout = 0;
   }
 
-//commenting out since we are calibrating the load/score headings at startup
-//    else {
-//      if (stateNum < MEST_BACKUP_THREE) {
-//        loadHeading = mag.getFiltHead();
-//        desiredHeading = scoreHeading;
-//      }
-//      else {
-//        scoreHeading = mag.getFiltHead();
-//        desiredHeading = loadHeading;
-//      }
-//    }
+    else {
+      if (stateNum < MEST_BACKUP_THREE) {
+        loadHeading = mag.getFiltHead();
+        desiredHeading = scoreHeading;
+      }
+      else {
+        scoreHeading = mag.getFiltHead();
+        desiredHeading = loadHeading;
+      }
+    }
   }
 }
 
@@ -193,7 +192,7 @@ void MainExecMachine::flipABitch(bool firstTime) {
   float delta;
   // once the desired heading is reached
   //   transition to findCenterLin
-  delta = getToHeading(desiredHeading);
+  delta =  getToHeadingDirection(desiredHeading,true);
 
   if(delta > 2)
     delta = 2;
