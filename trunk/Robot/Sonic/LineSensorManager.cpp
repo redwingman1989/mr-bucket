@@ -181,7 +181,7 @@ void LineSensorManager::determineLineDriveCommand(lineSensorPairs sensorPair) {
     //Only B hit
     output->offset.x = B.x;
     output->offset.y = B.y;
-    output->angle = atan2(B.y, A.x);
+    output->angle = atan2(B.y, B.x);
   }
   else {
     //None hit - invalidate sensor drive commnad and zero out
