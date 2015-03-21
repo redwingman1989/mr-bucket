@@ -32,7 +32,7 @@ ServoArmController::ServoArmController()
   this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1665;
   this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1840;
   this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1760;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 192;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1920;
 
   this->swingArmCommand = this->swingArmConstants[SA_DOWN];
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
