@@ -76,16 +76,16 @@ void MainExecMachine::loadRings(bool firstTime) {
     buttShadow = 0;
     buttonsDetected = false;
     buttTimeout = 0;
+    if (stateNum < MEST_BACKUP_THREE) desiredHeading = scoreHeading;
+    else desiredHeading = loadHeading;
   }
 
     else if (buttShadow & 0x3 == 0x3){
       if (stateNum < MEST_BACKUP_THREE) {
         loadHeading = mag.getFiltHead();
-        desiredHeading = scoreHeading;
       }
       else {
         scoreHeading = mag.getFiltHead();
-        desiredHeading = loadHeading;
       }
     }
   }
