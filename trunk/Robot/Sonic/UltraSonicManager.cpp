@@ -49,8 +49,12 @@ void UltraSonicManager::addSensor(uint8_t trigPin, uint8_t echoPin)
     arrManagedSensors[LEFT] = sensor;
   else if (trigPin == pinRUltraTrig)
     arrManagedSensors[RIGHT] = sensor;
-  else
+  else {
     Serial.println("Error Init. UltraSonic sen. in array of sensors.");
+    /* Don't increment the number of Managed sensors, because we had an error
+     *   adding this sensor. */
+    return;
+  }
 
   /* Keep track of the number of UltraSonic Sensors that are managed. May be useful later. */
   numManagedSensors++;
