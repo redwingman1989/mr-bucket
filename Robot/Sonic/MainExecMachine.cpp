@@ -220,23 +220,22 @@ void MainExecMachine::flipABitch(bool firstTime) {
 }
 
 void MainExecMachine::findCenterLine(bool firstTime) {
-  int8_t forwardSpeed = 15;
 
-  // Check Ultrasonic Sensors and Magnetometer to move to the center line
-  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() < 18)
+  float forwardSpeed = 15;
+  float sidewaysSpeed = 5;
+  float rotSpeed = 4;
+  static bool goRight = true;
+
+  // Stop going forward if getting too close to wall
+  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() < 24)
     forwardSpeed = 0;
 
+  // Check if we need to switch the sideways direction
+  if(ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue() < 12) goRight = false;
+  else if (ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue() < 12) goRight = true;
 
-  if(ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue() >
-     (ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue() + 9)) {
-       wheels.updateCommand(forwardSpeed,5,0);
-     }
-  else
-    wheels.updateCommand(forwardSpeed, -5,0);
-
-  // If found centerline on Right Line Sensors, transition to haulAss
-  if (lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
-
+  // When the right pair is valid, exit criteria has been met
+  if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     switch (stateNum) {
       case MEST_FIND_CENTER_LINE_ONE:
         stateNum = MEST_HAUL_TOSCORE;
@@ -249,6 +248,24 @@ void MainExecMachine::findCenterLine(bool firstTime) {
     }
     currentState = (state) &MainExecMachine::haulAss;
     wheels.updateCommand(0,0,0);
+  }
+
+  // If the right front sensor is valid, pivot to get back sensor on
+  else if(lineManager.getSingleCommand(LSL_RIGHT_FRONT).valid) {
+    if (goRight) wheels.updateCommand(forwardSpeed, 0, -rotSpeed, sensorCenters[LSL_RIGHT_FRONT]);
+    else wheels.updateCommand(forwardSpeed, 0, rotSpeed, sensorCenters[LSL_RIGHT_FRONT]);
+  }
+
+  // If the right back sensor is valid, pivot to get front sensor on
+  else if(lineManager.getSingleCommand(LSL_RIGHT_BACK).valid) {
+    if (goRight) wheels.updateCommand(forwardSpeed, 0, rotSpeed, sensorCenters[LSL_RIGHT_BACK]);
+    else wheels.updateCommand(forwardSpeed, 0, -rotSpeed, sensorCenters[LSL_RIGHT_BACK]);
+  }
+
+  // Else drive forward and sideways
+  else {
+    if (goRight) wheels.updateCommand(forwardSpeed, sidewaysSpeed, 0);
+    else wheels.updateCommand(forwardSpeed, -sidewaysSpeed, 0);
   }
 }
 
