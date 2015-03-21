@@ -33,7 +33,7 @@ static const uint32_t minutes_3 = (180000000); // Competition Timout of 3 minute
 static const uint32_t ringLoadTime = (2 * 1000000); // Load Ring Time
 
 /* Ring Load Time */
-static const uint32_t armSwingTime = (4 * 1000000); // Arm Swing Ring Time
+static const uint32_t armSwingTime = (1 * 1000); // Arm Swing Ring Time
 
 /* Other Global Constants */
 static const uint32_t serialBaud = (115200); // Debug Serial Baud Rate
