@@ -82,3 +82,26 @@ bool findCenterLine(bool first) {
 
   return false;
 }
+
+bool flipABitch(float desiredHeading) {
+  float rotationSpeed;
+  static int lineUpCount = 0;
+  float delta = getDeltaHeading(desiredHeading);
+  // once the desired heading is reached
+  //   transition to findCenterLin
+  rotationSpeed =  getToHeadingDirection(desiredHeading,true);
+
+  if(abs(rotationSpeed) < 1 || abs(delta) < 3){
+    if(lineUpCount++ > 10){
+        lineUpCount = 0;
+        return true;
+    }
+  }
+  else {
+        point_t point= {3.5,0};
+        wheels.updateCommand(0,0,rotationSpeed,point);
+        lineUpCount = 0;
+  }
+
+  return false;
+}

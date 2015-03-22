@@ -39,7 +39,10 @@ void MainExecMachine::raiseArm(bool first) {
 }
 
 void MainExecMachine::flipToScore(bool first) {
-
+  if (flipABitch(scoreHeading)) {
+    stateNum = MEST_FIND_CENTER_LINE_ONE;
+    currentState = (state) &MainExecMachine::findCenterLineToScore;
+  }
 }
 
 void MainExecMachine::findCenterLineToScore(bool first) {
@@ -75,7 +78,10 @@ void MainExecMachine::lowerArm(bool first) {
 }
 
 void MainExecMachine::flipToLoad(bool first) {
-
+  if (flipABitch(loadHeading)) {
+    stateNum = MEST_FIND_CENTER_LINE_TWO;
+    currentState = (state) &MainExecMachine::findCenterLineToLoad;
+  }
 }
 
 void MainExecMachine::findCenterLineToLoad(bool first) {

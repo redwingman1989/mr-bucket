@@ -4,3 +4,5 @@
 bool haulAss(bool first);
 
 bool findCenterLine(bool first);
+
+bool flipABitch(bool first);
