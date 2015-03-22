@@ -33,9 +33,9 @@ void PrimaryStateMachine::kickSomeAss(bool firstTime) {
   goToWork.RunTick();
  // goToWork.DebugOutput(&Serial2);
 
-//  if (micros() - runTimeStart > minutes_3) {
-//    currentState = (state) &PrimaryStateMachine::youWon;
-//  }
+  if (micros() - runTimeStart > minutes_3) {
+    currentState = (state) &PrimaryStateMachine::youWon;
+  }
 }
 
 void PrimaryStateMachine::youWon(bool firstTime) {

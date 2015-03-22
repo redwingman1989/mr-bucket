@@ -51,6 +51,7 @@ void MainExecMachine::loadLeftRightRings(bool first) {
     /* Reset the first time flag  */
     firstTime = true;
     /* Move on to the next state */
+    clearStaticData(&sharedData);
     currentState = (state) &MainExecMachine::pickupLeftRightRings;
   }
 
@@ -59,6 +60,7 @@ void MainExecMachine::loadLeftRightRings(bool first) {
   if (sharedData.staticButtonTimeoutFlag) {
     /* Mark Loading Zone as dirty */
     loadZoneDirty = true;
+    firstTime = true;
     /* Clear Static Data */
     clearStaticData(&sharedData);
     /* DO NOT CHANGE STATES */
@@ -75,7 +77,7 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
   }
 
   wheels.updateCommand(0, 0, 0);
-
+  loadHeading = mag.getFiltHead();
   arm.commandPickupServo(PU_LEFT, PS_GRAB);
   arm.commandPickupServo(PU_RIGHT, PS_GRAB);
 
@@ -85,10 +87,6 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
     currentState = (state) &MainExecMachine::backupFromLeftRightRings;
   }
 
-  /* Update the heading */
-  if (sharedData.staticButtShadow & 0x3 == 0x3) {
-    loadHeading = mag.getFiltHead();
-  }
 }
 
 void MainExecMachine::backupFromLeftRightRings(bool first) {
@@ -157,14 +155,7 @@ void MainExecMachine::loadCenterRings(bool first) {
   if (sharedData.staticButtonsDetected) {
     /* Reset the first time flag  */
     firstTime = true;
-    /* Move on to the next state */
-    currentState = (state) &MainExecMachine::pickupCenterRings;
-  }
-
-  /* Perform Arm Movements based on if buttons were detected */
-  if (sharedData.staticButtonsDetected) {
-    /* Reset the first time flag  */
-    firstTime = true;
+    clearStaticData(&sharedData);
     /* Move on to the next state */
     currentState = (state) &MainExecMachine::pickupCenterRings;
   }
@@ -180,10 +171,6 @@ void MainExecMachine::loadCenterRings(bool first) {
     currentState = (state) &MainExecMachine::pickupCenterRings;
   }
 
-  /* Update the heading */
-  if (sharedData.staticButtShadow & 0x3 == 0x3) {
-    loadHeading = mag.getFiltHead();
-  }
 }
 
 void MainExecMachine::pickupCenterRings(bool first) {
@@ -195,6 +182,8 @@ void MainExecMachine::pickupCenterRings(bool first) {
     firstTime = false;
   }
 
+  wheels.updateCommand(0,0,0);
+  loadHeading = mag.getFiltHead();
   arm.commandPickupServo(PU_CENTER, PS_GRAB);
 
   if (micros() - pickupStartTime > ringLoadTime) {
@@ -300,6 +289,8 @@ void MainExecMachine::scoreRings(bool first) {
   if (sharedData.staticButtonsDetected) {
     /* Reset the first time flag  */
     firstTime = true;
+    /* Clear Static Data */
+    clearStaticData(&sharedData);
     /* Move on to the next state */
     currentState = (state) &MainExecMachine::unloadAllRings;
   }
@@ -309,14 +300,10 @@ void MainExecMachine::scoreRings(bool first) {
   if (sharedData.staticButtonTimeoutFlag) {
     /* Mark Loading Zone as dirty */
     scoreZoneDirty = true;
+    firstTime = true;
     /* Clear Static Data */
     clearStaticData(&sharedData);
     /* DO NOT CHANGE STATES */
-  }
-
-  /* We may need to update the heading */
-  if (sharedData.staticButtShadow & 0x3 == 0x3) {
-    scoreHeading = mag.getFiltHead();
   }
 }
 
@@ -328,7 +315,8 @@ void MainExecMachine::unloadAllRings(bool first) {
     pickupStartTime = micros();
     firstTime = false;
   }
-
+  wheels.updateCommand(0,0,0);
+  scoreHeading = mag.getFiltHead();
   arm.commandPickupServo(PU_LEFT, PS_LETGO);
   arm.commandPickupServo(PU_CENTER, PS_LETGO);
   arm.commandPickupServo(PU_RIGHT, PS_LETGO);
