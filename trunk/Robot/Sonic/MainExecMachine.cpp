@@ -3,11 +3,13 @@
 #include "stateMachineCommon.h"
 #include "Globals.h"
 #include "driveAlgorithms.h"
-#include "stateMachineCommon.h"
+#include "SweepExecMachine.h"
 
 static loadRingsSharedStaticData_t sharedData = {false, 0, 0, 0};
 
 MainExecMachine::MainExecMachine() {
+  zamboniLoadZone = SweepExecMachine(Z_LOAD);
+  zamboniScoreZone = SweepExecMachine(Z_SCORE);
   currentState = (state) &MainExecMachine::loadLeftRightRings;
   stateNum = MEST_LOAD_LR_RINGS;
 }
@@ -15,6 +17,18 @@ MainExecMachine::MainExecMachine() {
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
   serialPort->print("st#: ");
   serialPort->println(stateNum);
+}
+
+bool MainExecMachine::RunTick() {
+  if (loadZoneDirty && (currentState == &MainExecMachine::loadLeftRightRings)) {
+    loadZoneDirty = !zamboniLoadZone.RunTick();
+  }
+  else if (scoreZoneDirty && (currentState == &MainExecMachine::scoreRings)){
+    scoreZoneDirty = !zamboniScoreZone.RunTick();
+  }
+  else {
+    runCurrentState();
+  }
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
@@ -32,8 +46,6 @@ void MainExecMachine::loadLeftRightRings(bool first) {
 
   /* Call the common Load Rings timeout check function */
   if (loadRingsTimeOutCheck(&sharedData)) {
-    /* Set the new desired heading */
-    desiredHeading = scoreHeading;
     /* If we timed out, move on */
     currentState = (state) &MainExecMachine::backupFromLeftRightRings;
   }
@@ -127,8 +139,6 @@ void MainExecMachine::loadCenterRings(bool first) {
 
   /* Call the common Load Rings timeout check function */
   if (loadRingsTimeOutCheck(&sharedData)) {
-    /* Set the new desired heading */
-    desiredHeading = scoreHeading;
     /* If we timed out, move on */
     currentState = (state) &MainExecMachine::backupFromCenterRings;
   }
@@ -254,8 +264,6 @@ void MainExecMachine::scoreRings(bool first) {
 
   /* Call the common Load Rings timeout check function */
   if (loadRingsTimeOutCheck(&sharedData)) {
-    /* Set the new desired heading */
-    desiredHeading = loadHeading;
     /* If we timed out, move on */
     currentState = (state) &MainExecMachine::backupFromScoring;
   }
