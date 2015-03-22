@@ -1,6 +1,7 @@
 #pragma once
 
 #include "StateMachine.h"
+#include "SweepExecMachine.h"
 
 typedef enum {
   MEST_LOAD_LR_RINGS,         //0
@@ -29,6 +30,7 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
   public:
     MainExecMachine();
 
+    bool RunTick();
     void DebugOutput(HardwareSerial *);
     void setScoreHead(float heading) {scoreHeading = heading;};
     void setLoadHead(float heading) {loadHeading = heading;};
@@ -36,8 +38,9 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
   private:
     StateNum stateNum;
     uint32_t timeOut;
+    bool scoreZoneDirty;
+    bool loadZoneDirty;
     float currentHeading;
-    float desiredHeading;
     float scoreHeading;
     float loadHeading;
 
@@ -61,4 +64,7 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     void findCenterLineToLoad(bool);
     void haulToLoad(bool);
 
+    /* Sub-State Machines */
+    SweepExecMachine zamboniLoadZone;
+    SweepExecMachine zamboniScoreZone;
 };
