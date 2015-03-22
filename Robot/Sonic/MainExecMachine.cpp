@@ -195,7 +195,7 @@ void MainExecMachine::pickupCenterRings(bool first) {
 
 void MainExecMachine::backupFromCenterRings(bool first) {
   wheels.updateCommand(-20, 0, 0);
-  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
+  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 12)
   {
     wheels.updateCommand(0,0,0);
     stateNum = MEST_RAISE_ARM;
@@ -225,7 +225,7 @@ void MainExecMachine::flipToScore(bool first) {
     }
   }
   else {
-        point_t point= {3.5,0};
+        point_t point= {2,0};
         wheels.updateCommand(0,0,rotationSpeed,point);
         lineUpCount = 0;
   }
@@ -330,7 +330,7 @@ void MainExecMachine::unloadAllRings(bool first) {
 
 void MainExecMachine::backupFromScoring(bool first) {
   wheels.updateCommand(-20, 0, 0);
-  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 16)
+  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 12)
   {
     wheels.updateCommand(0,0,0);
     stateNum = MEST_LOWER_ARM;
