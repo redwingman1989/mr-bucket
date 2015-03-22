@@ -3,15 +3,19 @@
 #include "stateMachineCommon.h"
 #include "Globals.h"
 #include "driveAlgorithms.h"
+#include "stateMachineCommon.h"
 #include "SweepExecMachine.h"
-
-static loadRingsSharedStaticData_t sharedData = {false, 0, 0, 0};
 
 MainExecMachine::MainExecMachine() {
   zamboniLoadZone = SweepExecMachine(Z_LOAD);
   zamboniScoreZone = SweepExecMachine(Z_SCORE);
   currentState = (state) &MainExecMachine::loadLeftRightRings;
   stateNum = MEST_LOAD_LR_RINGS;
+  sharedData.staticButtonsDetected = false;
+  sharedData.staticButtShadow = 0;
+  sharedData.staticButtTimeout = 0;
+  sharedData.staticStateTimeout = micros();
+  sharedData.staticButtonTimeoutFlag = false;
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
@@ -32,27 +36,32 @@ bool MainExecMachine::RunTick() {
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
+  static bool firstTime = true;
+
+  if (firstTime) {
+    sharedData.staticStateTimeout = micros();
+    firstTime = false;
+  }
+
   /* Call the common Load Rings functionality */
   loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
 
   /* Perform Arm Movements based on if buttons were detected */
   if (sharedData.staticButtonsDetected) {
-    /* Move Servos */
-    arm.commandPickupServo(PU_LEFT, PS_GRAB);
-    arm.commandPickupServo(PU_RIGHT, PS_GRAB);
+    /* Reset the first time flag  */
+    firstTime = true;
     /* Move on to the next state */
-    currentState = (state) &MainExecMachine::backupFromLeftRightRings;
+    currentState = (state) &MainExecMachine::pickupLeftRightRings;
   }
 
-  /* Call the common Load Rings timeout check function */
-  if (loadRingsTimeOutCheck(&sharedData)) {
-    /* If we timed out, move on */
-    currentState = (state) &MainExecMachine::backupFromLeftRightRings;
-  }
-
-  /* We may need to update the heading */
-  if (sharedData.staticButtShadow & 0x3 == 0x3) {
-    loadHeading = mag.getFiltHead();
+  /* A button has not been pressed for 5 seconds and the robot is more
+   *   than an inch from the wall */
+  if (sharedData.staticButtonTimeoutFlag) {
+    /* Mark Loading Zone as dirty */
+    loadZoneDirty = true;
+    /* Clear Static Data */
+    clearStaticData(&sharedData);
+    /* DO NOT CHANGE STATES */
   }
 }
 
@@ -65,6 +74,8 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
     firstTime = false;
   }
 
+  wheels.updateCommand(0, 0, 0);
+
   arm.commandPickupServo(PU_LEFT, PS_GRAB);
   arm.commandPickupServo(PU_RIGHT, PS_GRAB);
 
@@ -72,6 +83,11 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
     firstTime = true;
     stateNum = MEST_BACKUP_ONE;
     currentState = (state) &MainExecMachine::backupFromLeftRightRings;
+  }
+
+  /* Update the heading */
+  if (sharedData.staticButtShadow & 0x3 == 0x3) {
+    loadHeading = mag.getFiltHead();
   }
 }
 
@@ -126,24 +142,45 @@ void MainExecMachine::shiftForCenterRings(bool first) {
 }
 
 void MainExecMachine::loadCenterRings(bool first) {
+
+  static bool firstTime = true;
+
+  if (firstTime) {
+    sharedData.staticStateTimeout = micros();
+    firstTime = false;
+  }
+
   /* Call the common Load Rings functionality */
   loadRingsButtonDetection(LSL_CENTER_FRONT, &sharedData);
 
   /* Perform Arm Movements based on if buttons were detected */
   if (sharedData.staticButtonsDetected) {
-    /* Move Servos */
-    arm.commandPickupServo(PU_CENTER, PS_GRAB);
-    /* Move to the next state */
-    currentState = (state) &MainExecMachine::backupFromCenterRings;
+    /* Reset the first time flag  */
+    firstTime = true;
+    /* Move on to the next state */
+    currentState = (state) &MainExecMachine::pickupCenterRings;
   }
 
-  /* Call the common Load Rings timeout check function */
-  if (loadRingsTimeOutCheck(&sharedData)) {
-    /* If we timed out, move on */
-    currentState = (state) &MainExecMachine::backupFromCenterRings;
+  /* Perform Arm Movements based on if buttons were detected */
+  if (sharedData.staticButtonsDetected) {
+    /* Reset the first time flag  */
+    firstTime = true;
+    /* Move on to the next state */
+    currentState = (state) &MainExecMachine::pickupCenterRings;
   }
 
-  /* We may need to update the heading */
+  /* A button has not been pressed for 5 seconds and the robot is more
+   *   than an inch from the wall */
+  if (sharedData.staticButtonTimeoutFlag) {
+    /* Mark Loading Zone as dirty */
+    loadZoneDirty = true;
+    /* Clear Static Data */
+    clearStaticData(&sharedData);
+    /* THIS ONE NEEDS TO CHANGE STATES */
+    currentState = (state) &MainExecMachine::pickupCenterRings;
+  }
+
+  /* Update the heading */
   if (sharedData.staticButtShadow & 0x3 == 0x3) {
     loadHeading = mag.getFiltHead();
   }
@@ -249,23 +286,32 @@ void MainExecMachine::haulToScore(bool first) {
 }
 
 void MainExecMachine::scoreRings(bool first) {
+  static bool firstTime = true;
+
+  if (firstTime) {
+    sharedData.staticStateTimeout = micros();
+    firstTime = false;
+  }
+
   /* Call the common Load Rings functionality */
   loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
 
   /* Perform Arm Movements based on if buttons were detected */
   if (sharedData.staticButtonsDetected) {
-    /* Move Servos */
-    arm.commandPickupServo(PU_LEFT, PS_LETGO);
-    arm.commandPickupServo(PU_RIGHT, PS_LETGO);
-    arm.commandPickupServo(PU_CENTER, PS_LETGO);
+    /* Reset the first time flag  */
+    firstTime = true;
     /* Move on to the next state */
-    currentState = (state) &MainExecMachine::backupFromScoring;
+    currentState = (state) &MainExecMachine::unloadAllRings;
   }
 
-  /* Call the common Load Rings timeout check function */
-  if (loadRingsTimeOutCheck(&sharedData)) {
-    /* If we timed out, move on */
-    currentState = (state) &MainExecMachine::backupFromScoring;
+  /* A button has not been pressed for 5 seconds and the robot is more
+   *   than an inch from the wall */
+  if (sharedData.staticButtonTimeoutFlag) {
+    /* Mark Loading Zone as dirty */
+    scoreZoneDirty = true;
+    /* Clear Static Data */
+    clearStaticData(&sharedData);
+    /* DO NOT CHANGE STATES */
   }
 
   /* We may need to update the heading */
