@@ -10,3 +10,7 @@ SweepExecMachine::SweepExecMachine(Zone z) {
       break;
   }
 }
+
+bool SweepExecMachine::lz_RunTick() {
+  return true;
+}

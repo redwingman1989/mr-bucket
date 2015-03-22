@@ -12,6 +12,7 @@ class SweepExecMachine: public StateMachine<SweepExecMachine> {
   public:
     SweepExecMachine(){};
     SweepExecMachine(Zone z);
+    bool RunTick();
 
   private:
 
