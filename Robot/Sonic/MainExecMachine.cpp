@@ -1,8 +1,11 @@
 #include "MainExecMachine.h"
 #include "StateMachine.h"
+#include "stateMachineCommon.h"
 #include "Globals.h"
 #include "driveAlgorithms.h"
 #include "stateMachineCommon.h"
+
+static loadRingsSharedStaticData_t sharedData = {false, 0, 0, 0};
 
 MainExecMachine::MainExecMachine() {
   currentState = (state) &MainExecMachine::loadLeftRightRings;
@@ -15,7 +18,30 @@ void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
+  /* Call the common Load Rings functionality */
+  loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
 
+  /* Perform Arm Movements based on if buttons were detected */
+  if (sharedData.staticButtonsDetected) {
+    /* Move Servos */
+    arm.commandPickupServo(PU_LEFT, PS_GRAB);
+    arm.commandPickupServo(PU_RIGHT, PS_GRAB);
+    /* Move on to the next state */
+    currentState = (state) &MainExecMachine::backupFromLeftRightRings;
+  }
+
+  /* Call the common Load Rings timeout check function */
+  if (loadRingsTimeOutCheck(&sharedData)) {
+    /* Set the new desired heading */
+    desiredHeading = scoreHeading;
+    /* If we timed out, move on */
+    currentState = (state) &MainExecMachine::backupFromLeftRightRings;
+  }
+
+  /* We may need to update the heading */
+  if (sharedData.staticButtShadow & 0x3 == 0x3) {
+    loadHeading = mag.getFiltHead();
+  }
 }
 
 void MainExecMachine::backupFromLeftRightRings(bool first) {
@@ -69,7 +95,29 @@ void MainExecMachine::shiftForCenterRings(bool first) {
 }
 
 void MainExecMachine::loadCenterRings(bool first) {
+  /* Call the common Load Rings functionality */
+  loadRingsButtonDetection(LSL_CENTER_FRONT, &sharedData);
 
+  /* Perform Arm Movements based on if buttons were detected */
+  if (sharedData.staticButtonsDetected) {
+    /* Move Servos */
+    arm.commandPickupServo(PU_CENTER, PS_GRAB);
+    /* Move to the next state */
+    currentState = (state) &MainExecMachine::backupFromCenterRings;
+  }
+
+  /* Call the common Load Rings timeout check function */
+  if (loadRingsTimeOutCheck(&sharedData)) {
+    /* Set the new desired heading */
+    desiredHeading = scoreHeading;
+    /* If we timed out, move on */
+    currentState = (state) &MainExecMachine::backupFromCenterRings;
+  }
+
+  /* We may need to update the heading */
+  if (sharedData.staticButtShadow & 0x3 == 0x3) {
+    loadHeading = mag.getFiltHead();
+  }
 }
 
 void MainExecMachine::backupFromCenterRings(bool first) {
@@ -154,7 +202,31 @@ void MainExecMachine::haulToScore(bool first) {
 }
 
 void MainExecMachine::scoreRings(bool first) {
+  /* Call the common Load Rings functionality */
+  loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
 
+  /* Perform Arm Movements based on if buttons were detected */
+  if (sharedData.staticButtonsDetected) {
+    /* Move Servos */
+    arm.commandPickupServo(PU_LEFT, PS_LETGO);
+    arm.commandPickupServo(PU_RIGHT, PS_LETGO);
+    arm.commandPickupServo(PU_CENTER, PS_LETGO);
+    /* Move on to the next state */
+    currentState = (state) &MainExecMachine::backupFromScoring;
+  }
+
+  /* Call the common Load Rings timeout check function */
+  if (loadRingsTimeOutCheck(&sharedData)) {
+    /* Set the new desired heading */
+    desiredHeading = loadHeading;
+    /* If we timed out, move on */
+    currentState = (state) &MainExecMachine::backupFromScoring;
+  }
+
+  /* We may need to update the heading */
+  if (sharedData.staticButtShadow & 0x3 == 0x3) {
+    scoreHeading = mag.getFiltHead();
+  }
 }
 
 void MainExecMachine::backupFromScoring(bool first) {
