@@ -44,6 +44,25 @@ void MainExecMachine::loadLeftRightRings(bool first) {
   }
 }
 
+void MainExecMachine::pickupLeftRightRings(bool first) {
+  static bool firstTime = true;
+  static unsigned long pickupStartTime = 0;
+
+  if (firstTime) {
+    pickupStartTime = micros();
+    firstTime = false;
+  }
+
+  arm.commandPickupServo(PU_LEFT, PS_GRAB);
+  arm.commandPickupServo(PU_RIGHT, PS_GRAB);
+
+  if (micros() - pickupStartTime > ringLoadTime) {
+    firstTime = true;
+    stateNum = MEST_BACKUP_ONE;
+    currentState = (state) &MainExecMachine::backupFromLeftRightRings;
+  }
+}
+
 void MainExecMachine::backupFromLeftRightRings(bool first) {
   wheels.updateCommand(-2, 0, 0);
   FollowLine(0, -2, LSP_RIGHT);
@@ -117,6 +136,24 @@ void MainExecMachine::loadCenterRings(bool first) {
   /* We may need to update the heading */
   if (sharedData.staticButtShadow & 0x3 == 0x3) {
     loadHeading = mag.getFiltHead();
+  }
+}
+
+void MainExecMachine::pickupCenterRings(bool first) {
+  static bool firstTime = true;
+  static unsigned long pickupStartTime = 0;
+
+  if (firstTime) {
+    pickupStartTime = micros();
+    firstTime = false;
+  }
+
+  arm.commandPickupServo(PU_CENTER, PS_GRAB);
+
+  if (micros() - pickupStartTime > ringLoadTime) {
+    firstTime = true;
+    stateNum = MEST_BACKUP_TWO;
+    currentState = (state) &MainExecMachine::backupFromCenterRings;
   }
 }
 
@@ -226,6 +263,26 @@ void MainExecMachine::scoreRings(bool first) {
   /* We may need to update the heading */
   if (sharedData.staticButtShadow & 0x3 == 0x3) {
     scoreHeading = mag.getFiltHead();
+  }
+}
+
+void MainExecMachine::unloadAllRings(bool first) {
+  static bool firstTime = true;
+  static unsigned long pickupStartTime = 0;
+
+  if (firstTime) {
+    pickupStartTime = micros();
+    firstTime = false;
+  }
+
+  arm.commandPickupServo(PU_LEFT, PS_LETGO);
+  arm.commandPickupServo(PU_CENTER, PS_LETGO);
+  arm.commandPickupServo(PU_RIGHT, PS_LETGO);
+
+  if (micros() - pickupStartTime > ringLoadTime) {
+    firstTime = true;
+    stateNum = MEST_BACKUP_THREE;
+    currentState = (state) &MainExecMachine::backupFromScoring;
   }
 }
 
