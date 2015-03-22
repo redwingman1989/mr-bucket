@@ -4,6 +4,7 @@
 
 typedef struct {
   bool staticButtonsDetected;
+  bool staticButtonTimeoutFlag;
   uint8_t staticButtShadow;
   uint8_t staticButtTimeout;
   uint32_t staticStateTimeout;
@@ -18,4 +19,7 @@ void loadRingsButtonDetection(
 
 /* Load Rings: Check for Timeout */
 bool loadRingsTimeOutCheck (
+  loadRingsSharedStaticData_t * staticData);
+
+void clearStaticData(
   loadRingsSharedStaticData_t * staticData);

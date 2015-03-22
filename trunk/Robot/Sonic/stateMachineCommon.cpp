@@ -59,12 +59,8 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
  *****************************************/
 void loadRingsButtonDetection(lineSensorLocations lineLocation,
                               loadRingsSharedStaticData_t * staticData) {
-  /* Static Variable(s) - Note: Some come from the shared static data struct */
-  bool buttonsDetected = staticData->staticButtonsDetected; // Load the local from static data struct
-  uint8_t buttTimeout = staticData->staticButtTimeout;      // Load the local from static data struct
-  static int8_t rotation = 0;                               /* This could break */
-  uint8_t buttShadow = 0;
-
+  /* Static Variable(s) */
+  int8_t rotation = 0;
   /* Local variable(s) */
   float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   /* Constant Variable(s) */
@@ -73,27 +69,30 @@ void loadRingsButtonDetection(lineSensorLocations lineLocation,
   /* Update the static data structure with the latest buttons reading */
   staticData->staticButtShadow |= buttMan.getButtons();
 
-  /* load the local variable with data from the static structure */
-  buttShadow = staticData->staticButtShadow;
-
-  if(!buttonsDetected && (buttShadow & 0x03 == 0x01))
+  if(!staticData->staticButtonsDetected && (staticData->staticButtShadow & 0x03 == 0x01))
     rotation = -8;
-  else if(!buttonsDetected && (buttShadow & 0x03 == 0x02))
+  else if(!staticData->staticButtonsDetected && (staticData->staticButtShadow & 0x03 == 0x02))
     rotation = 8;
 
   // Keep going if it has been half a second since a single button was pressed
-  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore)) staticData->staticButtTimeout++;
+  if (staticData->staticButtShadow && (staticData->staticButtTimeout < timeBeforeButtonIgnore)) staticData->staticButtTimeout++;
 
   /* Buttons Detected */
-  if (!buttonsDetected && (((buttShadow & 0x03) == 0x03) || (buttTimeout >= timeBeforeButtonIgnore)) && (distanceToFront < 1)) {
+  if (!staticData->staticButtonsDetected && (((staticData->staticButtShadow & 0x03) == 0x03) ||
+      (staticData->staticButtTimeout >= timeBeforeButtonIgnore)) && (distanceToFront < 1)) {
     staticData->staticStateTimeout = micros();
     staticData->staticButtonsDetected = true;
     wheels.updateCommand(0,0,0);
   }
-  else if (!buttonsDetected && rotation != 0) {
+  else if (!staticData->staticButtonsDetected && rotation != 0) {
     wheels.updateCommand(0 ,0,rotation);
   }
-  else if (!buttonsDetected) {
+  else if (!staticData->staticButtonsDetected &&
+            distanceToFront >= 1              &&
+            micros() - staticData->staticStateTimeout >= loadRingsButtonTimeout) {
+    staticData->staticButtonTimeoutFlag = true;
+  }
+  else if (!staticData->staticButtonsDetected) {
     //Use the single front sensor to follow the line so there is not rotation
     //This assumes we are rotationally aligned when entering loadRings
     FollowLineSingle(4,true,lineLocation);
@@ -112,7 +111,7 @@ bool loadRingsTimeOutCheck (loadRingsSharedStaticData_t * staticData) {
   bool stateTimedOut = false;
 
   /* Buttons Detected flag will be set after a timeout period. See loadRingsButtonDetection() */
-  if (staticData->staticButtonsDetected) {
+  if (!staticData->staticButtonsDetected) {
     if (micros() - staticData->staticStateTimeout > ringLoadTime) {
       /* Set flag eventually returned to indicate that the state timed out */
       stateTimedOut = true;
@@ -123,4 +122,13 @@ bool loadRingsTimeOutCheck (loadRingsSharedStaticData_t * staticData) {
     }
   }
   return stateTimedOut;
+}
+
+
+void clearStaticData (loadRingsSharedStaticData_t * staticData) {
+  staticData->staticButtonsDetected = false;
+  staticData->staticButtonTimeoutFlag = false;
+  staticData->staticButtShadow = 0;
+  staticData->staticButtTimeout = 0;
+  staticData->staticStateTimeout = micros();
 }

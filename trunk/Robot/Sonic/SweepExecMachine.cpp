@@ -11,6 +11,6 @@ SweepExecMachine::SweepExecMachine(Zone z) {
   }
 }
 
-bool SweepExecMachine::lz_RunTick() {
+bool SweepExecMachine::RunTick() {
   return true;
 }

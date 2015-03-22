@@ -1,6 +1,7 @@
 #pragma once
 
 #include "StateMachine.h"
+#include "stateMachineCommon.h"
 #include "SweepExecMachine.h"
 
 typedef enum {
@@ -43,6 +44,7 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     float currentHeading;
     float scoreHeading;
     float loadHeading;
+    loadRingsSharedStaticData_t sharedData;
 
     /* States */
     void loadLeftRightRings(bool);
