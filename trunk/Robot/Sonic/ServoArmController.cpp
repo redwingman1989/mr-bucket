@@ -17,22 +17,22 @@ ServoArmController::ServoArmController()
 {
   //Setup servo constants
   this->swingArmConstants[SA_DOWN] = 660;
-  this->swingArmConstants[SA_UP] = 1560;
+  this->swingArmConstants[SA_UP] = 1540;
 
-  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1505;
-  this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1690;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1597;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1782;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1515;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1670;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1585;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1755;
 
   this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = 1420;
-  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1605;
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1595;
   this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = 1507;
   this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1682;
 
-  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1665;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1645;
   this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1840;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1760;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1920;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1750;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1900;
 
   this->swingArmCommand = this->swingArmConstants[SA_DOWN];
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
