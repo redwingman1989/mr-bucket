@@ -9,14 +9,14 @@ Servo testServo;
 void setup()
 {
   //delay(5000);
-  Serial.begin(57600);
+  Serial2.begin(115200);
 	pinMode(13, OUTPUT);
 /*  this->pickupLeft.attach(38);
   this->pickupCenter.attach(39);
   this->pickupRight.attach(40);
   this->swingArm.attach(41);
 */
-	testServo.attach(25);
+  //testServo.attach();
    servoArm.init();
 }
 
@@ -32,9 +32,9 @@ void loop()
 
   //servoArm.commandSwingArm(SA_UP);
   servoArm.exec();
-  while (Serial.available() > 0 )
+  while (Serial2.available() > 0 )
   {
-    temp = Serial.read();
+    temp = Serial2.read();
 
     if (temp == 'r') command = 1500;
     else if (temp == '+') command += increment;
@@ -60,14 +60,14 @@ void loop()
   testServo.writeMicroseconds(command);
 
   if (command != shadowCommand) {
-    Serial.print("CMD = ");
-    Serial.println(command);
+    Serial2.print("CMD = ");
+    Serial2.println(command);
     shadowCommand = command;
   }
 
   if (increment != shadowIncrement) {
-    Serial.print("INC = ");
-    Serial.println(increment);
+    Serial2.print("INC = ");
+    Serial2.println(increment);
     shadowIncrement = increment;
   }
 
