@@ -89,16 +89,31 @@ void MainExecMachine::raiseArm(bool first) {
 }
 
 void MainExecMachine::flipToScore(bool first) {
-  if (flipABitch(scoreHeading)) {
-    stateNum = MEST_FIND_CENTER_LINE_ONE;
-    currentState = (state) &MainExecMachine::findCenterLineToScore;
+  float rotationSpeed;
+  static int lineUpCount = 0;
+  float delta = getDeltaHeading(scoreHeading);
+  // once the desired heading is reached
+  //   transition to findCenterLin
+  rotationSpeed =  getToHeadingDirection(scoreHeading,true);
+
+  if(abs(rotationSpeed) < 1 || abs(delta) < 3){
+    if(lineUpCount++ > 10){
+        lineUpCount = 0;
+        stateNum = MEST_FIND_CENTER_LINE_ONE;
+        currentState = (state) &MainExecMachine::findCenterLineToScore;
+    }
+  }
+  else {
+        point_t point= {3.5,0};
+        wheels.updateCommand(0,0,rotationSpeed,point);
+        lineUpCount = 0;
   }
 }
 
 void MainExecMachine::findCenterLineToScore(bool first) {
   static bool firstTime = true;
 
-  if (findCenterLine(firstTime)) {
+  if (findCenterLine(firstTime, 15, 5, 4)) {
     firstTime = true;
 
     stateNum = MEST_HAUL_TOSCORE;
@@ -109,7 +124,30 @@ void MainExecMachine::findCenterLineToScore(bool first) {
 }
 
 void MainExecMachine::haulToScore(bool first) {
-  if (haulAss(first)) {
+  static int8_t sideSpeed;
+  static bool lostLine = false;
+  float leftError = 4.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  float forwardSpeed = 0;
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  sideSpeed = 2*(rightError - leftError);
+
+  if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
+    findCenterLine(!lostLine, 0, 5, 4);
+    lostLine = true;
+  }
+
+  else if (frontDist > 15) {
+    forwardSpeed = (frontDist-15) + 2;
+    forwardSpeed = forwardSpeed > 50 ? 50 : forwardSpeed;
+    forwardSpeed = forwardSpeed < 2 ? 2 : forwardSpeed;
+    FollowLine(0, forwardSpeed ,  LSP_RIGHT);
+  }
+
+  else {
+    wheels.updateCommand(0, 0, 0);
+    lostLine = false;
     stateNum = MEST_SCORE;
     currentState = (state) &MainExecMachine::scoreRings;
   }
@@ -136,16 +174,31 @@ void MainExecMachine::lowerArm(bool first) {
 }
 
 void MainExecMachine::flipToLoad(bool first) {
-  if (flipABitch(loadHeading)) {
-    stateNum = MEST_FIND_CENTER_LINE_TWO;
-    currentState = (state) &MainExecMachine::findCenterLineToLoad;
+  float rotationSpeed;
+  static int lineUpCount = 0;
+  float delta = getDeltaHeading(loadHeading);
+  // once the desired heading is reached
+  //   transition to findCenterLin
+  rotationSpeed =  getToHeadingDirection(loadHeading,true);
+
+  if(abs(rotationSpeed) < 1 || abs(delta) < 3){
+    if(lineUpCount++ > 10){
+        lineUpCount = 0;
+        stateNum = MEST_FIND_CENTER_LINE_TWO;
+        currentState = (state) &MainExecMachine::findCenterLineToLoad;
+    }
+  }
+  else {
+        point_t point= {3.5,0};
+        wheels.updateCommand(0,0,rotationSpeed,point);
+        lineUpCount = 0;
   }
 }
 
 void MainExecMachine::findCenterLineToLoad(bool first) {
   static bool firstTime = true;
 
-  if (findCenterLine(firstTime)) {
+  if (findCenterLine(firstTime, 15, 5, 4)) {
     firstTime = true;
 
     stateNum = MEST_HAUL_TOLOAD;
@@ -156,7 +209,30 @@ void MainExecMachine::findCenterLineToLoad(bool first) {
 }
 
 void MainExecMachine::haulToLoad(bool first) {
-  if (haulAss(first)) {
+  static int8_t sideSpeed;
+  static bool lostLine = false;
+  float leftError = 4.5 + ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  float forwardSpeed = 0;
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  sideSpeed = 2*(rightError - leftError);
+
+  if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
+    findCenterLine(!lostLine, 0, 5, 4);
+    lostLine = true;
+  }
+
+  else if (frontDist > 15) {
+    forwardSpeed = (frontDist-15) + 2;
+    forwardSpeed = forwardSpeed > 50 ? 50 : forwardSpeed;
+    forwardSpeed = forwardSpeed < 2 ? 2 : forwardSpeed;
+    FollowLine(0, forwardSpeed ,  LSP_RIGHT);
+  }
+
+  else {
+    wheels.updateCommand(0, 0, 0);
+    lostLine = false;
     stateNum = MEST_LOAD_LR_RINGS;
     currentState = (state) &MainExecMachine::loadLeftRightRings;
   }
