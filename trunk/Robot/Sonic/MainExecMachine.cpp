@@ -1,9 +1,7 @@
 #include "MainExecMachine.h"
-#include "StateMachine.h"
 #include "stateMachineCommon.h"
 #include "Globals.h"
 #include "driveAlgorithms.h"
-#include "stateMachineCommon.h"
 #include "SweepExecMachine.h"
 
 MainExecMachine::MainExecMachine() {
@@ -33,6 +31,7 @@ bool MainExecMachine::RunTick() {
   else {
     runCurrentState();
   }
+  return false;
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
