@@ -44,8 +44,8 @@ class SweepExecMachine: public StateMachine<SweepExecMachine> {
     state lzStateArray[];
     state szStateArray[];
 
-    LzState lzState;
-    SzState szState;
+    uint8_t lzState;
+    uint8_t szState;
 
     /* Sweep Load Zone Functions */
     void lz_backUpInitial(bool);

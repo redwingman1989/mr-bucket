@@ -22,3 +22,13 @@ float getDeltaHeading(float desiredHeading);
 
 //Gets us to a heading going a direction unless +- 10 thresholdGap
 float getToHeadingDirection(float desiredHeading,bool clockwise);
+
+/* retruns a speed command limited and linearly scaled to the input parameters */
+float
+scaleDistanceToSpeedCmd(
+  float distance,
+  float maxDistance,
+  float minDistance,
+  float maxSpeed,
+  float minSpeed
+);

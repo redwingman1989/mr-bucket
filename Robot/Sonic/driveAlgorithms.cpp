@@ -208,3 +208,25 @@ float getToHeadingDirection(float desiredHeading,bool clockwise) {
     return -rotationSpeed;
   }
 }
+
+float scaleDistanceToSpeedCmd(
+  float distance,
+  float maxDistance,
+  float minDistance,
+  float maxSpeed,
+  float minSpeed)
+{
+  float speedVal;
+
+  /* Calculate Speed to move */
+  if (distance > maxDistance)
+    speedVal = maxSpeed;
+  else if (distance < minDistance)
+    speedVal = minSpeed;
+  /* Linearly Scale Speed */
+  else {
+    speedVal = (distance*(maxSpeed - minSpeed)/
+               (maxDistance - minDistance)) + minSpeed;
+  }
+  return speedVal;
+}
