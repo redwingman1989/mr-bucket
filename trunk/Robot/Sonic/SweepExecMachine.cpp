@@ -52,6 +52,7 @@ void SweepExecMachine::lz_backUpInitial(bool first){
   if (firstTime) {
     startTime = micros();
     doneSweeping = false;
+    firstTime = false;
   }
 
   distanceReached = (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 5) ? true : false;
@@ -60,7 +61,7 @@ void SweepExecMachine::lz_backUpInitial(bool first){
   /* If we are further than 5 inchecs from the wall, or have been backing up for 3 seconds, advance to next state */
   if(distanceReached || timedOut) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_shiftLeftToWall;
   }
@@ -88,7 +89,7 @@ void SweepExecMachine::lz_shiftLeftToWall(bool first){
 
   if (firstTime) {
     startTime = micros();
-
+    firstTime = false;
     /* Command Arms to Desired Position */
     arm.commandPickupServo(PU_LEFT, PS_GRAB);
     arm.commandPickupServo(PU_CENTER, PS_GRAB);
@@ -107,7 +108,7 @@ void SweepExecMachine::lz_shiftLeftToWall(bool first){
   /* If against the wall or timedOut after 5 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     iter = 0;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_driveForward;
@@ -140,6 +141,7 @@ void SweepExecMachine::lz_driveForward(bool first){
 
   if (firstTime) {
     startTime = micros();
+    firstTime = false;
   }
 
   /* Check if ultrasonic indicate we are against the wall */
@@ -158,7 +160,7 @@ void SweepExecMachine::lz_driveForward(bool first){
   /* If against the wall or timedOut after 5 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     iter = 0;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_shiftRightToWall;
@@ -187,6 +189,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
 
   if (firstTime) {
     startTime = micros();
+    firstTime = false;
   }
 
   /* Check if ultrasonic indicate we are against the wall */
@@ -201,7 +204,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
   /* If against the wall or timedOut after 8 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     iter = 0;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_backOffLeft;
@@ -220,6 +223,7 @@ void SweepExecMachine::lz_backOffLeft(bool first){
 
   if (firstTime) {
     startTime = micros();
+    firstTime = false;
   }
 
   /* Check if we have timed out in this state */
@@ -228,7 +232,7 @@ void SweepExecMachine::lz_backOffLeft(bool first){
   /* If timedOut after 1 second, transition states */
   if (timedOut) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_backUpToAlign;
   }
@@ -255,7 +259,7 @@ void SweepExecMachine::lz_backUpToAlign(bool first){
 
   if (firstTime) {
     startTime = micros();
-
+    firstTime = false;
     /* Command Arms to Desired Position */
     arm.commandPickupServo(PU_LEFT, PS_LETGO);
     arm.commandPickupServo(PU_CENTER, PS_LETGO);
@@ -273,7 +277,7 @@ void SweepExecMachine::lz_backUpToAlign(bool first){
   /* If distance reached or timedOut after 5 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
-    firstTime = false;
+    firstTime = true;
     iter = 0;
     /* Transition State */
     currentState = (state) &SweepExecMachine::lz_reAlign;
