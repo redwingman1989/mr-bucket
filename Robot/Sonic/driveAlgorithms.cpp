@@ -185,7 +185,7 @@ float getToHeadingDirection(float desiredHeading,bool clockwise) {
   float delta;
   const float thresholdGap = 10;
   const float forceDirectionGap = 50;
-  const float rotationSpeed = 4;
+  const float rotationSpeed = 2;
   const float smallRotationDivider = .3;
   static float integralMotion=0;
 
