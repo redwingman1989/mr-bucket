@@ -8,8 +8,6 @@ const int pwmMax = 2000;
 const int pwmCenter = (pwmMax + pwmMin) / 2;
 
 const int updateRate = 50; //50 hz exec call rate
-const int swingArmLimit = (pwmMax - pwmMin) / (3 * updateRate); // full movement in five seconds
-const int pickupLimit = (pwmMax - pwmMin) / (1 * updateRate); // full movement in one seconds
 
 inline int rateLimit(int command, int current, int rate);
 
@@ -38,6 +36,9 @@ ServoArmController::ServoArmController()
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
   this->pickupCenterCommand = this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO];
   this->pickupRightCommand = this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO];
+
+  setPickupArmLimit(1);
+  setSwingArmLimit(3);
 }
 
 void ServoArmController::init(void)
@@ -112,6 +113,16 @@ void ServoArmController::DebugOutput(HardwareSerial *serialPort)
   if (currentPickupState[PU_RIGHT] == PS_GRAB) serialPort->print(" GRAB");
   else serialPort->print("LETGO");
 }
+
+void ServoArmController::setPickupArmLimit(uint8_t sec) {
+  pickupLimit = (pwmMax - pwmMin) / (sec * updateRate);
+}
+
+void ServoArmController::setSwingArmLimit(uint8_t sec) {
+  swingArmLimit = (pwmMax - pwmMin) / (sec * updateRate);
+}
+
+
 
 inline int rateLimit(int command, int current, int rate)
 {
