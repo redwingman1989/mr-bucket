@@ -80,7 +80,7 @@ void loadRingsButtonDetection(lineSensorLocations lineLocation,
   /* Buttons Detected */
   if (!staticData->staticButtonsDetected && (((staticData->staticButtShadow & 0x03) == 0x03) ||
       (staticData->staticButtTimeout >= timeBeforeButtonIgnore)) && (distanceToFront < 1)) {
-    staticData->staticStateTimeout = micros();
+    //staticData->staticStateTimeout = micros();
     staticData->staticButtonsDetected = true;
     wheels.updateCommand(0,0,0);
   }
@@ -95,7 +95,7 @@ void loadRingsButtonDetection(lineSensorLocations lineLocation,
   else if (!staticData->staticButtonsDetected) {
     //Use the single front sensor to follow the line so there is not rotation
     //This assumes we are rotationally aligned when entering loadRings
-    FollowLineSingle(4,true,lineLocation);
+    FollowLineSingle(2,true,lineLocation);
   }
 }
 
