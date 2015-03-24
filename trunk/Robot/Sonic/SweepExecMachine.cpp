@@ -276,7 +276,7 @@ void SweepExecMachine::lz_backUpToAlign(bool first){
     firstTime = false;
     iter = 0;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_reAlign;
   }
   /* Continue moving forward */
   else {

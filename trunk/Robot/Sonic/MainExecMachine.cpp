@@ -195,7 +195,7 @@ void MainExecMachine::pickupCenterRings(bool first) {
 }
 
 void MainExecMachine::backupFromCenterRings(bool first) {
-  wheels.updateCommand(-20, 0, 0);
+  wheels.updateCommand(-10, 0, 0);
   if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 12)
   {
     wheels.updateCommand(0,0,0);
