@@ -27,8 +27,7 @@ SweepExecMachine::SweepExecMachine(Zone z) {
 
   switch (z) {
     case Z_LOAD:
-      lzState = LZ_BACK_UP_INITIAL;
-      currentState = lzStateArray[lzState];
+      currentState = (state) &SweepExecMachine::lz_backUpInitial;
       break;
     case Z_SCORE:
     default:
@@ -63,7 +62,7 @@ void SweepExecMachine::lz_backUpInitial(bool first){
     /* reset Static Variables */
     firstTime = false;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_shiftLeftToWall;
   }
   /* Continue Backing up */
   else {
@@ -111,7 +110,7 @@ void SweepExecMachine::lz_shiftLeftToWall(bool first){
     firstTime = false;
     iter = 0;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_driveForward;
   }
   /* Continue moving Left */
   else {
@@ -162,7 +161,7 @@ void SweepExecMachine::lz_driveForward(bool first){
     firstTime = false;
     iter = 0;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_shiftRightToWall;
   }
   /* Continue moving forward */
   else {
@@ -205,7 +204,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
     firstTime = false;
     iter = 0;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_backOffLeft;
   }
   /* Continue moving Right */
   else {
@@ -231,7 +230,7 @@ void SweepExecMachine::lz_backOffLeft(bool first){
     /* reset Static Variables */
     firstTime = false;
     /* Transition State */
-    currentState = lzStateArray[++lzState];
+    currentState = (state) &SweepExecMachine::lz_backUpToAlign;
   }
   /* Continue moving Right */
   else {
@@ -298,8 +297,7 @@ void SweepExecMachine::lz_reAlign(bool first){
   if (findCenterLine(firstTime, 0, 4, 4)) {
     firstTime = true;
     doneSweeping = true;
-    lzState = LZ_BACK_UP_INITIAL;
-    currentState = lzStateArray[lzState];
+    currentState = (state) &SweepExecMachine::lz_backUpInitial;
   }
   else firstTime = false;
 }
