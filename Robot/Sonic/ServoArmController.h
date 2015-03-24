@@ -38,6 +38,8 @@ public:
   bool RunTick(void);
   void DebugOutput(HardwareSerial *serialPort);
   void init(void);
+  void setPickupArmLimit(uint8_t sec);
+  void setSwingArmLimit(uint8_t sec);
 
 private:
   Servo swingArm;
@@ -55,6 +57,9 @@ private:
   int pickupLeftCommand;
   int pickupCenterCommand;
   int pickupRightCommand;
+
+  int swingArmLimit;
+  int pickupLimit;
 };
 
 #endif // ServoArmController_h

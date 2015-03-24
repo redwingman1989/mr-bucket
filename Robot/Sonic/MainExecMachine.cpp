@@ -77,6 +77,7 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
 
   wheels.updateCommand(0, 0, 0);
   loadHeading = mag.getFiltHead();
+  arm.setPickupArmLimit(1); //Set Rate to 1 second to swing
   arm.commandPickupServo(PU_LEFT, PS_GRAB);
   arm.commandPickupServo(PU_RIGHT, PS_GRAB);
 
@@ -183,6 +184,7 @@ void MainExecMachine::pickupCenterRings(bool first) {
 
   wheels.updateCommand(0,0,0);
   loadHeading = mag.getFiltHead();
+  arm.setPickupArmLimit(1); //Set Rate to 1 second to swing
   arm.commandPickupServo(PU_CENTER, PS_GRAB);
 
   if (micros() - pickupStartTime > ringLoadTime) {
@@ -203,6 +205,8 @@ void MainExecMachine::backupFromCenterRings(bool first) {
 }
 
 void MainExecMachine::raiseArm(bool first) {
+  arm.setPickupArmLimit(3); //Set Rate to 3 seconds to swing
+  arm.setSwingArmLimit(3); //Set Rate to 3 seconds to swing
   arm.commandSwingArm(SA_UP);
   stateNum = MEST_FLIP_ONE;
   currentState = (state) &MainExecMachine::flipToScore;
@@ -316,11 +320,12 @@ void MainExecMachine::unloadAllRings(bool first) {
   }
   wheels.updateCommand(0,0,0);
   scoreHeading = mag.getFiltHead();
+  arm.setPickupArmLimit(1); //Set Rate to 1 seconds to swing
   arm.commandPickupServo(PU_LEFT, PS_LETGO);
   arm.commandPickupServo(PU_CENTER, PS_LETGO);
   arm.commandPickupServo(PU_RIGHT, PS_LETGO);
 
-  if (micros() - pickupStartTime > ringLoadTime) {
+  if (micros() - pickupStartTime > 2000000) {
     firstTime = true;
     stateNum = MEST_BACKUP_THREE;
     currentState = (state) &MainExecMachine::backupFromScoring;
