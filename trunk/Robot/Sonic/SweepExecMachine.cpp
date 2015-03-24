@@ -172,7 +172,7 @@ void SweepExecMachine::lz_driveForward(bool first){
                                     minDist,
                                     maxSpeed,
                                     minSpeed);
-    wheels.updateCommand(speed,0,0);
+    wheels.updateCommand(speed,-1.5,0);
   }
 }
 
@@ -199,9 +199,9 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
     prevDistLeft = distLeft;
   }
   /* Check if we have timed out in this state */
-  timedOut = (micros() - startTime > 8000000);
+  timedOut = (micros() - startTime > 7000000);
 
-  /* If against the wall or timedOut after 8 seconds, transition states */
+  /* If against the wall or timedOut after 7 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
     firstTime = true;
@@ -211,7 +211,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
   }
   /* Continue moving Right */
   else {
-    wheels.updateCommand(0,speed,0);
+    wheels.updateCommand(1.5,speed,0);
   }
 }
 
@@ -219,7 +219,7 @@ void SweepExecMachine::lz_backOffLeft(bool first){
   static bool firstTime = true;
   static uint32_t startTime;
   bool timedOut = false;
-  const float speed = 2.0;
+  const float speed = 1.5;
 
   if (firstTime) {
     startTime = micros();
@@ -227,9 +227,9 @@ void SweepExecMachine::lz_backOffLeft(bool first){
   }
 
   /* Check if we have timed out in this state */
-  timedOut = (micros() - startTime > 1000000);
+  timedOut = (micros() - startTime > 500000);
 
-  /* If timedOut after 1 second, transition states */
+  /* If timedOut after 0.5 second, transition states */
   if (timedOut) {
     /* reset Static Variables */
     firstTime = true;
@@ -272,9 +272,9 @@ void SweepExecMachine::lz_backUpToAlign(bool first){
     prevDist = dist;
   }
   /* Check if we have timed out in this state */
-  timedOut = (micros() - startTime > 5000000);
+  timedOut = (micros() - startTime > 4000000);
 
-  /* If distance reached or timedOut after 5 seconds, transition states */
+  /* If distance reached or timedOut after 4 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
     firstTime = true;
