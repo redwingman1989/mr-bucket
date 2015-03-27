@@ -38,7 +38,7 @@ static const uint32_t armSwingTime = (1 * 1000); // Arm Swing Ring Time
 /* Other Global Constants */
 static const uint32_t serialBaud = (115200); // Debug Serial Baud Rate
 
-static const uint32_t loadRingsButtonTimeout = 5000000;
+static const uint32_t loadRingsButtonTimeout = 3500000;
 
 /* Global Cycle Units */
 extern CycleUnit sense;

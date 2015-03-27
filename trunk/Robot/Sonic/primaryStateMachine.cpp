@@ -7,6 +7,8 @@ PrimaryStateMachine::PrimaryStateMachine() {
 
 
 void PrimaryStateMachine::waitForStart(bool firstTime) {
+  static bool buttOneDetected = false;
+  static bool buttTwoDetected = false;
   static bool calibrated = false;
 
   /* Calibration requires orienting the robot in the score position,
@@ -14,15 +16,18 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
    * then orienting the robot in the loading heading
    * High to low trigger on the left button will commence normal operation.
    */
-  if(buttMan.getL2HTrans() & 0x02) {
+  if(buttMan.getButtons() == 0x02) {
     goToWork.setScoreHead(mag.getFiltHead());
+    buttOneDetected = true;
   }
-  if(buttMan.getH2LTrans() & 0x02) {
-
+  else if(buttOneDetected && ((buttMan.getButtons() | 0x02) == 0)) {
     calibrated = true;
   }
-  if(buttMan.getH2LTrans() & 0x01 && calibrated) {
+  else if((buttMan.getButtons() & 0x01) && calibrated) {
     goToWork.setLoadHead(mag.getFiltHead());
+    buttTwoDetected = true;
+  }
+  else if (((buttMan.getButtons() | 0x01) == 0) && buttTwoDetected) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
     runTimeStart = micros();
   }
