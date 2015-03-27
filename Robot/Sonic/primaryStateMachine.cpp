@@ -20,14 +20,14 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
     goToWork.setScoreHead(mag.getFiltHead());
     buttOneDetected = true;
   }
-  if(buttOneDetected && ((buttMan.getButtons() | 0x02) == 0)) {
+  if(buttOneDetected && ((buttMan.getButtons() & 0x02) == 0)) {
     calibrated = true;
   }
   if((buttMan.getButtons() & 0x01) && calibrated) {
     goToWork.setLoadHead(mag.getFiltHead());
     buttTwoDetected = true;
   }
-  if (((buttMan.getButtons() | 0x01) == 0) && buttTwoDetected) {
+  if (((buttMan.getButtons() & 0x01) == 0) && buttTwoDetected) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
     runTimeStart = micros();
   }
