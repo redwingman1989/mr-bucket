@@ -16,18 +16,18 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
    * then orienting the robot in the loading heading
    * High to low trigger on the left button will commence normal operation.
    */
-  if(buttMan.getButtons() == 0x02) {
+  if(buttMan.getButtons() & 0x02) {
     goToWork.setScoreHead(mag.getFiltHead());
     buttOneDetected = true;
   }
-  else if(buttOneDetected && ((buttMan.getButtons() | 0x02) == 0)) {
+  if(buttOneDetected && ((buttMan.getButtons() | 0x02) == 0)) {
     calibrated = true;
   }
-  else if((buttMan.getButtons() & 0x01) && calibrated) {
+  if((buttMan.getButtons() & 0x01) && calibrated) {
     goToWork.setLoadHead(mag.getFiltHead());
     buttTwoDetected = true;
   }
-  else if (((buttMan.getButtons() | 0x01) == 0) && buttTwoDetected) {
+  if (((buttMan.getButtons() | 0x01) == 0) && buttTwoDetected) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
     runTimeStart = micros();
   }
