@@ -9,6 +9,8 @@ MainExecMachine::MainExecMachine() {
   zamboniScoreZone = SweepExecMachine(Z_SCORE);
   currentState = (state) &MainExecMachine::loadLeftRightRings;
   stateNum = MEST_LOAD_LR_RINGS;
+  loadZoneDirty = false;
+  scoreZoneDirty = false;
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
@@ -30,90 +32,105 @@ bool MainExecMachine::RunTick() {
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
-  /* Static Variable(s) */
-  static bool firstTime = true;
-  static bool buttsDetected = false;
-  static bool buttTimeoutFlag = false;
+  static bool firstTime = false;
+  static bool buttItTOStartFlag = false;
   static uint8_t buttShadow = 0;
-  static uint8_t buttTimeout = 0;
-  static uint32_t stateTimeout = micros();
-  static int8_t rotation = 0;
-  /* Local Variable(s) */
-  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  /* Constant Variable(s) */
-  const int timeBeforeButtonIgnore = 50;
+  static uint32_t stateStartTime = micros();
+  static uint8_t buttItTOCntr = 0;
 
+  float frontWallDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  int rotation = 0;
+
+  const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
+
+  /* If the first time, set the state start time */
   if (firstTime) {
-    stateTimeout = micros();
+    stateStartTime = micros();
     firstTime = false;
   }
 
-  /* Update the static with the latest buttons reading */
   buttShadow |= buttMan.getButtons();
 
-  /* If one of the buttons has been pressed, we need to rotate to make contact
-   *   with the second button */
-  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = -8;
-  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = 8;
+  /* Check to see if the button iteration timeout has been started */
+    /* If timeout has not been started, look at buttons to see if we should start it */
+    if ((buttShadow & 0x03) > 0){
+      buttItTOStartFlag = true;
+    }
 
-  /* Keep going if it has been half a second since a single button was pressed */
-  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
-    buttTimeout++;
-
-  /* Buttons Detected */
-  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
-      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
-    buttsDetected = true;
-    wheels.updateCommand(0,0,0);
-  }
-  else if (!buttsDetected && (rotation != 0)) {
-    wheels.updateCommand(0,0,rotation);
-  }
-  else if (!buttsDetected       &&
-           distanceToFront >= 1 &&
-           micros() - stateTimeout >= loadRingsButtonTimeout) {
-    buttTimeoutFlag = true;
-  }
-  else if (!buttsDetected) {
-    //Use the single front sensor to follow the line so there is not rotation
-    //This assumes we are rotationally aligned when entering loadRings
-    FollowLineSingle(2,true, LSL_RIGHT_FRONT);
-  }
-
-  /* Perform Arm Movements based on if buttons were detected */
-  if (buttsDetected) {
-    /* Clear all the static data */
+  /* Check to see if all buttons have been pressed */
+  if (buttShadow & 0x03 == 0x03) {
+    /* Clean up static variable(s) and move state machine on */
     firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
+    buttItTOStartFlag = false;
     buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
+    stateStartTime = micros();
+    buttItTOCntr = 0;
 
-    /* Move on to the next state */
+    /* Both buttons hit so mark the load zone as clean */
+    loadZoneDirty = false;
+
+    /* Move on */
     currentState = (state) &MainExecMachine::pickupLeftRightRings;
   }
+  /* Else, one or none of the buttons have been pressed */
+  else {
+    /* If at least one button has been pressed (buttItToStartFlag will be set) */
+    if (buttItTOStartFlag) {
+      /* Check to see if we have timed out */
+      if (buttItTOCntr++ >= buttItTimeout) {
+        /* Timeout expired: we hit one button and did not hit the other one */
 
-  /* A button has not been pressed for 5 seconds and the robot is more
-   *   than an inch from the wall */
-  if (buttTimeoutFlag) {
-    /* Mark Loading Zone as dirty */
-    loadZoneDirty = true;
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
 
-    /* Clear Static Data */
-    firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
-    buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
-    /* DO NOT CHANGE STATES */
+        /* DO NOT MARK DIRTY, even though we timed out */
+        loadZoneDirty = false;
+
+        /* Move on */
+        currentState = (state) &MainExecMachine::pickupLeftRightRings;
+        return;
+      }
+
+      /* Check to see which button was hit */
+      if ((buttShadow & 0x03) == 0x01)
+        rotation = -8;
+      else if ((buttShadow & 0x03) == 0x02)
+        rotation = 8;
+
+      wheels.updateCommand(0,0,rotation);
+    }
+    /* Else, no buttons are hit. Attempt to drive to the wall */
+    else {
+      /* Check for timeout */
+      if ((frontWallDist <= 4) && ((micros() - stateStartTime) >= loadRingsButtonTimeout)) {
+        /* A button was never pressed and we timed out being in this state */
+
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
+
+        /* MARK DIRTY and do not move the state machine forward */
+        loadZoneDirty = true;
+
+        return;
+      }
+
+      /* We aren't less than 4 inches from the wall OR
+       *   we are less than 4 inches but our state timeout hasn't expired
+       *   so continue driving to the wall */
+      FollowLineSingle(4,true, LSL_RIGHT_FRONT);
+    }
   }
 }
+
 
 void MainExecMachine::pickupLeftRightRings(bool first) {
   static bool firstTime = true;
@@ -189,93 +206,107 @@ void MainExecMachine::shiftForCenterRings(bool first) {
 }
 
 void MainExecMachine::loadCenterRings(bool first) {
-  /* Static Variable(s) */
-  static bool firstTime = true;
-  static bool buttsDetected = false;
-  static bool buttTimeoutFlag = false;
+  static bool firstTime = false;
+  static bool buttItTOStartFlag = false;
   static uint8_t buttShadow = 0;
-  static uint8_t buttTimeout = 0;
-  static uint32_t stateTimeout = micros();
-  static int8_t rotation = 0;
-  /* Local Variable(s) */
-  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  /* Constant Variable(s) */
-  const int timeBeforeButtonIgnore = 50;
+  static uint32_t stateStartTime = micros();
+  static uint8_t buttItTOCntr = 0;
 
+  float frontWallDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  int rotation = 0;
+
+  const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
+
+  /* If the first time, set the state start time */
   if (firstTime) {
-    stateTimeout = micros();
+    stateStartTime = micros();
     firstTime = false;
   }
 
-  /* Update the static with the latest buttons reading */
   buttShadow |= buttMan.getButtons();
 
-  /* If one of the buttons has been pressed, we need to rotate to make contact
-   *   with the second button */
-  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = -8;
-  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = 8;
+  /* Check to see if the button iteration timeout has been started */
+    /* If timeout has not been started, look at buttons to see if we should start it */
+    if ((buttShadow & 0x03) > 0){
+      buttItTOStartFlag = true;
+    }
 
-  /* Keep going if it has been half a second since a single button was pressed */
-  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
-    buttTimeout++;
-
-  /* Buttons Detected */
-  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
-      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
-    buttsDetected = true;
-    wheels.updateCommand(0,0,0);
-  }
-  else if (!buttsDetected && (rotation != 0)) {
-    wheels.updateCommand(0,0,rotation);
-  }
-  else if (!buttsDetected       &&
-           distanceToFront >= 1 &&
-           micros() - stateTimeout >= loadRingsButtonTimeout) {
-    buttTimeoutFlag = true;
-  }
-  else if (!buttsDetected) {
-    //Use the single front sensor to follow the line so there is not rotation
-    //This assumes we are rotationally aligned when entering loadRings
-    FollowLineSingle(2,true, LSL_CENTER_FRONT);
-  }
-
-  /* Perform Arm Movements based on if buttons were detected */
-  if (buttsDetected) {
-    /* Clear all the static data */
+  /* Check to see if all buttons have been pressed */
+  if (buttShadow & 0x03 == 0x03) {
+    /* Clean up static variable(s) and move state machine on */
     firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
+    buttItTOStartFlag = false;
     buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
+    stateStartTime = micros();
+    buttItTOCntr = 0;
 
-    /* Move on to the next state */
+    /* Both buttons hit so mark the load zone as clean */
+    loadZoneDirty = false;
+
+    /* Move on */
     currentState = (state) &MainExecMachine::pickupCenterRings;
   }
+  /* Else, one or none of the buttons have been pressed */
+  else {
+    /* If at least one button has been pressed (buttItToStartFlag will be set) */
+    if (buttItTOStartFlag) {
+      /* Check to see if we have timed out */
+      if (buttItTOCntr++ >= buttItTimeout) {
+        /* Timeout expired: we hit one button and did not hit the other one */
 
-  /* A button has not been pressed for 5 seconds and the robot is more
-   *   than an inch from the wall */
-  if (buttTimeoutFlag) {
-    /* Mark Loading Zone as dirty */
-    loadZoneDirty = true;
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
 
-    /* Clear all the static data */
-    firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
-    buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
+        /* DO NOT MARK DIRTY, even though we timed out */
+        loadZoneDirty = false;
 
-    /* THIS ONE NEEDS TO CHANGE STATES */
-    currentState = (state) &MainExecMachine::pickupCenterRings;
+        /* Move on */
+        currentState = (state) &MainExecMachine::pickupCenterRings;
+        return;
+      }
+
+      /* Check to see which button was hit */
+      if ((buttShadow & 0x03) == 0x01)
+        rotation = -8;
+      else if ((buttShadow & 0x03) == 0x02)
+        rotation = 8;
+
+      wheels.updateCommand(0,0,rotation);
+    }
+    /* Else, no buttons are hit. Attempt to drive to the wall */
+    else {
+      /* Check for timeout */
+      if ((frontWallDist <= 4) && ((micros() - stateStartTime) >= loadRingsButtonTimeout)) {
+        /* A button was never pressed and we timed out being in this state */
+
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
+
+        /* MARK DIRTY and move the state machine forward */
+        loadZoneDirty = true;
+
+        currentState = (state) &MainExecMachine::pickupCenterRings;
+
+        return;
+      }
+
+      /* We aren't less than 4 inches from the wall OR
+       *   we are less than 4 inches but our state timeout hasn't expired
+       *   so continue driving to the wall */
+      FollowLineSingle(4,true, LSL_CENTER_FRONT);
+    }
   }
-
 }
+
 
 void MainExecMachine::pickupCenterRings(bool first) {
   static bool firstTime = true;
@@ -383,89 +414,105 @@ void MainExecMachine::haulToScore(bool first) {
 }
 
 void MainExecMachine::scoreRings(bool first) {
-  /* Static Variable(s) */
-  static bool firstTime = true;
-  static bool buttsDetected = false;
-  static bool buttTimeoutFlag = false;
+  static bool firstTime = false;
+  static bool buttItTOStartFlag = false;
   static uint8_t buttShadow = 0;
-  static uint8_t buttTimeout = 0;
-  static uint32_t stateTimeout = micros();
-  static int8_t rotation = 0;
-  /* Local Variable(s) */
-  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  /* Constant Variable(s) */
-  const int timeBeforeButtonIgnore = 50;
+  static uint32_t stateStartTime = micros();
+  static uint8_t buttItTOCntr = 0;
 
+  float frontWallDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+
+  int rotation = 0;
+
+  const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
+
+  /* If the first time, set the state start time */
   if (firstTime) {
-    stateTimeout = micros();
+    stateStartTime = micros();
     firstTime = false;
   }
 
-  /* Update the static with the latest buttons reading */
   buttShadow |= buttMan.getButtons();
 
-  /* If one of the buttons has been pressed, we need to rotate to make contact
-   *   with the second button */
-  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = -8;
-  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
-    rotation = 8;
+  /* Check to see if the button iteration timeout has been started */
+    /* If timeout has not been started, look at buttons to see if we should start it */
+    if ((buttShadow & 0x03) > 0){
+      buttItTOStartFlag = true;
+    }
 
-  /* Keep going if it has been half a second since a single button was pressed */
-  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
-    buttTimeout++;
-
-  /* Buttons Detected */
-  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
-      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
-    buttsDetected = true;
-    wheels.updateCommand(0,0,0);
-  }
-  else if (!buttsDetected && (rotation != 0)) {
-    wheels.updateCommand(0,0,rotation);
-  }
-  else if (!buttsDetected       &&
-           distanceToFront >= 1 &&
-           micros() - stateTimeout >= loadRingsButtonTimeout) {
-    buttTimeoutFlag = true;
-  }
-  else if (!buttsDetected) {
-    //Use the single front sensor to follow the line so there is not rotation
-    //This assumes we are rotationally aligned when entering loadRings
-    FollowLineSingle(2,true, LSL_RIGHT_FRONT);
-  }
-
-  /* Perform Arm Movements based on if buttons were detected */
-  if (buttsDetected) {
-    /* Clear all the static data */
+  /* Check to see if all buttons have been pressed */
+  if (buttShadow & 0x03 == 0x03) {
+    /* Clean up static variable(s) and move state machine on */
     firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
+    buttItTOStartFlag = false;
     buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
-    /* Move on to the next state */
+    stateStartTime = micros();
+    buttItTOCntr = 0;
+
+    /* Both buttons hit so mark the load zone as clean */
+    scoreZoneDirty = false;
+
+    /* Move on */
     currentState = (state) &MainExecMachine::unloadAllRings;
   }
+  /* Else, one or none of the buttons have been pressed */
+  else {
+    /* If at least one button has been pressed (buttItToStartFlag will be set) */
+    if (buttItTOStartFlag) {
+      /* Check to see if we have timed out */
+      if (buttItTOCntr++ >= buttItTimeout) {
+        /* Timeout expired: we hit one button and did not hit the other one */
 
-  /* A button has not been pressed for 5 seconds and the robot is more
-   *   than an inch from the wall */
-  if (buttTimeoutFlag) {
-    /* Mark Loading Zone as dirty */
-    scoreZoneDirty = true;
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
 
-    /* Clear all the static data */
-    firstTime = true;
-    buttsDetected = false;
-    buttTimeoutFlag = false;
-    buttShadow = 0;
-    buttTimeout = 0;
-    stateTimeout = micros();
-    rotation = 0;
-    /* DO NOT CHANGE STATES */
+        /* DO NOT MARK DIRTY, even though we timed out */
+        scoreZoneDirty = false;
+
+        /* Move on */
+        currentState = (state) &MainExecMachine::unloadAllRings;
+        return;
+      }
+
+      /* Check to see which button was hit */
+      if ((buttShadow & 0x03) == 0x01)
+        rotation = -8;
+      else if ((buttShadow & 0x03) == 0x02)
+        rotation = 8;
+
+      wheels.updateCommand(0,0,rotation);
+    }
+    /* Else, no buttons are hit. Attempt to drive to the wall */
+    else {
+      /* Check for timeout */
+      if ((frontWallDist <= 4) && ((micros() - stateStartTime) >= loadRingsButtonTimeout)) {
+        /* A button was never pressed and we timed out being in this state */
+
+        /* Clean up static variables */
+        firstTime = true;
+        buttItTOStartFlag = false;
+        buttShadow = 0;
+        stateStartTime = micros();
+        buttItTOCntr = 0;
+
+        /* MARK DIRTY and do not move the state machine forward */
+        scoreZoneDirty = true;
+
+        return;
+      }
+
+      /* We aren't less than 4 inches from the wall OR
+       *   we are less than 4 inches but our state timeout hasn't expired
+       *   so continue driving to the wall */
+      FollowLineSingle(4,true, LSL_RIGHT_FRONT);
+    }
   }
 }
+
 
 void MainExecMachine::unloadAllRings(bool first) {
   static bool firstTime = true;
