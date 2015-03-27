@@ -46,7 +46,7 @@ void setup()
   sense.addTask(&mag, rate250Hz, 0);
   sense.addTask(&lineManager, rate250Hz, 0);
   sense.addTask(&buttMan, rate100Hz, 0, "Button Manager");
-  sense.addTask(&ultraSonicMgr, rate16Hz, 4);
+  sense.addTask(&ultraSonicMgr, rate16Hz, 0);
 
   plan.addTask(&masterChief, rate100Hz, 0);
 
