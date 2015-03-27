@@ -37,6 +37,20 @@ float speedBuild(float *integral,float speed){
     return returnfloat;
 }
 
+float speedBuild(float *integral,float speed, float toValue){
+        float returnfloat = 0;
+        if(abs(speed) < toValue){
+            *integral += speed;
+        }
+        if(abs(*integral) > toValue){
+            returnfloat =  *integral;
+            *integral = 0;
+        }else{
+            returnfloat = speed;
+        }
+    return returnfloat;
+}
+
 bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
     float turnConstant = 8;
     static float totalAngle = 0;
@@ -185,14 +199,14 @@ float getToHeadingDirection(float desiredHeading,bool clockwise) {
   float delta;
   const float thresholdGap = 20;
   const float forceDirectionGap = 50;
-  const float rotationSpeed = 2;
-  const float smallRotationDivider = .15;
+  const float rotationSpeed = 3;
+  const float smallRotationDivider = .01;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
   if( abs(delta) < forceDirectionGap){
     if(abs(delta) < thresholdGap){
-        return speedBuild(&integralMotion, smallRotationDivider * delta );
+        return speedBuild(&integralMotion,delta * smallRotationDivider,2 );
     } else {
         if(delta < 0){
             return -rotationSpeed;
