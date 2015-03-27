@@ -15,7 +15,7 @@ ServoArmController::ServoArmController()
 {
   //Setup servo constants
   this->swingArmConstants[SA_DOWN] = 660;
-  this->swingArmConstants[SA_UP] = 1540;
+  this->swingArmConstants[SA_UP] = 1550;
 
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1515;
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1670;
