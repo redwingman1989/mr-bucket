@@ -58,10 +58,10 @@ class SweepExecMachine: public StateMachine<SweepExecMachine> {
 
     /* Sweep Score Zone Functions */
     void sz_backUpInitial(bool);
-    void sz_shiftRightToWall(bool);
-    void sz_driveForward(bool);
     void sz_shiftLeftToWall(bool);
-    void sz_backOffRight(bool);
+    void sz_driveForward(bool);
+    void sz_shiftRightToWall(bool);
+    void sz_backOffLeft(bool);
     void sz_backUpToAlign(bool);
     void sz_reAlign(bool);
 
