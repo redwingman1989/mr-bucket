@@ -9,11 +9,6 @@ MainExecMachine::MainExecMachine() {
   zamboniScoreZone = SweepExecMachine(Z_SCORE);
   currentState = (state) &MainExecMachine::loadLeftRightRings;
   stateNum = MEST_LOAD_LR_RINGS;
-  sharedData.staticButtonsDetected = false;
-  sharedData.staticButtShadow = 0;
-  sharedData.staticButtTimeout = 0;
-  sharedData.staticStateTimeout = micros();
-  sharedData.staticButtonTimeoutFlag = false;
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
@@ -35,33 +30,87 @@ bool MainExecMachine::RunTick() {
 }
 
 void MainExecMachine::loadLeftRightRings(bool first) {
+  /* Static Variable(s) */
   static bool firstTime = true;
+  static bool buttsDetected = false;
+  static bool buttTimeoutFlag = false;
+  static uint8_t buttShadow = 0;
+  static uint8_t buttTimeout = 0;
+  static uint32_t stateTimeout = micros();
+  static int8_t rotation = 0;
+  /* Local Variable(s) */
+  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  /* Constant Variable(s) */
+  const int timeBeforeButtonIgnore = 50;
 
   if (firstTime) {
-    sharedData.staticStateTimeout = micros();
+    stateTimeout = micros();
     firstTime = false;
   }
 
-  /* Call the common Load Rings functionality */
-  loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
+  /* Update the static with the latest buttons reading */
+  buttShadow |= buttMan.getButtons();
+
+  /* If one of the buttons has been pressed, we need to rotate to make contact
+   *   with the second button */
+  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = -8;
+  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = 8;
+
+  /* Keep going if it has been half a second since a single button was pressed */
+  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
+    buttTimeout++;
+
+  /* Buttons Detected */
+  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
+      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
+    buttsDetected = true;
+    wheels.updateCommand(0,0,0);
+  }
+  else if (!buttsDetected && (rotation != 0)) {
+    wheels.updateCommand(0,0,rotation);
+  }
+  else if (!buttsDetected       &&
+           distanceToFront >= 1 &&
+           micros() - stateTimeout >= loadRingsButtonTimeout) {
+    buttTimeoutFlag = true;
+  }
+  else if (!buttsDetected) {
+    //Use the single front sensor to follow the line so there is not rotation
+    //This assumes we are rotationally aligned when entering loadRings
+    FollowLineSingle(2,true, LSL_RIGHT_FRONT);
+  }
 
   /* Perform Arm Movements based on if buttons were detected */
-  if (sharedData.staticButtonsDetected) {
-    /* Reset the first time flag  */
+  if (buttsDetected) {
+    /* Clear all the static data */
     firstTime = true;
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
+
     /* Move on to the next state */
-    clearStaticData(&sharedData);
     currentState = (state) &MainExecMachine::pickupLeftRightRings;
   }
 
   /* A button has not been pressed for 5 seconds and the robot is more
    *   than an inch from the wall */
-  if (sharedData.staticButtonTimeoutFlag) {
+  if (buttTimeoutFlag) {
     /* Mark Loading Zone as dirty */
     loadZoneDirty = true;
-    firstTime = true;
+
     /* Clear Static Data */
-    clearStaticData(&sharedData);
+    firstTime = true;
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
     /* DO NOT CHANGE STATES */
   }
 }
@@ -140,33 +189,88 @@ void MainExecMachine::shiftForCenterRings(bool first) {
 }
 
 void MainExecMachine::loadCenterRings(bool first) {
-
+  /* Static Variable(s) */
   static bool firstTime = true;
+  static bool buttsDetected = false;
+  static bool buttTimeoutFlag = false;
+  static uint8_t buttShadow = 0;
+  static uint8_t buttTimeout = 0;
+  static uint32_t stateTimeout = micros();
+  static int8_t rotation = 0;
+  /* Local Variable(s) */
+  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  /* Constant Variable(s) */
+  const int timeBeforeButtonIgnore = 50;
 
   if (firstTime) {
-    sharedData.staticStateTimeout = micros();
+    stateTimeout = micros();
     firstTime = false;
   }
 
-  /* Call the common Load Rings functionality */
-  loadRingsButtonDetection(LSL_CENTER_FRONT, &sharedData);
+  /* Update the static with the latest buttons reading */
+  buttShadow |= buttMan.getButtons();
+
+  /* If one of the buttons has been pressed, we need to rotate to make contact
+   *   with the second button */
+  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = -8;
+  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = 8;
+
+  /* Keep going if it has been half a second since a single button was pressed */
+  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
+    buttTimeout++;
+
+  /* Buttons Detected */
+  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
+      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
+    buttsDetected = true;
+    wheels.updateCommand(0,0,0);
+  }
+  else if (!buttsDetected && (rotation != 0)) {
+    wheels.updateCommand(0,0,rotation);
+  }
+  else if (!buttsDetected       &&
+           distanceToFront >= 1 &&
+           micros() - stateTimeout >= loadRingsButtonTimeout) {
+    buttTimeoutFlag = true;
+  }
+  else if (!buttsDetected) {
+    //Use the single front sensor to follow the line so there is not rotation
+    //This assumes we are rotationally aligned when entering loadRings
+    FollowLineSingle(2,true, LSL_CENTER_FRONT);
+  }
 
   /* Perform Arm Movements based on if buttons were detected */
-  if (sharedData.staticButtonsDetected) {
-    /* Reset the first time flag  */
+  if (buttsDetected) {
+    /* Clear all the static data */
     firstTime = true;
-    clearStaticData(&sharedData);
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
+
     /* Move on to the next state */
     currentState = (state) &MainExecMachine::pickupCenterRings;
   }
 
   /* A button has not been pressed for 5 seconds and the robot is more
    *   than an inch from the wall */
-  if (sharedData.staticButtonTimeoutFlag) {
+  if (buttTimeoutFlag) {
     /* Mark Loading Zone as dirty */
     loadZoneDirty = true;
-    /* Clear Static Data */
-    clearStaticData(&sharedData);
+
+    /* Clear all the static data */
+    firstTime = true;
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
+
     /* THIS ONE NEEDS TO CHANGE STATES */
     currentState = (state) &MainExecMachine::pickupCenterRings;
   }
@@ -278,34 +382,86 @@ void MainExecMachine::haulToScore(bool first) {
 }
 
 void MainExecMachine::scoreRings(bool first) {
+  /* Static Variable(s) */
   static bool firstTime = true;
+  static bool buttsDetected = false;
+  static bool buttTimeoutFlag = false;
+  static uint8_t buttShadow = 0;
+  static uint8_t buttTimeout = 0;
+  static uint32_t stateTimeout = micros();
+  static int8_t rotation = 0;
+  /* Local Variable(s) */
+  float distanceToFront = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  /* Constant Variable(s) */
+  const int timeBeforeButtonIgnore = 50;
 
   if (firstTime) {
-    sharedData.staticStateTimeout = micros();
+    stateTimeout = micros();
     firstTime = false;
   }
 
-  /* Call the common Load Rings functionality */
-  loadRingsButtonDetection(LSL_RIGHT_FRONT, &sharedData);
+  /* Update the static with the latest buttons reading */
+  buttShadow |= buttMan.getButtons();
+
+  /* If one of the buttons has been pressed, we need to rotate to make contact
+   *   with the second button */
+  if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = -8;
+  else if (!buttsDetected && (buttShadow & 0x03 == 0x01))
+    rotation = 8;
+
+  /* Keep going if it has been half a second since a single button was pressed */
+  if (buttShadow && (buttTimeout < timeBeforeButtonIgnore))
+    buttTimeout++;
+
+  /* Buttons Detected */
+  if (!buttsDetected && (((buttShadow & 0x03) == 0x03) ||
+      (buttTimeout >= timeBeforeButtonIgnore))&& (distanceToFront < 1)) {
+    buttsDetected = true;
+    wheels.updateCommand(0,0,0);
+  }
+  else if (!buttsDetected && (rotation != 0)) {
+    wheels.updateCommand(0,0,rotation);
+  }
+  else if (!buttsDetected       &&
+           distanceToFront >= 1 &&
+           micros() - stateTimeout >= loadRingsButtonTimeout) {
+    buttTimeoutFlag = true;
+  }
+  else if (!buttsDetected) {
+    //Use the single front sensor to follow the line so there is not rotation
+    //This assumes we are rotationally aligned when entering loadRings
+    FollowLineSingle(2,true, LSL_RIGHT_FRONT);
+  }
 
   /* Perform Arm Movements based on if buttons were detected */
-  if (sharedData.staticButtonsDetected) {
-    /* Reset the first time flag  */
+  if (buttsDetected) {
+    /* Clear all the static data */
     firstTime = true;
-    /* Clear Static Data */
-    clearStaticData(&sharedData);
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
     /* Move on to the next state */
     currentState = (state) &MainExecMachine::unloadAllRings;
   }
 
   /* A button has not been pressed for 5 seconds and the robot is more
    *   than an inch from the wall */
-  if (sharedData.staticButtonTimeoutFlag) {
+  if (buttTimeoutFlag) {
     /* Mark Loading Zone as dirty */
     scoreZoneDirty = true;
+
+    /* Clear all the static data */
     firstTime = true;
-    /* Clear Static Data */
-    clearStaticData(&sharedData);
+    buttsDetected = false;
+    buttTimeoutFlag = false;
+    buttShadow = 0;
+    buttTimeout = 0;
+    stateTimeout = micros();
+    rotation = 0;
     /* DO NOT CHANGE STATES */
   }
 }
