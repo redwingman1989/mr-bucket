@@ -330,6 +330,7 @@ void MainExecMachine::flipToScore(bool first) {
         stateNum = MEST_FIND_CENTER_LINE_ONE;
         currentState = (state) &MainExecMachine::findCenterLineToScore;
     }
+    wheels.updateCommand(0,0,0);
   }
   else {
         point_t point= {2,0};

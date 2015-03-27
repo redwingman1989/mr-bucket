@@ -50,7 +50,7 @@ void setup()
 
   plan.addTask(&masterChief, rate100Hz, 0);
 
-  act.addTask(&wheels, rate50Hz, 0);
+  act.addTask(&wheels, rate100Hz, 0);
   act.addTask(&arm, rate50Hz, 0);
 
   /*--- Initialize Cycle Units ---*/
