@@ -6,8 +6,8 @@ float convertRadToPercent(float rad, float speed){
 
 float getSpeedHelper(float offset,float lineCenter){
     float speedConst = 2.5;
-    float speedConstCenter = 5;
-    float centerThreshhold = .5;
+    float speedConstCenter = 2.5;
+    float centerThreshhold = 1;
     float speed = - 1 *(offset - lineCenter );
 
     if(speed < 0){
@@ -183,10 +183,10 @@ float getDeltaHeading(float desiredHeading){
 //Gets us to a heading going a direction unless +- 10 thresholdGap
 float getToHeadingDirection(float desiredHeading,bool clockwise) {
   float delta;
-  const float thresholdGap = 10;
+  const float thresholdGap = 20;
   const float forceDirectionGap = 50;
   const float rotationSpeed = 2;
-  const float smallRotationDivider = .3;
+  const float smallRotationDivider = .15;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
