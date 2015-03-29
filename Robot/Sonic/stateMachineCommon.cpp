@@ -7,6 +7,8 @@
 // Returns true when completed (<15 inches on front and on line)
 bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float rotSpeed) {
   static bool goRight = true;
+  static bool goRightShadow = true;
+  static float threshHold = 12.0;
 
   float rightUltra = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float leftUltra = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
@@ -23,11 +25,19 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
     forwardSpeed = 0;
 
   // Check if we need to switch the sideways direction
-  if(rightUltra < 12) goRight = false;
-  else if (leftUltra < 12) goRight = true;
+  if(rightUltra < threshHold) goRight = false;
+  else if (leftUltra < threshHold) goRight = true;
 
-  if(lineManager.getLineDriveCommand(LSP_RIGHT).valid)
+  if (goRight != goRightShadow) {
+    if(threshHold > 0)
+    threshHold = threshHold - 1.0;
+  }
+
+  if(lineManager.getLineDriveCommand(LSP_RIGHT).valid){
+    threshHold = 12.0;
     return true;
+  }
+
 
   // If the right front sensor is valid, pivot to get back sensor on
   else if(lineManager.getSingleCommand(LSL_RIGHT_FRONT).valid) {

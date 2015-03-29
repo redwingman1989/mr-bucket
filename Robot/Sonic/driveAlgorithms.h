@@ -6,6 +6,8 @@ float convertRadToPercent(float rad, float speed);
 
 float getSpeedHelper(float offset,float lineCenter);
 
+float speedBuild(float *integral,float speed, float maxSpeed);
+
 float speedBuild(float *integral,float speed);
 
 bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum);
