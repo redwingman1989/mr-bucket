@@ -23,12 +23,12 @@ float getSpeedHelper(float offset,float lineCenter){
    return speed;
 }
 
-float speedBuild(float *integral,float speed){
+float speedBuild(float *integral,float speed, float maxSpeed){
         float returnfloat = 0;
-        if(abs(speed) < 1){
+        if(abs(speed) < maxSpeed){
             *integral += speed;
         }
-        if(abs(*integral) > 1){
+        if(abs(*integral) > maxSpeed){
             returnfloat =  *integral;
             *integral = 0;
         }else{
@@ -37,12 +37,12 @@ float speedBuild(float *integral,float speed){
     return returnfloat;
 }
 
-float speedBuild(float *integral,float speed, float toValue){
+float speedBuild(float *integral,float speed){
         float returnfloat = 0;
-        if(abs(speed) < toValue){
+        if(abs(speed) < 1){
             *integral += speed;
         }
-        if(abs(*integral) > toValue){
+        if(abs(*integral) > 1){
             returnfloat =  *integral;
             *integral = 0;
         }else{
@@ -199,14 +199,14 @@ float getToHeadingDirection(float desiredHeading,bool clockwise) {
   float delta;
   const float thresholdGap = 20;
   const float forceDirectionGap = 50;
-  const float rotationSpeed = 3;
-  const float smallRotationDivider = .01;
+  const float rotationSpeed = 2;
+  const float smallRotationDivider = .15;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
   if( abs(delta) < forceDirectionGap){
     if(abs(delta) < thresholdGap){
-        return speedBuild(&integralMotion,delta * smallRotationDivider,2 );
+        return speedBuild(&integralMotion, smallRotationDivider * delta,2 );
     } else {
         if(delta < 0){
             return -rotationSpeed;

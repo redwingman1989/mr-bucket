@@ -693,8 +693,9 @@
 			<Option compile="1" />
 			<Option link="1" />
 		</Unit>
-		<Unit filename="StateMachine.cpp" />
 		<Unit filename="StateMachine.h" />
+		<Unit filename="SweepExecMachine.cpp" />
+		<Unit filename="SweepExecMachine.h" />
 		<Unit filename="System/CycleUnit.cpp" />
 		<Unit filename="System/CycleUnit.h" />
 		<Unit filename="System/RunableModule.cpp" />
@@ -705,9 +706,12 @@
 		<Unit filename="UltraSonicManager.h" />
 		<Unit filename="UltraSonicSensor.cpp" />
 		<Unit filename="UltraSonicSensor.h" />
+		<Unit filename="driveAlgorithms.cpp" />
 		<Unit filename="driveAlgorithms.h" />
 		<Unit filename="primaryStateMachine.cpp" />
 		<Unit filename="primaryStateMachine.h" />
+		<Unit filename="stateMachineCommon.cpp" />
+		<Unit filename="stateMachineCommon.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
