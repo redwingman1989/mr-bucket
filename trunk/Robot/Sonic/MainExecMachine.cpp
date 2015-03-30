@@ -594,7 +594,7 @@ void MainExecMachine::haulToLoad(bool first) {
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-
+  static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
   if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
@@ -602,17 +602,19 @@ void MainExecMachine::haulToLoad(bool first) {
     lostLine = true;
   }
 
-  else if (frontDist > 15) {
-    forwardSpeed = (frontDist-15) + 2;
-    forwardSpeed = forwardSpeed > 50 ? 50 : forwardSpeed;
-    forwardSpeed = forwardSpeed < 2 ? 2 : forwardSpeed;
+  else if (frontDist > 8) {
+    forwardSpeed = (frontDist-8) + 2;
+    forwardSpeed = forwardSpeed > 70 ? 70 : forwardSpeed;
+    forwardSpeed = forwardSpeed < 5 ? 5 : forwardSpeed;
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
+    distanceCount = 0;
   }
 
-  else {
-    wheels.updateCommand(0, 0, 0);
-    lostLine = false;
-    stateNum = MEST_LOAD_LR_RINGS;
-    currentState = (state) &MainExecMachine::loadLeftRightRings;
+  else if(distanceCount++ > 5){
+        wheels.updateCommand(0, 0, 0);
+        lostLine = false;
+        stateNum = MEST_LOAD_LR_RINGS;
+        currentState = (state) &MainExecMachine::loadLeftRightRings;
+        distanceCount = 0;
   }
 }

@@ -99,7 +99,7 @@ bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations locati
     if(linePair.valid){
         float speed = 0;
         speed = getSpeedHelper(offset ,center);
-        speed = speedBuild(&totalOff,speed);
+        speed = speedBuild(&totalOff,speed,2);
         if (fwd) wheels.updateCommand(speedDirection, speed, 0);
         else wheels.updateCommand(speed ,speedDirection ,0);
     }
