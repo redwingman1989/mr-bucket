@@ -285,12 +285,16 @@ void UltraSonicSensor::triggerAPulse()
 void UltraSonicSensor::calculateDistance()
 {
     #define VELOCITY_ULTRA_WAVE_IN_MICROSECONDS (0.0066929134)
+    #define MAX_DISTANCE (120.0)
 
     uint32_t timeDelta = this->rxLastEchoTime - this->rxFirstEchoTime;
 
     float timeDeltaFloat = (float) timeDelta;
 
     float finalVal = ((timeDeltaFloat) * VELOCITY_ULTRA_WAVE_IN_MICROSECONDS);
+
+    if(finalVal > MAX_DISTANCE)
+      finalVal = 0;
 
     calcDist = finalVal;
 

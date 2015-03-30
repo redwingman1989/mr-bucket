@@ -32,10 +32,14 @@ ServoArmController::ServoArmController()
   this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1750;
   this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1900;
 
+  this->doublePointConstants[DP_RETRACT] = 1400;
+  this->doublePointConstants[DP_DROP] = 1500;
+
   this->swingArmCommand = this->swingArmConstants[SA_DOWN];
   this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
   this->pickupCenterCommand = this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO];
   this->pickupRightCommand = this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO];
+  this->doublePointCommand = this->doublePointConstants[DP_DROP];
 
   setPickupArmLimit(1);
   setSwingArmLimit(3);
@@ -48,6 +52,7 @@ void ServoArmController::init(void)
   this->pickupCenter.attach(pinCRingSvo);
   this->pickupRight.attach(pinRRingSvo);
   this->swingArm.attach(pinArmSvo);
+  this->doublePoint.attach(pinDblPntSvo);
 
   //Run to initialize the servo positions
   RunTick();
@@ -61,6 +66,10 @@ void ServoArmController::commandSwingArm(swingArmStates_t state)
 void ServoArmController::commandPickupServo(pickupServoSelection_t selection, pickupStates_t state)
 {
   this->currentPickupState[selection] = state;
+}
+
+void ServoArmController::commandDoublePointServo(doublePointStates_t state) {
+  this->currentDoublePointState = state;
 }
 
 bool ServoArmController::RunTick()
@@ -86,11 +95,14 @@ bool ServoArmController::RunTick()
     this->pickupRightCommand,
     pickupLimit);
 
+  this->doublePointCommand = this->doublePointConstants[this->currentDoublePointState];
+
   //Write servo commands
   this->swingArm.writeMicroseconds(this->swingArmCommand);
   this->pickupLeft.writeMicroseconds(this->pickupLeftCommand);
   this->pickupCenter.writeMicroseconds(this->pickupCenterCommand);
   this->pickupRight.writeMicroseconds(this->pickupRightCommand);
+  this->doublePoint.writeMicroseconds(this->doublePointCommand);
 
   return false;
 }

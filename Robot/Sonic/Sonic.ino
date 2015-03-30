@@ -18,7 +18,7 @@ void findLineRight(void);
 
 void setup()
 {
-  Serial2.begin(serialBaud);
+  //Serial2.begin(serialBaud);
 
   /*--- Initialize Runable Modules ---*/
   /* Inputs */

@@ -20,6 +20,7 @@ static const uint8_t pinLButton    = 14; // Left Front Tacttile Button
 static const uint8_t pinRButton    = 15; // Right Front Tactile Button
 static const uint8_t pinDebugTx    = 16; // Debug Serial Tx
 static const uint8_t pinDebugRx    = 17; // Debug Serial Rx
+static const uint8_t pinDblPntSvo  = 17; // Double Point Servo PWM
 static const uint8_t pinFUltraEcho = 18; // Front Ultrasonic Echo
 static const uint8_t pinLUltraEcho = 19; // Left Ultrasonic Echo
 static const uint8_t pinSDA        = 20; // I2C Data line (Magnetormeter Data)

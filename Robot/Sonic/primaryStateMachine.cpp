@@ -22,6 +22,7 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
   }
   if(buttOneDetected && ((buttMan.getButtons() & 0x02) == 0)) {
     calibrated = true;
+    arm.commandDoublePointServo(DP_RETRACT);
   }
   if((buttMan.getButtons() & 0x01) && calibrated) {
     goToWork.setLoadHead(mag.getFiltHead());
@@ -30,6 +31,7 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
   if (((buttMan.getButtons() & 0x01) == 0) && buttTwoDetected) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
     runTimeStart = micros();
+
   }
 }
 
