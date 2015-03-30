@@ -81,7 +81,7 @@ void SweepExecMachine::lz_shiftLeftToWall(bool first){
   float distLeft = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
   float distRight = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   static float prevDistRight = 0.0;
-  const float minSpeed = 3; // in motor command units
+  const float minSpeed = 5; // in motor command units
   const float maxSpeed = 50;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 3.0;  // in inches
@@ -103,9 +103,9 @@ void SweepExecMachine::lz_shiftLeftToWall(bool first){
     prevDistRight = distRight;
   }
   /* Check if we have timed out in this state */
-  timedOut = (micros() - startTime > 5000000);
+  timedOut = (micros() - startTime > 4000000);
 
-  /* If against the wall or timedOut after 5 seconds, transition states */
+  /* If against the wall or timedOut after 4 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
     firstTime = true;
@@ -155,9 +155,9 @@ void SweepExecMachine::lz_driveForward(bool first){
     prevDist = dist;
   }
   /* Check if we have timed out in this state */
-  timedOut = (micros() - startTime > 5000000);
+  timedOut = (micros() - startTime > 4000000);
 
-  /* If against the wall or timedOut after 5 seconds, transition states */
+  /* If against the wall or timedOut after 4 seconds, transition states */
   if (timedOut || distanceReached) {
     /* reset Static Variables */
     firstTime = true;
@@ -172,7 +172,7 @@ void SweepExecMachine::lz_driveForward(bool first){
                                     minDist,
                                     maxSpeed,
                                     minSpeed);
-    wheels.updateCommand(speed,-1,0);
+    wheels.updateCommand(speed,0,0);
   }
 }
 

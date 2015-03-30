@@ -95,14 +95,6 @@ void MainExecMachine::loadLeftRightRings(bool first) {
         currentState = (state) &MainExecMachine::pickupLeftRightRings;
         return;
       }
-
-      /* Check to see which button was hit */
-      if ((buttShadow & 0x03) == 0x01)
-        rotation = -8;
-      else if ((buttShadow & 0x03) == 0x02)
-        rotation = 8;
-
-      wheels.updateCommand(0,0,rotation);
     }
     /* Else, no buttons are hit. Attempt to drive to the wall */
     else {
@@ -270,13 +262,6 @@ void MainExecMachine::loadCenterRings(bool first) {
         return;
       }
 
-      /* Check to see which button was hit */
-      if ((buttShadow & 0x03) == 0x01)
-        rotation = -8;
-      else if ((buttShadow & 0x03) == 0x02)
-        rotation = 8;
-
-      wheels.updateCommand(0,0,rotation);
     }
     /* Else, no buttons are hit. Attempt to drive to the wall */
     else {
@@ -390,7 +375,11 @@ void MainExecMachine::haulToScore(bool first) {
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-
+  const float minSpeed = 1;   // in motor command units
+  const float maxSpeed = 50;  // in motor command units
+  const float maxDist = 48.0; // in inches
+  const float minDist = 20.0; // in inches
+  static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
   if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
@@ -398,18 +387,21 @@ void MainExecMachine::haulToScore(bool first) {
     lostLine = true;
   }
 
-  else if (frontDist > 15) {
-    forwardSpeed = (frontDist-15) + 2;
-    forwardSpeed = forwardSpeed > 50 ? 50 : forwardSpeed;
-    forwardSpeed = forwardSpeed < 2 ? 2 : forwardSpeed;
+  else if (frontDist > minDist) {
+    forwardSpeed = scaleDistanceToSpeedCmd(frontDist,
+                                           maxDist,
+                                           minDist,
+                                           maxSpeed,
+                                           minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
+    distanceCount = 0;
   }
-
-  else {
+  else if(distanceCount++ > 5){
     wheels.updateCommand(0, 0, 0);
     lostLine = false;
     stateNum = MEST_SCORE;
     currentState = (state) &MainExecMachine::scoreRings;
+    distanceCount = 0;
   }
 }
 
@@ -478,12 +470,6 @@ void MainExecMachine::scoreRings(bool first) {
         return;
       }
 
-      /* Check to see which button was hit */
-      if ((buttShadow & 0x03) == 0x01)
-        rotation = -8;
-      else if ((buttShadow & 0x03) == 0x02)
-        rotation = 8;
-
       wheels.updateCommand(0,0,rotation);
     }
     /* Else, no buttons are hit. Attempt to drive to the wall */
@@ -537,8 +523,20 @@ void MainExecMachine::unloadAllRings(bool first) {
 }
 
 void MainExecMachine::backupFromScoring(bool first) {
-  wheels.updateCommand(-20, 0, 0);
-  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 12)
+  const float minSpeed = 2;   // in motor command units
+  const float maxSpeed = 40;  // in motor command units
+  const float maxDist = 16.0; // in inches
+  const float minDist = 4.0; // in inches
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  float backwardSpeed = -scaleDistanceToSpeedCmd(frontDist,
+                                           maxDist,
+                                           minDist,
+                                           maxSpeed,
+                                           minSpeed);
+
+  FollowLine(0, backwardSpeed ,  LSP_RIGHT);
+
+  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > maxDist)
   {
     wheels.updateCommand(0,0,0);
     stateNum = MEST_LOWER_ARM;
@@ -577,7 +575,7 @@ void MainExecMachine::flipToLoad(bool first) {
 void MainExecMachine::findCenterLineToLoad(bool first) {
   static bool firstTime = true;
 
-  if (findCenterLine(firstTime, 15, 5, 4)) {
+  if (findCenterLine(firstTime, 25, 5, 4)) {
     firstTime = true;
 
     stateNum = MEST_HAUL_TOLOAD;
@@ -595,17 +593,22 @@ void MainExecMachine::haulToLoad(bool first) {
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   static int distanceCount = 0;
+  const float minSpeed = 1;   // in motor command units
+  const float maxSpeed = 60;  // in motor command units
+  const float maxDist = 48.0; // in inches
+  const float minDist = 20.0; // in inches
   sideSpeed = 2*(rightError - leftError);
 
-  if(! lineManager.getLineDriveCommand(LSP_RIGHT).valid){
+  if(!lineManager.getLineDriveCommand(LSP_RIGHT).valid){
     findCenterLine(!lostLine, 0, 5, 4);
     lostLine = true;
   }
-
-  else if (frontDist > 8) {
-    forwardSpeed = (frontDist-8) + 2;
-    forwardSpeed = forwardSpeed > 70 ? 70 : forwardSpeed;
-    forwardSpeed = forwardSpeed < 5 ? 5 : forwardSpeed;
+  else if (frontDist > minDist) {
+    forwardSpeed = scaleDistanceToSpeedCmd(frontDist,
+                                           maxDist,
+                                           minDist,
+                                           maxSpeed,
+                                           minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
     distanceCount = 0;
   }
