@@ -375,8 +375,8 @@ void MainExecMachine::haulToScore(bool first) {
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  const float minSpeed = 1;   // in motor command units
-  const float maxSpeed = 50;  // in motor command units
+  const float minSpeed = 2;   // in motor command units
+  const float maxSpeed = 40;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   static int distanceCount = 0;
@@ -387,22 +387,24 @@ void MainExecMachine::haulToScore(bool first) {
     lostLine = true;
   }
 
-  else if (frontDist > minDist) {
+  else {
     forwardSpeed = scaleDistanceToSpeedCmd(frontDist,
                                            maxDist,
                                            minDist,
                                            maxSpeed,
                                            minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
-    distanceCount = 0;
+    if(frontDist > minDist)
+      distanceCount = 0;
+    else if(distanceCount++ > 5){
+      wheels.updateCommand(0, 0, 0);
+      lostLine = false;
+      stateNum = MEST_SCORE;
+      currentState = (state) &MainExecMachine::scoreRings;
+      distanceCount = 0;
+    }
   }
-  else if(distanceCount++ > 5){
-    wheels.updateCommand(0, 0, 0);
-    lostLine = false;
-    stateNum = MEST_SCORE;
-    currentState = (state) &MainExecMachine::scoreRings;
-    distanceCount = 0;
-  }
+
 }
 
 void MainExecMachine::scoreRings(bool first) {
@@ -594,7 +596,7 @@ void MainExecMachine::haulToLoad(bool first) {
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   static int distanceCount = 0;
   const float minSpeed = 1;   // in motor command units
-  const float maxSpeed = 60;  // in motor command units
+  const float maxSpeed = 40;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   sideSpeed = 2*(rightError - leftError);
@@ -603,21 +605,21 @@ void MainExecMachine::haulToLoad(bool first) {
     findCenterLine(!lostLine, 0, 5, 4);
     lostLine = true;
   }
-  else if (frontDist > minDist) {
+  else {
     forwardSpeed = scaleDistanceToSpeedCmd(frontDist,
                                            maxDist,
                                            minDist,
                                            maxSpeed,
                                            minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
-    distanceCount = 0;
-  }
-
-  else if(distanceCount++ > 5){
-        wheels.updateCommand(0, 0, 0);
-        lostLine = false;
-        stateNum = MEST_LOAD_LR_RINGS;
-        currentState = (state) &MainExecMachine::loadLeftRightRings;
-        distanceCount = 0;
+    if (frontDist > minDist)
+      distanceCount = 0;
+    else if(distanceCount++ > 5){
+      wheels.updateCommand(0, 0, 0);
+      lostLine = false;
+      stateNum = MEST_LOAD_LR_RINGS;
+      currentState = (state) &MainExecMachine::loadLeftRightRings;
+      distanceCount = 0;
+    }
   }
 }
