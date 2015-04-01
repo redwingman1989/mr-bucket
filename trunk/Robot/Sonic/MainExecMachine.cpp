@@ -591,7 +591,7 @@ void MainExecMachine::flipToLoad(bool first) {
   if (micros() - flipTimeStart > flipTimeout) {
     wheels.updateCommand(0,0,0);
     firstTime = true;
-    stateNum = MEST_FIND_CENTER_LINE_ONE;
+    stateNum = MEST_FIND_CENTER_LINE_TWO;
     currentState = (state) &MainExecMachine::findCenterLineToLoad;
   }
 
