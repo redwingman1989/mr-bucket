@@ -366,6 +366,13 @@ void MainExecMachine::findCenterLineToScore(bool first) {
   }
 
   else firstTime = false;
+
+  if (abs(getDeltaHeading(scoreHeading)) > 45) {
+    stateNum = MEST_FLIP_ONE;
+    currentState = (state) &MainExecMachine::flipToScore;
+    firstTime = true;
+  }
+
 }
 
 void MainExecMachine::haulToScore(bool first) {
@@ -404,7 +411,6 @@ void MainExecMachine::haulToScore(bool first) {
       distanceCount = 0;
     }
   }
-
 }
 
 void MainExecMachine::scoreRings(bool first) {
@@ -585,6 +591,12 @@ void MainExecMachine::findCenterLineToLoad(bool first) {
   }
 
   else firstTime = false;
+
+  if (abs(getDeltaHeading(loadHeading)) > 45) {
+    stateNum = MEST_FLIP_TWO;
+    currentState = (state) &MainExecMachine::flipToLoad;
+    firstTime = true;
+  }
 }
 
 void MainExecMachine::haulToLoad(bool first) {
