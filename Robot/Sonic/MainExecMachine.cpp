@@ -333,11 +333,27 @@ void MainExecMachine::raiseArm(bool first) {
 }
 
 void MainExecMachine::flipToScore(bool first) {
+  static bool firstTime = true;
+  static uint32_t startFlipTime = micros();
   float rotationSpeed;
   static int lineUpCount = 0;
   float delta = getDeltaHeading(scoreHeading);
   // once the desired heading is reached
   //   transition to findCenterLin
+
+  if (firstTime) {
+    firstTime = false;
+    startFlipTime = micros();
+  }
+
+  /* Check for a state timeout */
+  if (micros() - startFlipTime > flipTimeout) {
+    wheels.updateCommand(0,0,0);
+    firstTime = true;
+    stateNum = MEST_FIND_CENTER_LINE_ONE;
+    currentState = (state) &MainExecMachine::findCenterLineToScore;
+  }
+
   rotationSpeed =  getToHeadingDirection(scoreHeading,true);
 
   if(abs(rotationSpeed) < 1 || abs(delta) < 3){
@@ -365,7 +381,7 @@ void MainExecMachine::findCenterLineToScore(bool first) {
     currentState = (state) &MainExecMachine::haulToScore;
   }
 
-  else firstTime = false;
+  else  firstTime = false;
 
   if (abs(getDeltaHeading(scoreHeading)) > 45) {
     stateNum = MEST_FLIP_ONE;
@@ -559,11 +575,26 @@ void MainExecMachine::lowerArm(bool first) {
 }
 
 void MainExecMachine::flipToLoad(bool first) {
+  static bool firstTime = true;
+  static uint32_t flipTimeStart = micros();
   float rotationSpeed;
   static int lineUpCount = 0;
   float delta = getDeltaHeading(loadHeading);
   // once the desired heading is reached
   //   transition to findCenterLin
+
+  if (firstTime) {
+    firstTime = false;
+    flipTimeStart = micros();
+  }
+
+  if (micros() - flipTimeStart > flipTimeout) {
+    wheels.updateCommand(0,0,0);
+    firstTime = true;
+    stateNum = MEST_FIND_CENTER_LINE_ONE;
+    currentState = (state) &MainExecMachine::findCenterLineToLoad;
+  }
+
   rotationSpeed =  getToHeadingDirection(loadHeading,true);
 
   if(abs(rotationSpeed) < 1 || abs(delta) < 3){
