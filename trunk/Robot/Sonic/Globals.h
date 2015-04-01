@@ -35,10 +35,14 @@ static const uint32_t ringLoadTime = (2 * 1000000); // Load Ring Time
 /* Ring Load Time */
 static const uint32_t armSwingTime = (1 * 1000); // Arm Swing Ring Time
 
+/* Load Rings Button Timeout */
+static const uint32_t loadRingsButtonTimeout = 3500000;
+
+/* Flip Timeout */
+static const uint32_t flipTimeout = 3000000;
+
 /* Other Global Constants */
 static const uint32_t serialBaud = (115200); // Debug Serial Baud Rate
-
-static const uint32_t loadRingsButtonTimeout = 3500000;
 
 /* Global Cycle Units */
 extern CycleUnit sense;
