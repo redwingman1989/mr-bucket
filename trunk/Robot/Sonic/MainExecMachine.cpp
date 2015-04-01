@@ -398,10 +398,12 @@ void MainExecMachine::haulToScore(bool first) {
   float rightError = 1.5 + ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
-  const float minSpeed = 2;   // in motor command units
+  const float minSpeed = 4;   // in motor command units
   const float maxSpeed = 40;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
+  const float stateTransDist = 12.0; // in inches
+  const uint8_t wallThresh = 20; // iterations
   static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
@@ -417,9 +419,9 @@ void MainExecMachine::haulToScore(bool first) {
                                            maxSpeed,
                                            minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
-    if(frontDist > minDist)
+    if(frontDist > stateTransDist)
       distanceCount = 0;
-    else if(distanceCount++ > 5){
+    else if(distanceCount++ > wallThresh){
       wheels.updateCommand(0, 0, 0);
       lostLine = false;
       stateNum = MEST_SCORE;
@@ -638,10 +640,12 @@ void MainExecMachine::haulToLoad(bool first) {
   float forwardSpeed = 0;
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
   static int distanceCount = 0;
-  const float minSpeed = 1;   // in motor command units
+  const float minSpeed = 4;   // in motor command units
   const float maxSpeed = 40;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
+  const float stateTransDist = 12.0; // in inches
+  const uint8_t wallThresh = 20; // iterations
   sideSpeed = 2*(rightError - leftError);
 
   if(!lineManager.getLineDriveCommand(LSP_RIGHT).valid){
@@ -655,9 +659,9 @@ void MainExecMachine::haulToLoad(bool first) {
                                            maxSpeed,
                                            minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
-    if (frontDist > minDist)
+    if (frontDist > stateTransDist)
       distanceCount = 0;
-    else if(distanceCount++ > 5){
+    else if(distanceCount++ > wallThresh){
       wheels.updateCommand(0, 0, 0);
       lostLine = false;
       stateNum = MEST_LOAD_LR_RINGS;
