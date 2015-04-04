@@ -1,5 +1,6 @@
 #include "primaryStateMachine.h"
 #include "MainExecMachine.h"
+#include "DoublePointsStateMachine.h"
 #include "Globals.h"
 
 PrimaryStateMachine::PrimaryStateMachine() {
@@ -8,9 +9,21 @@ PrimaryStateMachine::PrimaryStateMachine() {
 
 
 void PrimaryStateMachine::waitForStart(bool firstTime) {
+  static bool dpServoCmd = false;
+  static bool debounce1 = false;
   static bool buttOneDetected = false;
   static bool buttTwoDetected = false;
   static bool calibrated = false;
+
+
+  if((buttMan.getButtons() & 0x01) && !debounce1) {
+    dpServoCmd = !dpServoCmd;
+    arm.commandDoublePointServo((doublePointStates_t)dpServoCmd);
+    debounce1 = true;
+  }
+  else if (debounce1 && ((buttMan.getButtons() & 0x01) == 0x00)) {
+    debounce1 = false;
+  }
 
   /* Calibration requires orienting the robot in the score position,
    * then pressing the right front button
@@ -23,13 +36,12 @@ void PrimaryStateMachine::waitForStart(bool firstTime) {
   }
   if(buttOneDetected && ((buttMan.getButtons() & 0x02) == 0)) {
     calibrated = true;
-    arm.commandDoublePointServo(DP_RETRACT);
   }
-  if((buttMan.getButtons() & 0x01) && calibrated) {
+  if((buttMan.getButtons() & 0x04) && calibrated) {
     goToWork.setLoadHead(mag.getFiltHead());
     buttTwoDetected = true;
   }
-  if (((buttMan.getButtons() & 0x01) == 0) && buttTwoDetected) {
+  if (((buttMan.getButtons() & 0x04) == 0) && buttTwoDetected) {
     currentState = (state) &PrimaryStateMachine::kickSomeAss;
     runTimeStart = micros();
 
