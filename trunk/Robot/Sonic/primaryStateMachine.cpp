@@ -1,4 +1,5 @@
 #include "primaryStateMachine.h"
+#include "MainExecMachine.h"
 #include "Globals.h"
 
 PrimaryStateMachine::PrimaryStateMachine() {
@@ -40,7 +41,7 @@ void PrimaryStateMachine::kickSomeAss(bool firstTime) {
   goToWork.RunTick();
  // goToWork.DebugOutput(&Serial2);
 
-  if (micros() - runTimeStart > 10000000) {
+  if (((micros() - runTimeStart) > 10000000) && (!goToWork.lockoutDblDwn())) {
     currentState = (state) &PrimaryStateMachine::doubleDown;
   }
 }

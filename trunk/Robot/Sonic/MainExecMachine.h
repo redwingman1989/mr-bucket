@@ -36,9 +36,11 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     void DebugOutput(HardwareSerial *);
     void setScoreHead(float heading) {scoreHeading = heading;};
     void setLoadHead(float heading) {loadHeading = heading;};
+    bool lockoutDblDwn();
 
     float loadHeading;
     float scoreHeading;
+    bool lockoutDoubleDown;
 
   private:
     StateNum stateNum;
