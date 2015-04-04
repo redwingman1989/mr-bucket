@@ -18,6 +18,9 @@ MotorController::MotorController()
   this->prevOutputCmds[M_RIGHT] = 0;
   this->prevOutputCmds[M_FRONT] = 0;
   this->prevOutputCmds[M_BACK] = 0;
+
+  this->enblSmootherRateLmt = false;
+  this->smootherRateLmtStartTime = micros();
 }
 
 //Inputs are in percentage of max command -100% to +100%
@@ -220,9 +223,26 @@ void MotorController::commandRateLimit(int8_t motor) {
   float cmdDelta;
   float outputLimit;
 
+  /* Check to see if the smooth rate limit flag time has expired (1 second in microsecs) */
+  if (micros() - this->smootherRateLmtStartTime > 1000000) {
+    enblSmootherRateLmt = false;
+  }
+
   timeDelta = this->currentTime - this->prevTime;
   cmdDelta = this->outputCmds[motor] - this->prevOutputCmds[motor];
-  outputLimit = timeDelta * outputRateLimit;
+
+  /* If the command is close, end the rate limiting */
+  if ((enblSmootherRateLmt == true) && (abs(cmdDelta) < 1.0)) {
+    enblSmootherRateLmt = false;
+  }
+
+  /* If smoothing out the rate limiting */
+  if (enblSmootherRateLmt) {
+    outputLimit = timeDelta * smootherRateLimit;
+  }
+  else {
+    outputLimit = timeDelta * outputRateLimit;
+  }
 
   if (abs(cmdDelta) > outputLimit) {
       if (cmdDelta > 0) this->outputCmds[motor] = this->prevOutputCmds[motor] + outputLimit;
@@ -247,3 +267,8 @@ void MotorController::updateShadows(int8_t motor) {
   this->prevOutputCmds[motor] = this->outputCmds[motor];
 }
 
+
+void MotorController::setHigherRateLimiting() {
+  this->enblSmootherRateLmt = true;
+  this->smootherRateLmtStartTime = micros();
+}
