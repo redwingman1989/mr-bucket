@@ -580,7 +580,9 @@ void MainExecMachine::backupFromScoring(bool first) {
                                            maxSpeed,
                                            minSpeed);
 
-  FollowLine(0, backwardSpeed ,  LSP_RIGHT);
+  if (!FollowLine(0, backwardSpeed ,  LSP_RIGHT)) {
+    wheels.updateCommand(backwardSpeed, 0, 0);
+  }
 
   if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > maxDist)
   {
