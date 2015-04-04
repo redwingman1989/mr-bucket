@@ -24,7 +24,7 @@ void DpExecMachine::backUpInitial(bool first) {
 
   wheels.updateCommand(backSpeed, sideSpeed, 0);
 
-  if ((micros() - startTime > 3000000) || ((abs(backSpeed) > 5) && (abs(sideSpeed) < 5))) {
+  if ((micros() - startTime > 3000000) || ((abs(backSpeed) < 5) && (abs(sideSpeed) < 5))) {
     currentState = (state) &DpExecMachine::rotateToHeading;
     calcCenterPoleHeading();
   }

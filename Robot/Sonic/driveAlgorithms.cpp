@@ -181,7 +181,7 @@ float getToHeading(float desiredHeading) {
   if (delta < -180)
     delta += 360;
 
-  returnVal = (0.6 * delta);
+  returnVal = (0.4 * delta);
   returnVal = speedBuild(&integralMotion,returnVal );
 
   return returnVal;
@@ -205,13 +205,13 @@ float getToHeadingDirection(float desiredHeading,bool clockwise,float speed) {
   const float thresholdGap = 20;
   const float forceDirectionGap = 60;
   float rotationSpeed = speed;
-  const float smallRotationDivider = .12;
+  const float smallRotationDivider = .10;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
   if( abs(delta) < forceDirectionGap){
     if(abs(delta) < thresholdGap){
-        return speedBuild(&integralMotion, smallRotationDivider * delta,1.1);
+        return speedBuild(&integralMotion, smallRotationDivider * delta,1);
     } else {
         if(delta < 0){
             return -rotationSpeed;
@@ -220,7 +220,7 @@ float getToHeadingDirection(float desiredHeading,bool clockwise,float speed) {
         }
     }
   }
-rotationSpeed = (speed - 2.4) * (abs(delta) - thresholdGap) * .0055 + 2.4;
+rotationSpeed = (speed - 2) * (abs(delta) - thresholdGap) * .0055 + 2;
   if( clockwise){
     return rotationSpeed;
   } else {

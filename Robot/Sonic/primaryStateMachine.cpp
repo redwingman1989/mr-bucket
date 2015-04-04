@@ -64,7 +64,7 @@ void PrimaryStateMachine::doubleDown(bool firstTime) {
 
   bankBreaker.RunTick();
 
-  if (micros() - runTimeStart > (minutes_3)) {
+  if ((micros() - runTimeStart) > (minutes_3)) {
     currentState = (state) &PrimaryStateMachine::youWon;
   }
 
