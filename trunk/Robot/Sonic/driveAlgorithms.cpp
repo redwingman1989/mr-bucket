@@ -198,19 +198,20 @@ float getDeltaHeading(float desiredHeading){
     return delta;
 }
 
+
 //Gets us to a heading going a direction unless +- 10 thresholdGap
-float getToHeadingDirection(float desiredHeading,bool clockwise) {
+float getToHeadingDirection(float desiredHeading,bool clockwise,float speed) {
   float delta;
   const float thresholdGap = 20;
-  const float forceDirectionGap = 50;
-  const float rotationSpeed = 2;
-  const float smallRotationDivider = .15;
+  const float forceDirectionGap = 60;
+  float rotationSpeed = speed;
+  const float smallRotationDivider = .12;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
   if( abs(delta) < forceDirectionGap){
     if(abs(delta) < thresholdGap){
-        return speedBuild(&integralMotion, smallRotationDivider * delta,2 );
+        return speedBuild(&integralMotion, smallRotationDivider * delta,1.1);
     } else {
         if(delta < 0){
             return -rotationSpeed;
@@ -219,12 +220,16 @@ float getToHeadingDirection(float desiredHeading,bool clockwise) {
         }
     }
   }
-
+rotationSpeed = (speed - 2.4) * (abs(delta) - thresholdGap) * .0055 + 2.4;
   if( clockwise){
     return rotationSpeed;
   } else {
     return -rotationSpeed;
   }
+}
+
+float getToHeadingDirection(float desiredHeading,bool clockwise) {
+    return getToHeadingDirection( desiredHeading, clockwise,2);
 }
 
 float scaleDistanceToSpeedCmd(
