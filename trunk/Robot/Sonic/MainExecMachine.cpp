@@ -383,7 +383,7 @@ void MainExecMachine::findCenterLineToScore(bool first) {
 
   else  firstTime = false;
 
-  if (abs(getDeltaHeading(scoreHeading)) > 45) {
+  if (abs(getDeltaHeading(scoreHeading)) > 25) {
     stateNum = MEST_FLIP_ONE;
     currentState = (state) &MainExecMachine::flipToScore;
     firstTime = true;
@@ -625,7 +625,7 @@ void MainExecMachine::findCenterLineToLoad(bool first) {
 
   else firstTime = false;
 
-  if (abs(getDeltaHeading(loadHeading)) > 45) {
+  if (abs(getDeltaHeading(loadHeading)) > 25) {
     stateNum = MEST_FLIP_TWO;
     currentState = (state) &MainExecMachine::flipToLoad;
     firstTime = true;

@@ -14,7 +14,7 @@ inline int rateLimit(int command, int current, int rate);
 ServoArmController::ServoArmController()
 {
   //Setup servo constants
-  this->swingArmConstants[SA_DOWN] = 660;
+  this->swingArmConstants[SA_DOWN] = 650;
   this->swingArmConstants[SA_UP] = 1560;
 
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1515;

@@ -2,6 +2,7 @@
 
 #include "StateMachine.h"
 #include "MainExecMachine.h"
+#include "DoublePointsStateMachine.h"
 
 class PrimaryStateMachine: public StateMachine <PrimaryStateMachine> {
 public:
@@ -11,8 +12,10 @@ private:
   uint32_t runTimeStart;
   void waitForStart(bool);
   void kickSomeAss(bool);
+  void doubleDown(bool);
   void youWon(bool);
 
   /* Sub State Machines */
   MainExecMachine goToWork;
+  DpExecMachine bankBreaker;
 };

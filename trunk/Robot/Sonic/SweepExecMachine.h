@@ -41,8 +41,6 @@ class SweepExecMachine: public StateMachine<SweepExecMachine> {
 
   private:
     bool doneSweeping;
-    state lzStateArray[];
-    state szStateArray[];
 
     uint8_t lzState;
     uint8_t szState;

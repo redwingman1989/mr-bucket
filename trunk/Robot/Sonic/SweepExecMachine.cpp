@@ -4,27 +4,6 @@
 #include "stateMachineCommon.h"
 
 SweepExecMachine::SweepExecMachine(Zone z) {
-  /* Initalize State Arrays */
-  const state lzStateArray[] = {
-    (state) &SweepExecMachine::lz_backUpInitial,
-    (state) &SweepExecMachine::lz_shiftLeftToWall,
-    (state) &SweepExecMachine::lz_driveForward,
-    (state) &SweepExecMachine::lz_shiftRightToWall,
-    (state) &SweepExecMachine::lz_backOffLeft,
-    (state) &SweepExecMachine::lz_backUpToAlign,
-    (state) &SweepExecMachine::lz_reAlign
-  };
-
-  const state szStateArray[] = {
-    (state) &SweepExecMachine::sz_backUpInitial,
-    (state) &SweepExecMachine::sz_shiftLeftToWall,
-    (state) &SweepExecMachine::sz_driveForward,
-    (state) &SweepExecMachine::sz_shiftRightToWall,
-    (state) &SweepExecMachine::sz_backOffLeft,
-    (state) &SweepExecMachine::sz_backUpToAlign,
-    (state) &SweepExecMachine::sz_reAlign,
-  };
-
   switch (z) {
     case Z_LOAD:
       currentState = (state) &SweepExecMachine::lz_backUpInitial;
@@ -194,7 +173,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
 
   /* Check if ultrasonic indicate we are against the wall */
   /* every half second, check if the distance on the rightsensor is the same within the tollerence */
-  if ((iter++ % 50) == 0) {
+  if ((distLeft > 4.0) && ((iter++ % 50) == 0)) {
     distanceReached = (abs(distLeft - prevDistLeft) < distDeadBand);
     prevDistLeft = distLeft;
   }
@@ -211,7 +190,7 @@ void SweepExecMachine::lz_shiftRightToWall(bool first){
   }
   /* Continue moving Right */
   else {
-    wheels.updateCommand(1,speed,0);
+    wheels.updateCommand(0,speed,0);
   }
 }
 
@@ -459,7 +438,7 @@ void SweepExecMachine::sz_shiftRightToWall(bool first){
 
   /* Check if ultrasonic indicate we are against the wall */
   /* every half second, check if the distance on the rightsensor is the same within the tollerence */
-  if ((iter++ % 50) == 0) {
+  if ((distLeft > 4.0) && ((iter++ % 50) == 0)) {
     distanceReached = (abs(distLeft - prevDistLeft) < distDeadBand);
     prevDistLeft = distLeft;
   }
