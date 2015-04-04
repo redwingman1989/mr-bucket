@@ -108,7 +108,6 @@ void LineSensorManager::determineSensorHits(lineSensorLocations location) {
   bool activeHit = false; //Flag for in first contiguous hit section
   uint8_t hitStart = 0; //Tracks the start of the hit
   uint8_t hitCount = 0; //Tracks number of hits in contiguous section
-  uint8_t hitCount2 = 0;
 
   //Grab pointer for output
   sensorHit_t *output = &sensorHits[location];
@@ -132,19 +131,11 @@ void LineSensorManager::determineSensorHits(lineSensorLocations location) {
     else if (activeHit) break;
     //Else no hit, just continue looping
   }
-
-  for (i=0; i<NUM_SENSORS_PER_ARRAY; i++) {
-    if (reading & (1 << i)) hitCount2++;
-  }
-
   //Set sensor hit in the output
   output->hit = (hitCount);
 
-  if (hitCount2 != hitCount) output->hit = false;
-  else if (hitCount >= 6) output->hit = false;
-
   //If the hit count is non-zero, calculate sensor hit center point
-  else if (hitCount) {
+  if (hitCount) {
     //Reset center to zero
     output->center.x = 0;
     output->center.y = 0;
