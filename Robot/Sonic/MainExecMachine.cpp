@@ -360,7 +360,7 @@ void MainExecMachine::flipToScore(bool first) {
     currentState = (state) &MainExecMachine::findCenterLineToScore;
   }
 
-  rotationSpeed =  getToHeadingDirection(scoreHeading,true,4);
+  rotationSpeed =  getToHeadingDirection(scoreHeading,true,2);
 
   if(abs(rotationSpeed) < 1 || abs(delta) < 3){
     if(lineUpCount++ > 10){
@@ -368,7 +368,7 @@ void MainExecMachine::flipToScore(bool first) {
         stateNum = MEST_FIND_CENTER_LINE_ONE;
         currentState = (state) &MainExecMachine::findCenterLineToScore;
     }
-    wheels.updateCommand(0,0,0);
+    wheels.updateCommand(0,0,rotationSpeed);
   }
   else {
         //point_t point= {0,0};
@@ -624,7 +624,7 @@ void MainExecMachine::flipToLoad(bool first) {
         stateNum = MEST_FIND_CENTER_LINE_TWO;
         currentState = (state) &MainExecMachine::findCenterLineToLoad;
     }
-    wheels.updateCommand(0,0,0);
+    wheels.updateCommand(0,0,rotationSpeed);
   }
   else {
         //point_t point= {3.5,0};
