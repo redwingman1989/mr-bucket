@@ -68,7 +68,15 @@ void DpExecMachine::backUpToWall(bool first) {
                                            maxSpeed,
                                            minSpeed);
   backSpeed = 40 - backSpeed;
-  wheels.updateCommand(-backSpeed, 0, 0);
+
+
+  float sideSpeed = 0;
+
+  if(findCenterLine(first, -backSpeed, 15, 4)) {
+    wheels.updateCommand(-backSpeed,0,0);
+  }
+
+  //wheels.updateCommand(-backSpeed, 0, 0);
 
   limitCounter++;
 
@@ -87,13 +95,14 @@ void DpExecMachine::shiftForCenterPost( bool first) {
   static uint8_t tickCount = 0;
 
   if(findCenterLine(first, -1, 15, 0)) {
-    if(lineUpOneLine(LSP_RIGHT)) {
+    if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
       if (++tickCount > 50)
         currentState = (state) &DpExecMachine::deployTheSecretWeapon;
     }
     else
       tickCount = 0;
   }
+  else tickCount = 0;
 }
 
 void DpExecMachine::deployTheSecretWeapon(bool first) {
