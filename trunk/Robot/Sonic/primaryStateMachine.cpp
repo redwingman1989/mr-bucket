@@ -53,7 +53,7 @@ void PrimaryStateMachine::kickSomeAss(bool firstTime) {
   goToWork.RunTick();
  // goToWork.DebugOutput(&Serial2);
 
-  if (((micros() - runTimeStart) > 10000000) && (!goToWork.lockoutDblDwn())) {
+  if (((micros() - runTimeStart) > 160000000) && (!goToWork.lockoutDblDwn())) {
     currentState = (state) &PrimaryStateMachine::doubleDown;
   }
 }
@@ -64,7 +64,7 @@ void PrimaryStateMachine::doubleDown(bool firstTime) {
 
   bankBreaker.RunTick();
 
-  if (micros() - runTimeStart > minutes_3) {
+  if (micros() - runTimeStart > (minutes_3)) {
     currentState = (state) &PrimaryStateMachine::youWon;
   }
 
