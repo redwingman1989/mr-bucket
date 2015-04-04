@@ -243,7 +243,7 @@ float scaleDistanceToSpeedCmd(
     speedVal = minSpeed;
   /* Linearly Scale Speed */
   else {
-    speedVal = (distance*(maxSpeed - minSpeed)/
+    speedVal = ((distance - minDistance)*(maxSpeed - minSpeed)/
                (maxDistance - minDistance)) + minSpeed;
   }
   return speedVal;

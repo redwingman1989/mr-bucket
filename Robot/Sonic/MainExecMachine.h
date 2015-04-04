@@ -3,6 +3,7 @@
 #include "StateMachine.h"
 #include "stateMachineCommon.h"
 #include "SweepExecMachine.h"
+#include "DoublePointsStateMachine.h"
 
 typedef enum {
   MEST_LOAD_LR_RINGS,         //0
@@ -36,14 +37,15 @@ class MainExecMachine: public StateMachine<MainExecMachine> {
     void setScoreHead(float heading) {scoreHeading = heading;};
     void setLoadHead(float heading) {loadHeading = heading;};
 
+    float loadHeading;
+    float scoreHeading;
+
   private:
     StateNum stateNum;
     uint32_t timeOut;
     bool scoreZoneDirty;
     bool loadZoneDirty;
     float currentHeading;
-    float scoreHeading;
-    float loadHeading;
 
     /* States */
     void loadLeftRightRings(bool);

@@ -44,7 +44,7 @@ template <class T> void StateMachine<T>::DebugOutput(HardwareSerial *serialPort)
 template <class T> void StateMachine<T>::runCurrentState() {
   //Determine if the state just changed
   stateChanged = (prevState != currentState);
-
+  prevState = currentState;
   //Execute the current state and pass in if the state just changed
   (this->*currentState)(stateChanged);
 

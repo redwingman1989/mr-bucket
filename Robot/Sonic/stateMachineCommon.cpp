@@ -29,8 +29,10 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
   else if (leftUltra < threshHold) goRight = true;
 
   if (goRight != goRightShadow) {
-    if(threshHold > 0)
-    threshHold = threshHold - 3.0;
+    if(threshHold > 0) {
+     threshHold = threshHold - 3.0;
+    }
+    goRightShadow = goRight;
   }
 
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid){
