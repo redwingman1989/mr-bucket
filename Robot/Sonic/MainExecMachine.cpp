@@ -360,7 +360,7 @@ void MainExecMachine::flipToScore(bool first) {
     currentState = (state) &MainExecMachine::findCenterLineToScore;
   }
 
-  rotationSpeed =  getToHeadingDirection(scoreHeading,true);
+  rotationSpeed =  getToHeadingDirection(scoreHeading,true,4);
 
   if(abs(rotationSpeed) < 1 || abs(delta) < 3){
     if(lineUpCount++ > 10){
@@ -371,8 +371,8 @@ void MainExecMachine::flipToScore(bool first) {
     wheels.updateCommand(0,0,0);
   }
   else {
-        point_t point= {2,0};
-        wheels.updateCommand(0,0,rotationSpeed,point);
+        //point_t point= {0,0};
+        wheels.updateCommand(0,0,rotationSpeed);
         lineUpCount = 0;
   }
 }
@@ -616,7 +616,7 @@ void MainExecMachine::flipToLoad(bool first) {
     currentState = (state) &MainExecMachine::findCenterLineToLoad;
   }
 
-  rotationSpeed =  getToHeadingDirection(loadHeading,true);
+  rotationSpeed =  getToHeadingDirection(loadHeading,true,8);
 
   if(abs(rotationSpeed) < 1 || abs(delta) < 3){
     if(lineUpCount++ > 10){
@@ -624,10 +624,11 @@ void MainExecMachine::flipToLoad(bool first) {
         stateNum = MEST_FIND_CENTER_LINE_TWO;
         currentState = (state) &MainExecMachine::findCenterLineToLoad;
     }
+    wheels.updateCommand(0,0,0);
   }
   else {
-        point_t point= {3.5,0};
-        wheels.updateCommand(0,0,rotationSpeed,point);
+        //point_t point= {3.5,0};
+        wheels.updateCommand(0,0,rotationSpeed);
         lineUpCount = 0;
   }
 }
