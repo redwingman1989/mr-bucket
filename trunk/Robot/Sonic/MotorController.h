@@ -25,6 +25,8 @@ const float motorOffset = 4.5; //Distance from center to wheel centerline in inc
 //0.5 seconds to ramp 0 to 100
 const float outputRateLimit = outputMax / (500000.0);
 
+const float smootherRateLimit = outputMax / (5000000.0);
+
 const int leftMotorPin = pinLMotorPWM;
 const int rightMotorPin = pinRMotorPWM;
 const int frontMotorPin = pinFMotorPWM;
@@ -50,6 +52,8 @@ class MotorController : public RunableModule {
     bool RunTick();
     void DebugOutput(HardwareSerial *serialPort);
     void KillMotors();
+
+    void setHigherRateLimiting();
 
     void init(void);
   private:
@@ -81,6 +85,9 @@ class MotorController : public RunableModule {
     void updateShadows(int8_t);
     bool rotatePoint;
 
+    bool enblSmootherRateLmt;
+
     unsigned long currentTime; //in microseconds
     unsigned long prevTime; //in microseconds
+    uint32_t smootherRateLmtStartTime; //in microseconds
 };

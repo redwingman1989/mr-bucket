@@ -20,6 +20,11 @@ void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
 }
 
 bool MainExecMachine::RunTick() {
+  /* If we changed states, allow for higher rate limiting in the motor controller */
+  if(prevState != currentState) {
+    wheels.setHigherRateLimiting();
+  }
+
   if (loadZoneDirty && (currentState == &MainExecMachine::loadLeftRightRings)) {
     loadZoneDirty = !zamboniLoadZone.RunTick();
   }
@@ -154,7 +159,7 @@ void MainExecMachine::backupFromLeftRightRings(bool first) {
   if (lineManager.getLineDriveCommand(LSP_BACK).valid ||
       ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 5)
   {
-    wheels.updateCommand(0,0,0);
+    wheels.updateCommand(0,2,0);
     stateNum = MEST_SHIFT_FOR_CENTER;
     currentState = (state) &MainExecMachine::shiftForCenterRings;
   }
