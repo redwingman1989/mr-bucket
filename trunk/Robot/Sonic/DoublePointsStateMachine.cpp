@@ -72,9 +72,13 @@ void DpExecMachine::backUpToWall(bool first) {
 
   float sideSpeed = 0;
 
-  if(findCenterLine(first, -backSpeed, 15, 4)) {
-    wheels.updateCommand(-backSpeed,0,0);
-  }
+  float leftDist = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+  float rightDist = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+
+  if (rightDist > leftDist) sideSpeed = 10;
+  else sideSpeed = -10;
+
+  wheels.updateCommand(-backSpeed,sideSpeed,0);
 
   //wheels.updateCommand(-backSpeed, 0, 0);
 
