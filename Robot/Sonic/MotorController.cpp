@@ -224,7 +224,7 @@ void MotorController::commandRateLimit(int8_t motor) {
   float outputLimit;
 
   /* Check to see if the smooth rate limit flag time has expired (1 second in microsecs) */
-  if (micros() - this->smootherRateLmtStartTime > 1000000) {
+  if (micros() - this->smootherRateLmtStartTime > 500000) {
     enblSmootherRateLmt = false;
   }
 
