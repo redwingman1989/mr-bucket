@@ -11,6 +11,7 @@ MainExecMachine::MainExecMachine() {
   stateNum = MEST_LOAD_LR_RINGS;
   loadZoneDirty = false;
   scoreZoneDirty = false;
+  lockoutDoubleDown = false;
 }
 
 void MainExecMachine::DebugOutput(HardwareSerial * serialPort){
@@ -444,6 +445,8 @@ void MainExecMachine::scoreRings(bool first) {
 
   const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
 
+  lockoutDoubleDown = true;
+
   /* If the first time, set the state start time */
   if (firstTime) {
     stateStartTime = micros();
@@ -467,6 +470,8 @@ void MainExecMachine::scoreRings(bool first) {
     stateStartTime = micros();
     buttItTOCntr = 0;
 
+    lockoutDoubleDown = true;
+
     /* Both buttons hit so mark the load zone as clean */
     scoreZoneDirty = false;
 
@@ -487,6 +492,8 @@ void MainExecMachine::scoreRings(bool first) {
         buttShadow = 0;
         stateStartTime = micros();
         buttItTOCntr = 0;
+
+        lockoutDoubleDown = true;
 
         /* DO NOT MARK DIRTY, even though we timed out */
         scoreZoneDirty = false;
@@ -511,6 +518,9 @@ void MainExecMachine::scoreRings(bool first) {
         stateStartTime = micros();
         buttItTOCntr = 0;
 
+        /* We are marking the scoring zone as dirty, so remove the lockout on the double down code */
+        lockoutDoubleDown = false;
+
         /* MARK DIRTY and do not move the state machine forward */
         scoreZoneDirty = true;
 
@@ -528,12 +538,15 @@ void MainExecMachine::scoreRings(bool first) {
 
 void MainExecMachine::unloadAllRings(bool first) {
   static bool firstTime = true;
-  static unsigned long pickupStartTime = 0;
+  static unsigned long unloadStartTime = 0;
+
+  lockoutDoubleDown = true;
 
   if (firstTime) {
-    pickupStartTime = micros();
+    unloadStartTime = micros();
     firstTime = false;
   }
+
   wheels.updateCommand(0,0,0);
   scoreHeading = mag.getFiltHead();
   arm.setPickupArmLimit(1); //Set Rate to 1 seconds to swing
@@ -541,8 +554,9 @@ void MainExecMachine::unloadAllRings(bool first) {
   arm.commandPickupServo(PU_CENTER, PS_LETGO);
   arm.commandPickupServo(PU_RIGHT, PS_LETGO);
 
-  if (micros() - pickupStartTime > 2000000) {
+  if (micros() - unloadStartTime > 2000000) {
     firstTime = true;
+    lockoutDoubleDown = false;
     stateNum = MEST_BACKUP_THREE;
     currentState = (state) &MainExecMachine::backupFromScoring;
   }
@@ -669,4 +683,9 @@ void MainExecMachine::haulToLoad(bool first) {
       distanceCount = 0;
     }
   }
+}
+
+
+bool MainExecMachine::lockoutDblDwn() {
+  return lockoutDoubleDown;
 }
