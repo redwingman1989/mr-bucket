@@ -367,14 +367,15 @@ void MainExecMachine::flipToScore(bool first) {
         lineUpCount = 0;
         stateNum = MEST_FIND_CENTER_LINE_ONE;
         currentState = (state) &MainExecMachine::findCenterLineToScore;
+    }else{
+        wheels.updateCommand(0,0,0);
     }
-    wheels.updateCommand(0,0,rotationSpeed);
   }
   else {
-        //point_t point= {0,0};
-        wheels.updateCommand(0,0,rotationSpeed);
-        lineUpCount = 0;
+    lineUpCount = 0;
   }
+  wheels.updateCommand(0,0,rotationSpeed);
+
 }
 
 void MainExecMachine::findCenterLineToScore(bool first) {
@@ -623,14 +624,14 @@ void MainExecMachine::flipToLoad(bool first) {
         lineUpCount = 0;
         stateNum = MEST_FIND_CENTER_LINE_TWO;
         currentState = (state) &MainExecMachine::findCenterLineToLoad;
+    }else{
+        wheels.updateCommand(0,0,0);
     }
-    wheels.updateCommand(0,0,rotationSpeed);
   }
   else {
-        //point_t point= {3.5,0};
-        wheels.updateCommand(0,0,rotationSpeed);
-        lineUpCount = 0;
+    lineUpCount = 0;
   }
+  wheels.updateCommand(0,0,rotationSpeed);
 }
 
 void MainExecMachine::findCenterLineToLoad(bool first) {

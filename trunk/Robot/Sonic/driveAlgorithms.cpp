@@ -202,10 +202,10 @@ float getDeltaHeading(float desiredHeading){
 //Gets us to a heading going a direction unless +- 10 thresholdGap
 float getToHeadingDirection(float desiredHeading,bool clockwise,float speed) {
   float delta;
-  const float thresholdGap = 20;
+  const float thresholdGap = 25;
   const float forceDirectionGap = 60;
   float rotationSpeed = speed;
-  const float smallRotationDivider = .10;
+  const float smallRotationDivider = .08;
   static float integralMotion=0;
 
   delta = getDeltaHeading(desiredHeading);
