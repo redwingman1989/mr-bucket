@@ -25,6 +25,7 @@ void setup()
   buttMan.init();
   buttMan.addButton(pinLButton); // Button 0
   buttMan.addButton(pinRButton); // Button 1
+  buttMan.addButton(pinTButton); // Button 2
 
   linesensors[LSL_CENTER_FRONT] = &linesensorCenterFront;
   linesensors[LSL_CENTER_BACK]  = &linesensorCenterBack;
