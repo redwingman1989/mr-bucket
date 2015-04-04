@@ -13,15 +13,21 @@ bool DpExecMachine::RunTick(void) {
 
 void DpExecMachine::backUpInitial(bool first) {
   static unsigned long startTime;
+  float backSpeed = 0;
+  float sideSpeed = 0;
 
   if (first) startTime = micros();
 
-  wheels.updateCommand(-10, 0, 0);
+  if (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() < 10) backSpeed = -10;
+  if (ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue() < 10) sideSpeed = 10;
+  if (ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue() < 10) sideSpeed = -10;
 
-  if ((micros() - startTime > 4000000) ||
-      (ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 12))
+  wheels.updateCommand(backSpeed, sideSpeed, 0);
+
+  if ((micros() - startTime > 3000000) || ((backSpeed < 5) && (sideSpeed < 5))) {
     currentState = (state) &DpExecMachine::rotateToHeading;
     calcCenterPoleHeading();
+  }
 }
 
 
@@ -38,11 +44,10 @@ void DpExecMachine::rotateToHeading(bool first) {
         lineUpCount = 0;
         currentState = (state) &DpExecMachine::backUpToWall;
     }
-    wheels.updateCommand(0,0,0);
   }
   else {
         point_t point= {2,0};
-        wheels.updateCommand(0,0,rotationSpeed,point);
+        wheels.updateCommand(0,0,rotationSpeed/2.0,point);
         lineUpCount = 0;
   }
 }
