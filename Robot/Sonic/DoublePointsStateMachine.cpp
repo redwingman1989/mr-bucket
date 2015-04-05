@@ -94,7 +94,6 @@ void DpExecMachine::shiftForCenterPost( bool first) {
   static uint8_t tickCount = 0;
   static float speedBackIntegral = 0;
 
-
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
       if (++tickCount > 50)
