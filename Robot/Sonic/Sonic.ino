@@ -40,8 +40,8 @@ void setup()
   mag.init();
 
   /* Outputs */
-  wheels.init();
   arm.init();
+  wheels.init();
 
   /*--- Add Runable Modules to Cycle Units ---*/
   sense.addTask(&mag, rate250Hz, 0);
