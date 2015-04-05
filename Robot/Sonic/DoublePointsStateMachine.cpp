@@ -93,6 +93,9 @@ void DpExecMachine::backUpToWall(bool first) {
 void DpExecMachine::shiftForCenterPost( bool first) {
   static uint8_t tickCount = 0;
   static float speedBackIntegral = 0;
+  static unsigned long stateStartTime;
+
+  if (first) stateStartTime = micros();
 
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
@@ -102,11 +105,15 @@ void DpExecMachine::shiftForCenterPost( bool first) {
     else
       tickCount = 0;
   }else{
+    if ( micros() - stateStartTime > 5000000 ) {
+        DirectionToDPRight = !DirectionToDPRight;
+        stateStartTime = micros();
+    }
     if(DirectionToDPRight){
-         wheels.updateCommand(-1 * speedBuild(&speedBackIntegral, .05),2,0);
+         wheels.updateCommand(-1 * speedBuild(&speedBackIntegral, .05),6,0);
     }
     else{
-        wheels.updateCommand(-1 * speedBuild(&speedBackIntegral , .05),-2,0);
+        wheels.updateCommand(-1 * speedBuild(&speedBackIntegral , .05),-6,0);
     }
     tickCount = 0;
   }

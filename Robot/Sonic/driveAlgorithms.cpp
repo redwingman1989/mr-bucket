@@ -111,7 +111,7 @@ bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations locati
         wheels.updateCommand(0,0,0);
         return false;
     }
-    return (abs(offset - center) < 0.2);
+    return (abs(offset - center) < 0.1);
 
 }
 

@@ -411,7 +411,7 @@ void MainExecMachine::haulToScore(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 20; // iterations
+  const uint8_t wallThresh = 80; // iterations
   static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
@@ -613,7 +613,7 @@ void MainExecMachine::flipToLoad(bool first) {
     flipTimeStart = micros();
   }
 
-  if (micros() - flipTimeStart > flipTimeout) {
+  if (micros() - flipTimeStart > 2000000) {
     wheels.updateCommand(0,0,0);
     firstTime = true;
     stateNum = MEST_FIND_CENTER_LINE_TWO;
@@ -669,7 +669,7 @@ void MainExecMachine::haulToLoad(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 20; // iterations
+  const uint8_t wallThresh = 80; // iterations
   sideSpeed = 2*(rightError - leftError);
 
   if(!lineManager.getLineDriveCommand(LSP_RIGHT).valid){
