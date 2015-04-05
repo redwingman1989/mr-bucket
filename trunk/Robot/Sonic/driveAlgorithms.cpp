@@ -103,7 +103,7 @@ bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations locati
         float driveAngle = 0;
         speed = getSpeedHelper(offset ,center);
         speed = speedBuild(&totalOff,speed,2);
-        driveAngle = speedBuild(&AngleOff,speed * .02 * speedDirection);
+        driveAngle = speedBuild(&AngleOff,speed * .02 * abs(speedDirection));
         if (fwd) wheels.updateCommand(speedDirection, speed, driveAngle);
         else wheels.updateCommand(speed ,speedDirection ,-driveAngle);
     }
