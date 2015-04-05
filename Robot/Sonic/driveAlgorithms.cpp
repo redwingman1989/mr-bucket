@@ -181,7 +181,7 @@ float getToHeading(float desiredHeading) {
   if (delta < -180)
     delta += 360;
 
-  returnVal = (0.4 * delta);
+  returnVal = (0.2 * delta);
   returnVal = speedBuild(&integralMotion,returnVal );
 
   return returnVal;

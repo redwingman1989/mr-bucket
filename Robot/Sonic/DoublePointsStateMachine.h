@@ -12,6 +12,7 @@ class DpExecMachine: public StateMachine<DpExecMachine> {
 
   private:
     bool doneDoublingPoints;
+    bool DirectionToDPRight;
 
     /* */
     void backUpInitial(bool);

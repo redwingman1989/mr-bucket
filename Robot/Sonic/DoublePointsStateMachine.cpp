@@ -3,6 +3,7 @@
 
 DpExecMachine::DpExecMachine() {
   currentState = (state) &DpExecMachine::backUpInitial;
+  DirectionToDPRight =  false;
 }
 
 bool DpExecMachine::RunTick(void) {
@@ -34,21 +35,25 @@ void DpExecMachine::backUpInitial(bool first) {
 void DpExecMachine::rotateToHeading(bool first) {
   float rotationSpeed;
   static int lineUpCount = 0;
+  static float leftDist = 0 , rightDist = 0;
   float delta = getDeltaHeading(centerPoleHeading);
   // once the desired heading is reached
   //   transition to findCenterLin
   rotationSpeed =  getToHeading(centerPoleHeading);
 
-  if(abs(delta) < 3){
-    if(lineUpCount++ >= 0){
+  if(abs(delta) < 3 && rotationSpeed < 1){
+     leftDist += ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+     rightDist += ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+    if(lineUpCount++ >= 5){
         lineUpCount = 0;
+        DirectionToDPRight = leftDist - 3.5 * 5 < rightDist;
         currentState = (state) &DpExecMachine::backUpToWall;
     }
   }
   else {
-        point_t point= {2,0};
-        wheels.updateCommand(0,0,rotationSpeed/2.0,point);
+        wheels.updateCommand(0,0,rotationSpeed);
         lineUpCount = 0;
+        leftDist = rightDist = 0;
   }
 }
 
@@ -70,17 +75,7 @@ void DpExecMachine::backUpToWall(bool first) {
   backSpeed = 40 - backSpeed;
 
 
-  float sideSpeed = 0;
-
-  float leftDist = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
-  float rightDist = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
-
-  if (rightDist > leftDist) sideSpeed = 10;
-  else sideSpeed = -10;
-
-  wheels.updateCommand(-backSpeed,sideSpeed,0);
-
-  //wheels.updateCommand(-backSpeed, 0, 0);
+  wheels.updateCommand(-backSpeed,0,0);
 
   limitCounter++;
 
@@ -97,16 +92,25 @@ void DpExecMachine::backUpToWall(bool first) {
 
 void DpExecMachine::shiftForCenterPost( bool first) {
   static uint8_t tickCount = 0;
+  static float speedBackIntegral = 0;
 
-  if(findCenterLine(first, -1, 15, 0)) {
+
+  if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
       if (++tickCount > 50)
         currentState = (state) &DpExecMachine::deployTheSecretWeapon;
     }
     else
       tickCount = 0;
+  }else{
+    if(DirectionToDPRight){
+         wheels.updateCommand(-1 * speedBuild(&speedBackIntegral, .05),2,0);
+    }
+    else{
+        wheels.updateCommand(-1 * speedBuild(&speedBackIntegral , .05),-2,0);
+    }
+    tickCount = 0;
   }
-  else tickCount = 0;
 }
 
 void DpExecMachine::deployTheSecretWeapon(bool first) {
