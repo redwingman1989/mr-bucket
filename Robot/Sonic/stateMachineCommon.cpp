@@ -15,6 +15,7 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
 
   // If first time then set goRight to the short way to prevent zig-zag
   if (first) {
+    threshHold = 12.0;
     first = false;
     if ((leftUltra + 7) < (rightUltra + 1.5)) goRight = true;
     else goRight = false;
@@ -29,7 +30,7 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
   else if (leftUltra < threshHold) goRight = true;
 
   if (goRight != goRightShadow) {
-    if(threshHold > 0) {
+    if(threshHold > 4.0) {
      threshHold = threshHold - 3.0;
     }
     goRightShadow = goRight;
