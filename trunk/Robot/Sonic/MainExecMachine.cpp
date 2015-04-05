@@ -49,7 +49,7 @@ void MainExecMachine::loadLeftRightRings(bool first) {
   int rotation = 0;
 
   const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
-  wheels.updateCommand(0, 0, 0); //blanket statement to prevent moving(not all if cases are covered)
+  //wheels.updateCommand(0, 0, 0); //blanket statement to prevent moving(not all if cases are covered)
   /* If the first time, set the state start time */
   if (firstTime) {
     stateStartTime = micros();
@@ -124,7 +124,15 @@ void MainExecMachine::loadLeftRightRings(bool first) {
       /* We aren't less than 4 inches from the wall OR
        *   we are less than 4 inches but our state timeout hasn't expired
        *   so continue driving to the wall */
-      FollowLineSingle(4,true, LSL_RIGHT_FRONT);
+       if(lineManager.getSingleCommand(LSL_CENTER_BACK).valid || lineManager.getSingleCommand(LSL_CENTER_FRONT).valid)
+       {
+          FollowLineSingle(3,true, LSL_RIGHT_FRONT);
+       }
+        else
+        {
+          FollowLine(0,3,LSP_RIGHT);
+        }
+
     }
   }
 }
@@ -413,7 +421,7 @@ void MainExecMachine::haulToScore(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 80; // iterations
+  const uint8_t wallThresh = 20; // iterations
   static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
@@ -671,7 +679,7 @@ void MainExecMachine::haulToLoad(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 80; // iterations
+  const uint8_t wallThresh = 20; // iterations
   sideSpeed = 2*(rightError - leftError);
 
   if(!lineManager.getLineDriveCommand(LSP_RIGHT).valid){
@@ -685,7 +693,7 @@ void MainExecMachine::haulToLoad(bool first) {
                                            maxSpeed,
                                            minSpeed);
     FollowLine(0, forwardSpeed ,  LSP_RIGHT);
-    if (frontDist > stateTransDist)
+    if (frontDist > stateTransDist || (lineManager.getSingleCommand(LSL_CENTER_FRONT).valid && frontDist > 30))
       distanceCount = 0;
     else if(distanceCount++ > wallThresh){
       wheels.updateCommand(0, 0, 0);

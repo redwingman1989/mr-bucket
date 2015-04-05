@@ -23,6 +23,24 @@ float getSpeedHelper(float offset,float lineCenter){
    return speed;
 }
 
+float getSpeedHelper(float offset,float lineCenter,float speedConst){
+    float speedConstCenter = 2.5;
+    float centerThreshhold = 1;
+    float speed = - 1 *(offset - lineCenter );
+
+    if(speed < 0){
+        speedConst *= -1;
+    }
+
+   if(abs(speed) > centerThreshhold){
+        speed = speedConst;
+   }
+   else{
+        speed *= speedConstCenter;
+   }
+   return speed;
+}
+
 float speedBuild(float *integral,float speed, float maxSpeed){
         float returnfloat = 0;
         if(abs(speed) < maxSpeed){
@@ -63,11 +81,11 @@ bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
 
         float speed = 0;
         if(linePairEnum != LSP_BACK){
-            speed = getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x);
+            speed = getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x,5);
             speed = speedBuild(&totalOff,speed);
             wheels.updateCommand(speedy ,speed ,adjustedAngleRad);
         } else{
-            speed = getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y );
+            speed = getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y, 5);
             speed = speedBuild(&totalOff,speed);
             wheels.updateCommand(speed , speedx ,adjustedAngleRad);
         }
@@ -104,8 +122,8 @@ bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations locati
         speed = getSpeedHelper(offset ,center);
         speed = speedBuild(&totalOff,speed,2);
         driveAngle = speedBuild(&AngleOff,speed * .02 * abs(speedDirection));
-        if (fwd) wheels.updateCommand(speedDirection, speed, driveAngle);
-        else wheels.updateCommand(speed ,speedDirection ,-driveAngle);
+        if (fwd) wheels.updateCommand(speedDirection, speed, 0);
+        else wheels.updateCommand(speed ,speedDirection ,0);
     }
     else{
         wheels.updateCommand(0,0,0);

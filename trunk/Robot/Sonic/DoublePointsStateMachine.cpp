@@ -60,7 +60,7 @@ void DpExecMachine::rotateToHeading(bool first) {
 
 void DpExecMachine::backUpToWall(bool first) {
   const float minSpeed = 0;   // in motor command units
-  const float maxSpeed = 38;  // in motor command units
+  const float maxSpeed = 28;  // in motor command units
   const float maxDist = 34.0; // in inches
   const float minDist = 12.0; // in inches
   float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
@@ -72,7 +72,7 @@ void DpExecMachine::backUpToWall(bool first) {
                                            minDist,
                                            maxSpeed,
                                            minSpeed);
-  backSpeed = 40 - backSpeed;
+  backSpeed = 30 - backSpeed;
 
 
   wheels.updateCommand(-backSpeed,0,0);
