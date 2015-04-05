@@ -49,7 +49,7 @@ void MainExecMachine::loadLeftRightRings(bool first) {
   int rotation = 0;
 
   const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
-
+  wheels.updateCommand(0, 0, 0); //blanket statement to prevent moving(not all if cases are covered)
   /* If the first time, set the state start time */
   if (firstTime) {
     stateStartTime = micros();
@@ -215,6 +215,7 @@ void MainExecMachine::loadCenterRings(bool first) {
   int rotation = 0;
 
   const uint8_t buttItTimeout = 50; //50 iterations @ 100Hz = 0.5 seconds
+  wheels.updateCommand(0, 0, 0); //blanket statement to prevent moving(not all if cases are covered)
 
   /* If the first time, set the state start time */
   if (firstTime) {
