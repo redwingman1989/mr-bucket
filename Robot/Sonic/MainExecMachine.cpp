@@ -154,8 +154,10 @@ void MainExecMachine::pickupLeftRightRings(bool first) {
 }
 
 void MainExecMachine::backupFromLeftRightRings(bool first) {
-  wheels.updateCommand(-2, 0, 0);
-  FollowLine(0, -2, LSP_RIGHT);
+
+  if (!FollowLine(0, -2, LSP_RIGHT)) {
+    wheels.updateCommand(-2, 0, 0);
+  }
   if (lineManager.getLineDriveCommand(LSP_BACK).valid ||
       ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue() > 5)
   {
