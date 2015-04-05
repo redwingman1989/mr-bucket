@@ -17,7 +17,7 @@ bool findCenterLine(bool first, float forwardSpeed, float sidewaysSpeed, float r
   if (first) {
     threshHold = 12.0;
     first = false;
-    if ((leftUltra + 7) < (rightUltra + 1.5)) goRight = true;
+    if ((leftUltra + 8.5) < (rightUltra + 1.5)) goRight = true;
     else goRight = false;
   }
 
