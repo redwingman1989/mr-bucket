@@ -53,7 +53,7 @@ void PrimaryStateMachine::kickSomeAss(bool firstTime) {
   goToWork.RunTick();
  // goToWork.DebugOutput(&Serial2);
 
-  if (((micros() - runTimeStart) > 160000000) && (!goToWork.lockoutDblDwn())) {
+  if (((micros() - runTimeStart) > 168000000) && (!goToWork.lockoutDblDwn())) {
     currentState = (state) &PrimaryStateMachine::doubleDown;
   }
 }
