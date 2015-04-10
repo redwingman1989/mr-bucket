@@ -25,3 +25,5 @@ UltraSonicManager ultraSonicMgr;
 /* Global State Machine */
 
 PrimaryStateMachine masterChief;
+
+uint32_t runTimeStart;

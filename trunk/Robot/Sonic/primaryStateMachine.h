@@ -9,7 +9,7 @@ public:
   PrimaryStateMachine();
 
 private:
-  uint32_t runTimeStart;
+
   void waitForStart(bool);
   void kickSomeAss(bool);
   void doubleDown(bool);
