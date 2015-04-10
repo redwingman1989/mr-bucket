@@ -41,7 +41,7 @@ void DpExecMachine::rotateToHeading(bool first) {
 
   arm.commandSwingArm(SA_DOWN);
 
-  if(abs(delta) < 3){
+  if(abs(delta) < 5){
     leftDist += ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
     rightDist += ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
     if(lineUpCount++ >= 5){
@@ -161,17 +161,19 @@ void DpExecMachine::deployTheSecretWeapon(bool first) {
 
 void DpExecMachine::doubleTap(bool first) {
   static uint32_t startTime;
+  static bool backup = false;
 
   if (first)
     startTime = micros();
 
-  if((micros() - startTime) < 500000) {
-    startTime = micros();
+  if(!backup && ((micros() - startTime) < 500000)) {
     FollowLine(0, 3, LSP_RIGHT);
   }
-
-  else if ((micros() - startTime < 500000)) {
+  else if (!backup) {
+    backup = true;
     startTime = micros();
+  }
+  else if (backup && (micros() - startTime < 500000)) {
     FollowLine(0, -5, LSP_RIGHT);
   }
 
