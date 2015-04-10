@@ -70,6 +70,8 @@ extern UltraSonicManager ultraSonicMgr;
 extern PrimaryStateMachine masterChief;
 //extern MainExecMachine mainExec;
 
+extern uint32_t runTimeStart;
+
 #endif // _GLOBALS_H
 
 

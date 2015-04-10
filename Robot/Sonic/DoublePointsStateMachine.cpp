@@ -1,5 +1,6 @@
 #include "DoublePointsStateMachine.h"
 #include "driveAlgorithms.h"
+#include "Globals.h"
 
 DpExecMachine::DpExecMachine() {
   currentState = (state) &DpExecMachine::backUpInitial;
@@ -33,28 +34,28 @@ void DpExecMachine::backUpInitial(bool first) {
 
 
 void DpExecMachine::rotateToHeading(bool first) {
-  float rotationSpeed;
+  float rotationSpeed = 0;
   static int lineUpCount = 0;
   static float leftDist = 0 , rightDist = 0;
   float delta = getDeltaHeading(centerPoleHeading);
-  // once the desired heading is reached
-  //   transition to findCenterLin
-  rotationSpeed =  getToHeading(centerPoleHeading);
 
-  if(abs(delta) < 3 && rotationSpeed < 1){
-     leftDist += ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
-     rightDist += ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+  arm.commandSwingArm(SA_DOWN);
+
+  if(abs(delta) < 3){
+    leftDist += ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+    rightDist += ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
     if(lineUpCount++ >= 5){
-        lineUpCount = 0;
-        DirectionToDPRight = leftDist - 3.5 * 5 < rightDist;
-        currentState = (state) &DpExecMachine::backUpToWall;
+      lineUpCount = 0;
+      DirectionToDPRight = leftDist - 3.5 * 5 < rightDist;
+      currentState = (state) &DpExecMachine::backUpToWall;
     }
   }
   else {
-        wheels.updateCommand(0,0,rotationSpeed);
-        lineUpCount = 0;
-        leftDist = rightDist = 0;
+    rotationSpeed =  getToHeading(centerPoleHeading);
+    lineUpCount = 0;
+    leftDist = rightDist = 0;
   }
+  wheels.updateCommand(0,0,rotationSpeed);
 }
 
 
@@ -73,12 +74,9 @@ void DpExecMachine::backUpToWall(bool first) {
                                            maxSpeed,
                                            minSpeed);
   backSpeed = 30 - backSpeed;
-
-
   wheels.updateCommand(-backSpeed,0,0);
 
   limitCounter++;
-
   if (limitCounter >= 50) {
     limitCounter = 0;
 
@@ -100,22 +98,46 @@ void DpExecMachine::shiftForCenterPost( bool first) {
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
     if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
       if (++tickCount > 50)
-        currentState = (state) &DpExecMachine::deployTheSecretWeapon;
+        currentState = (state) &DpExecMachine::waitForLastSeconds;
     }
     else
       tickCount = 0;
-  }else{
+  }
+  else {
     if ( micros() - stateStartTime > 5000000 ) {
         DirectionToDPRight = !DirectionToDPRight;
         stateStartTime = micros();
     }
     if(DirectionToDPRight){
-         wheels.updateCommand(-1 * speedBuild(&speedBackIntegral, .05),6,0);
+         wheels.updateCommand(-1,15,0);
     }
     else{
-        wheels.updateCommand(-1 * speedBuild(&speedBackIntegral , .05),-6,0);
+        wheels.updateCommand(-1,-15,0);
     }
     tickCount = 0;
+  }
+}
+
+void DpExecMachine::waitForLastSeconds(bool first) {
+  float frontDist = ultraSonicMgr.getSensor(FRONT)->getCalculatedDistanceValue();
+  static float lastFront = 0;
+  static uint8_t limitCounter = 0;
+
+  if (micros() - runTimeStart > 173000000) {
+    FollowLine(0, -5, LSP_RIGHT);
+    limitCounter++;
+    if (limitCounter >= 50) {
+      limitCounter = 0;
+      if (frontDist - lastFront < 0.375)
+        currentState = (state) &DpExecMachine::deployTheSecretWeapon;
+      lastFront = frontDist;
+    }
+  }
+  else if (frontDist > 26) {
+    FollowLine(0, 3, LSP_RIGHT);
+  }
+  else {
+    wheels.updateCommand(0,0,0);
   }
 }
 
@@ -128,13 +150,35 @@ void DpExecMachine::deployTheSecretWeapon(bool first) {
     arm.commandDoublePointServo(DP_DROP);
   }
 
-  else if (micros() - startTime > 2000000) {
+  else if (micros() - startTime > 1000000) {
     timedOut = true;
   }
 
   if (timedOut) {
-      currentState = (state) &DpExecMachine::avoidHovering;
+      currentState = (state) &DpExecMachine::doubleTap;
   }
+}
+
+void DpExecMachine::doubleTap(bool first) {
+  static uint32_t startTime;
+
+  if (first)
+    startTime = micros();
+
+  if((micros() - startTime) < 500000) {
+    startTime = micros();
+    FollowLine(0, 3, LSP_RIGHT);
+  }
+
+  else if ((micros() - startTime < 500000)) {
+    startTime = micros();
+    FollowLine(0, -5, LSP_RIGHT);
+  }
+
+  else {
+    currentState = (state) &DpExecMachine::avoidHovering;
+  }
+
 }
 
 void DpExecMachine::avoidHovering(bool first) {
@@ -146,7 +190,7 @@ void DpExecMachine::avoidHovering(bool first) {
     wheels.updateCommand(4,0,0);
   }
 
-  else if (micros() - startTime > 20000000) {
+  else if (micros() - startTime > 7000000) {
     timedOut = true;
   }
 

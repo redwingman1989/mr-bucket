@@ -19,8 +19,9 @@ class DpExecMachine: public StateMachine<DpExecMachine> {
     void rotateToHeading(bool);
     void backUpToWall(bool);
     void shiftForCenterPost(bool);
+    void waitForLastSeconds(bool);
     void deployTheSecretWeapon(bool);
-    void retractTheDpServo(bool);
+    void doubleTap(bool);
     void avoidHovering(bool);
 
     void calcCenterPoleHeading(void) {
