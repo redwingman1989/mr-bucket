@@ -124,7 +124,7 @@ void DpExecMachine::waitForLastSeconds(bool first) {
   static uint8_t limitCounter = 0;
 
   if (micros() - runTimeStart > 173000000) {
-    FollowLine(0, -5, LSP_RIGHT);
+    FollowLineSingle(-2, true, LSL_RIGHT_FRONT);
     limitCounter++;
     if (limitCounter >= 50) {
       limitCounter = 0;
@@ -134,7 +134,7 @@ void DpExecMachine::waitForLastSeconds(bool first) {
     }
   }
   else if (frontDist > 26) {
-    FollowLine(0, 3, LSP_RIGHT);
+    FollowLineSingle(2, true, LSL_RIGHT_FRONT);
   }
   else {
     wheels.updateCommand(0,0,0);
@@ -167,14 +167,14 @@ void DpExecMachine::doubleTap(bool first) {
     startTime = micros();
 
   if(!backup && ((micros() - startTime) < 500000)) {
-    FollowLine(0, 3, LSP_RIGHT);
+    FollowLineSingle(5, true, LSL_RIGHT_FRONT);
   }
   else if (!backup) {
     backup = true;
     startTime = micros();
   }
   else if (backup && (micros() - startTime < 500000)) {
-    FollowLine(0, -5, LSP_RIGHT);
+    FollowLineSingle(-5, true, LSL_RIGHT_FRONT);
   }
 
   else {
