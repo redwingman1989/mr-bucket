@@ -42,11 +42,11 @@ void DpExecMachine::rotateToHeading(bool first) {
   arm.commandSwingArm(SA_DOWN);
 
   if(abs(delta) < 5){
-    leftDist += ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
-    rightDist += ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
-    if(lineUpCount++ >= 5){
+    leftDist = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
+    rightDist = ultraSonicMgr.getSensor(RIGHT)->getCalculatedDistanceValue();
+    if(lineUpCount++ >= 10){
       lineUpCount = 0;
-      DirectionToDPRight = leftDist - 3.5 * 5 < rightDist;
+      DirectionToDPRight = leftDist - 3.5 < rightDist;
       currentState = (state) &DpExecMachine::backUpToWall;
     }
   }
