@@ -424,7 +424,7 @@ void MainExecMachine::haulToScore(bool first) {
   const float maxSpeed = 50;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
-  const float stateTransDist = 12.0; // in inches
+  const float stateTransDist = 8.0; // in inches
   const uint8_t wallThresh = 50; // iterations
   static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
@@ -682,7 +682,7 @@ void MainExecMachine::haulToLoad(bool first) {
   const float maxSpeed = 80;  // in motor command units
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
-  const float stateTransDist = 12.0; // in inches
+  const float stateTransDist = 8.0; // in inches
   const uint8_t wallThresh = 50; // iterations
   sideSpeed = 2*(rightError - leftError);
 
