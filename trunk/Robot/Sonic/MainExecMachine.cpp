@@ -124,14 +124,18 @@ void MainExecMachine::loadLeftRightRings(bool first) {
       /* We aren't less than 4 inches from the wall OR
        *   we are less than 4 inches but our state timeout hasn't expired
        *   so continue driving to the wall */
-       if(lineManager.getSingleCommand(LSL_CENTER_BACK).valid || lineManager.getSingleCommand(LSL_CENTER_FRONT).valid)
+       if(lineManager.getSingleCommand(LSL_CENTER_BACK).valid)
        {
           FollowLineSingle(3,true, LSL_RIGHT_FRONT);
        }
-        else
-        {
+       else if(lineManager.getSingleCommand(LSL_CENTER_FRONT).valid)
+       {
+          FollowLineSingle(3,true, LSL_RIGHT_BACK);
+       }
+       else
+       {
           FollowLine(0,3,LSP_RIGHT);
-        }
+       }
 
     }
   }
