@@ -425,7 +425,7 @@ void MainExecMachine::haulToScore(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 100; // iterations
+  const uint8_t wallThresh = 50; // iterations
   static int distanceCount = 0;
   sideSpeed = 2*(rightError - leftError);
 
@@ -683,7 +683,7 @@ void MainExecMachine::haulToLoad(bool first) {
   const float maxDist = 48.0; // in inches
   const float minDist = 20.0; // in inches
   const float stateTransDist = 12.0; // in inches
-  const uint8_t wallThresh = 100; // iterations
+  const uint8_t wallThresh = 50; // iterations
   sideSpeed = 2*(rightError - leftError);
 
   if(!lineManager.getLineDriveCommand(LSP_RIGHT).valid){
