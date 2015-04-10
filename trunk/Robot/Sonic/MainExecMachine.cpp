@@ -595,7 +595,7 @@ void MainExecMachine::backupFromScoring(bool first) {
                                            maxSpeed,
                                            minSpeed);
 
-  if (!FollowLine(0, backwardSpeed ,  LSP_RIGHT)) {
+  if (!FollowLineSingle(backwardSpeed,true,LSL_RIGHT_BACK)) {
     wheels.updateCommand(backwardSpeed, 0, 0);
   }
 

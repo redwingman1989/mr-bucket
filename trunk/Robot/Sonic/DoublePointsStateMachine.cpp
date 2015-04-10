@@ -167,13 +167,13 @@ void DpExecMachine::doubleTap(bool first) {
     startTime = micros();
 
   if(!backup && ((micros() - startTime) < 500000)) {
-    FollowLineSingle(5, true, LSL_RIGHT_FRONT);
+    FollowLineSingle(4, true, LSL_RIGHT_FRONT);
   }
   else if (!backup) {
     backup = true;
     startTime = micros();
   }
-  else if (backup && (micros() - startTime < 500000)) {
+  else if (backup && (micros() - startTime < 750000)) {
     FollowLineSingle(-5, true, LSL_RIGHT_FRONT);
   }
 
