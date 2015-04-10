@@ -426,7 +426,7 @@ void SweepExecMachine::sz_shiftRightToWall(bool first){
   bool timedOut = false;
   bool distanceReached = false;
   static uint16_t iter = 0;
-  const float speed = 6.0;
+  const float speed = 12.0;
   float distLeft = ultraSonicMgr.getSensor(LEFT)->getCalculatedDistanceValue();
   static float prevDistLeft = 0.0;
   const float distDeadBand = 0.25; // 0.5 in/s
@@ -438,7 +438,7 @@ void SweepExecMachine::sz_shiftRightToWall(bool first){
 
   /* Check if ultrasonic indicate we are against the wall */
   /* every half second, check if the distance on the rightsensor is the same within the tollerence */
-  if ((distLeft > 4.0) && ((iter++ % 50) == 0)) {
+  if ((distLeft > 16.0) && ((iter++ % 50) == 0)) {
     distanceReached = (abs(distLeft - prevDistLeft) < distDeadBand);
     prevDistLeft = distLeft;
   }
@@ -455,7 +455,7 @@ void SweepExecMachine::sz_shiftRightToWall(bool first){
   }
   /* Continue moving Right */
   else {
-    wheels.updateCommand(1.5,speed,0);
+    wheels.updateCommand(1,speed,0);
   }
 }
 
