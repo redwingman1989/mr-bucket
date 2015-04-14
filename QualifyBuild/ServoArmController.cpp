@@ -1,0 +1,145 @@
+#include "ServoArmController.h"
+#include <Arduino.h>
+#include <Servo.h>
+#include "Pins.h"
+
+const int pwmMin = 1000;
+const int pwmMax = 2000;
+const int pwmCenter = (pwmMax + pwmMin) / 2;
+
+const int updateRate = 50; //50 hz exec call rate
+
+inline int rateLimit(int command, int current, int rate);
+
+ServoArmController::ServoArmController()
+{
+  //Setup servo constants
+  this->swingArmConstants[SA_DOWN] = 660;
+  this->swingArmConstants[SA_UP] = 1575;
+
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1520;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1670;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1595;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1755;
+
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = 1420;
+  this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1595;
+  this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = 1502;
+  this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1687;
+
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1645;
+  this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1825;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1735;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1895;
+
+  this->doublePointConstants[DP_RETRACT] = 1500;
+  this->doublePointConstants[DP_DROP] = 1110;
+
+  this->swingArmCommand = this->swingArmConstants[SA_DOWN];
+  this->pickupLeftCommand = this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO];
+  this->pickupCenterCommand = this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO];
+  this->pickupRightCommand = this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO];
+  this->doublePointCommand = this->doublePointConstants[DP_DROP];
+
+  setPickupArmLimit(1);
+  setSwingArmLimit(3);
+}
+
+void ServoArmController::init(void)
+{
+  //Setup servo pins
+  this->pickupLeft.attach(pinLRingSvo);
+  this->pickupCenter.attach(pinCRingSvo);
+  this->pickupRight.attach(pinRRingSvo);
+  this->swingArm.attach(pinArmSvo);
+  this->doublePoint.attach(pinDblPntSvo);
+
+  //Run to initialize the servo positions
+  RunTick();
+}
+
+void ServoArmController::commandSwingArm(swingArmStates_t state)
+{
+  this->currentSwingArmState = state;
+}
+
+void ServoArmController::commandPickupServo(pickupServoSelection_t selection, pickupStates_t state)
+{
+  this->currentPickupState[selection] = state;
+}
+
+void ServoArmController::commandDoublePointServo(doublePointStates_t state) {
+  this->currentDoublePointState = state;
+}
+
+bool ServoArmController::RunTick()
+{
+  //Update and rate limit servo commands
+  this->swingArmCommand = rateLimit(
+    this->swingArmConstants[this->currentSwingArmState],
+    this->swingArmCommand,
+    swingArmLimit);
+
+  this->pickupLeftCommand = rateLimit(
+    this->pickupConstants[PU_LEFT][this->currentSwingArmState][this->currentPickupState[PU_LEFT]],
+    this->pickupLeftCommand,
+    pickupLimit);
+
+  this->pickupCenterCommand = rateLimit(
+    this->pickupConstants[PU_CENTER][this->currentSwingArmState][this->currentPickupState[PU_CENTER]],
+    this->pickupCenterCommand,
+    pickupLimit);
+
+   this->pickupRightCommand = rateLimit(
+    this->pickupConstants[PU_RIGHT][this->currentSwingArmState][this->currentPickupState[PU_RIGHT]],
+    this->pickupRightCommand,
+    pickupLimit);
+
+  this->doublePointCommand = this->doublePointConstants[this->currentDoublePointState];
+
+  //Write servo commands
+  this->swingArm.writeMicroseconds(this->swingArmCommand);
+  this->pickupLeft.writeMicroseconds(this->pickupLeftCommand);
+  this->pickupCenter.writeMicroseconds(this->pickupCenterCommand);
+  this->pickupRight.writeMicroseconds(this->pickupRightCommand);
+  this->doublePoint.writeMicroseconds(this->doublePointCommand);
+
+  return false;
+}
+
+void ServoArmController::DebugOutput(HardwareSerial *serialPort)
+{
+  serialPort->print("A:");
+  if (currentSwingArmState == SA_DOWN) serialPort->print("DOWN");
+  else serialPort->print("  UP");
+
+  serialPort->print(", L:");
+  if (currentPickupState[PU_LEFT] == PS_GRAB) serialPort->print(" GRAB");
+  else serialPort->print("LETGO");
+
+  serialPort->print(", C:");
+  if (currentPickupState[PU_CENTER] == PS_GRAB) serialPort->print(" GRAB");
+  else serialPort->print("LETGO");
+
+  serialPort->print(", R:");
+  if (currentPickupState[PU_RIGHT] == PS_GRAB) serialPort->print(" GRAB");
+  else serialPort->print("LETGO");
+}
+
+void ServoArmController::setPickupArmLimit(uint8_t sec) {
+  pickupLimit = (pwmMax - pwmMin) / (sec * updateRate);
+}
+
+void ServoArmController::setSwingArmLimit(uint8_t sec) {
+  swingArmLimit = (pwmMax - pwmMin) / (sec * updateRate);
+}
+
+
+
+inline int rateLimit(int command, int current, int rate)
+{
+  if ((command - current) > rate) return (current + rate);
+  else if ((current - command) > rate) return (current - rate);
+  else return command;
+  //return command;
+}
