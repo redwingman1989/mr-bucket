@@ -669,6 +669,8 @@
 		</Compiler>
 		<Unit filename="Buttons.cpp" />
 		<Unit filename="Buttons.h" />
+		<Unit filename="DoublePointsStateMachine.cpp" />
+		<Unit filename="DoublePointsStateMachine.h" />
 		<Unit filename="Globals.cpp" />
 		<Unit filename="Globals.h" />
 		<Unit filename="Heartbeat.cpp" />
