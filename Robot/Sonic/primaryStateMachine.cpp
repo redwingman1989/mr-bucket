@@ -65,6 +65,7 @@ void PrimaryStateMachine::doubleDown(bool firstTime) {
   bankBreaker.RunTick();
 
   if ((micros() - runTimeStart) > (minutes_3)) {
+    arm.commandDoublePointServo(DP_DROP);
     currentState = (state) &PrimaryStateMachine::youWon;
   }
 
