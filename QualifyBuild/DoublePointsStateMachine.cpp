@@ -96,7 +96,7 @@ void DpExecMachine::shiftForCenterPost( bool first) {
   if (first) stateStartTime = micros();
 
   if(lineManager.getLineDriveCommand(LSP_RIGHT).valid) {
-    if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT)) {
+    if(FollowLineSingle(-4, true, LSL_RIGHT_FRONT, first)) {
       if (++tickCount > 50)
         currentState = (state) &DpExecMachine::waitForLastSeconds;
     }
@@ -124,7 +124,7 @@ void DpExecMachine::waitForLastSeconds(bool first) {
   static uint8_t limitCounter = 0;
 
   if (micros() - runTimeStart > 173000000) {
-    FollowLineSingle(-2, true, LSL_RIGHT_FRONT);
+    FollowLineSingle(-2, true, LSL_RIGHT_FRONT, first);
     limitCounter++;
     if (limitCounter >= 50) {
       limitCounter = 0;
@@ -134,7 +134,7 @@ void DpExecMachine::waitForLastSeconds(bool first) {
     }
   }
   else if (frontDist > 26) {
-    FollowLineSingle(2, true, LSL_RIGHT_FRONT);
+    FollowLineSingle(2, true, LSL_RIGHT_FRONT, first);
   }
   else {
     wheels.updateCommand(0,0,0);
@@ -167,14 +167,14 @@ void DpExecMachine::doubleTap(bool first) {
     startTime = micros();
 
   if(!backup && ((micros() - startTime) < 500000)) {
-    FollowLineSingle(4, true, LSL_RIGHT_FRONT);
+    FollowLineSingle(4, true, LSL_RIGHT_FRONT, first);
   }
   else if (!backup) {
     backup = true;
     startTime = micros();
   }
   else if (backup && (micros() - startTime < 750000)) {
-    FollowLineSingle(-5, true, LSL_RIGHT_FRONT);
+    FollowLineSingle(-5, true, LSL_RIGHT_FRONT, first);
   }
 
   else {

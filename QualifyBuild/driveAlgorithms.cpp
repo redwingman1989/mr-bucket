@@ -98,13 +98,18 @@ bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
 
 //Returns true when on the line and centered
 //Returns false when off the line or not centered
-bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations location){
+bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations location, bool firstTime){
     static float totalOff = 0;
     static float AngleOff = 0;
     lineDriveCommand_t linePair = lineManager.getSingleCommand(location);
 
     float center;
     float offset;
+
+    if(firstTime) {
+      totalOff = 0;
+      AngleOff = 0;
+    }
 
     if (fwd) {
       offset = linePair.offset.x;

@@ -126,11 +126,11 @@ void MainExecMachine::loadLeftRightRings(bool first) {
        *   so continue driving to the wall */
        if(lineManager.getSingleCommand(LSL_CENTER_BACK).valid)
        {
-          FollowLineSingle(3,true, LSL_RIGHT_FRONT);
+          FollowLineSingle(3,true, LSL_RIGHT_FRONT, first);
        }
        else if(lineManager.getSingleCommand(LSL_CENTER_FRONT).valid)
        {
-          FollowLineSingle(3,true, LSL_RIGHT_BACK);
+          FollowLineSingle(3,true, LSL_RIGHT_BACK, first);
        }
        else
        {
@@ -201,7 +201,7 @@ void MainExecMachine::shiftForCenterRings(bool first) {
   }
 
   if (needToCenter) {
-    if(FollowLineSingle(0,true,LSL_CENTER_FRONT)) {
+    if(FollowLineSingle(0,true,LSL_CENTER_FRONT, first)) {
             if(lineUpCount++ > 10){
                 wheels.updateCommand(0,0,0);
                 stateNum = MEST_LOAD_CENTER_RINGS;
@@ -308,7 +308,7 @@ void MainExecMachine::loadCenterRings(bool first) {
       /* We aren't less than 4 inches from the wall OR
        *   we are less than 4 inches but our state timeout hasn't expired
        *   so continue driving to the wall */
-      FollowLineSingle(4,true, LSL_CENTER_FRONT);
+      FollowLineSingle(4,true, LSL_CENTER_FRONT, first);
     }
   }
 }
@@ -395,9 +395,41 @@ void MainExecMachine::flipToScore(bool first) {
 
 void MainExecMachine::findCenterLineToScore(bool first) {
   static bool firstTime = true;
+  static bool waitForUltraSonicSensors = true;
+  static uint8_t ultraSonicWaitIterations = 0;
 
+  if (first) {
+    ultraSonicWaitIterations = 0;
+  }
+
+  /* Check to see if we need to wait for a good ultrasonic reading */
+  if (waitForUltraSonicSensors) {
+    /* Call find center line to prevent smacking into the wall while driving forward
+     *   If we found the center line... */
+    if (findCenterLine(firstTime, 5, 0, 0)) {
+      /* Reset the statics */
+      waitForUltraSonicSensors = true;
+      firstTime = true;
+
+      /* Update State Information */
+      stateNum = MEST_HAUL_TOSCORE;
+      currentState = (state) &MainExecMachine::haulToScore;
+    }
+
+    else {
+      /* This is not the first time that we will call findCenterLine */
+      firstTime = false;
+      /* Increment the iteration count and if it has been long enough
+       *   we can trust the ultra sonic sensors */
+      if (ultraSonicWaitIterations++ > 20) {
+        waitForUltraSonicSensors = false;
+      }
+    }
+  }
+  else {
   if (findCenterLine(firstTime, 15, 5, 4)) {
     firstTime = true;
+      waitForUltraSonicSensors = true;
 
     stateNum = MEST_HAUL_TOSCORE;
     currentState = (state) &MainExecMachine::haulToScore;
@@ -409,8 +441,9 @@ void MainExecMachine::findCenterLineToScore(bool first) {
     stateNum = MEST_FLIP_ONE;
     currentState = (state) &MainExecMachine::flipToScore;
     firstTime = true;
+      waitForUltraSonicSensors = true;
+    }
   }
-
 }
 
 void MainExecMachine::haulToScore(bool first) {
@@ -551,7 +584,7 @@ void MainExecMachine::scoreRings(bool first) {
       /* We aren't less than 4 inches from the wall OR
        *   we are less than 4 inches but our state timeout hasn't expired
        *   so continue driving to the wall */
-      FollowLineSingle(4,true, LSL_RIGHT_FRONT);
+      FollowLineSingle(4,true, LSL_RIGHT_FRONT, first);
     }
   }
 }
@@ -595,7 +628,7 @@ void MainExecMachine::backupFromScoring(bool first) {
                                            maxSpeed,
                                            minSpeed);
 
-  if (!FollowLineSingle(backwardSpeed, true, LSL_RIGHT_BACK)) {
+  if (!FollowLineSingle(backwardSpeed, true, LSL_RIGHT_BACK, first)) {
     wheels.updateCommand(backwardSpeed, 0, 0);
   }
 
@@ -653,7 +686,39 @@ void MainExecMachine::flipToLoad(bool first) {
 
 void MainExecMachine::findCenterLineToLoad(bool first) {
   static bool firstTime = true;
+  static bool waitForUltraSonicSensors = true;
+  static uint8_t ultraSonicWaitIterations = 0;
 
+  if (first) {
+    ultraSonicWaitIterations = 0;
+  }
+
+  /* Check to see if we need to wait for a good ultrasonic reading */
+  if (waitForUltraSonicSensors) {
+    /* Call find center line to precent smacking into the wall while driving forward
+     *   If we found the center line... */
+    if (findCenterLine(firstTime, 5, 0, 0)) {
+      /* Reset the statics */
+      waitForUltraSonicSensors = true;
+      firstTime = true;
+
+      /* Update State Information */
+      stateNum = MEST_HAUL_TOLOAD;
+      currentState = (state) &MainExecMachine::haulToLoad;
+    }
+    else {
+      /* This is not the first time that we will call findCenterLine */
+      firstTime = false;
+
+      /* Increment the iteration count and if it has been long enough
+       *   we can trust the ultra sonic sensors */
+      if (ultraSonicWaitIterations++ > 20) {
+        waitForUltraSonicSensors = false;
+      }
+    }
+  }
+
+  else {
   if (findCenterLine(firstTime, 25, 5, 4)) {
     firstTime = true;
 
@@ -668,6 +733,7 @@ void MainExecMachine::findCenterLineToLoad(bool first) {
     currentState = (state) &MainExecMachine::flipToLoad;
     firstTime = true;
   }
+}
 }
 
 void MainExecMachine::haulToLoad(bool first) {
