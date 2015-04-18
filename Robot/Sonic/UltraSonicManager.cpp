@@ -85,6 +85,11 @@ bool UltraSonicManager::RunTick()
   /* Initialize the last sensor executed to a known good value, then update it */
   ultSensor_t lastSensorExec = sensorToExec;
 
+    float temp = getSensor(RIGHT)->getCalculatedDistanceValue();
+    temp = 38 - temp;
+    if (temp < 0) temp = 0;
+    getSensor(LEFT)->setCalcValue(temp);
+
   /* Rollover */
   if (lastSensorExec == FRONT)
     lastSensorExec = (ultSensor_t)((uint8_t)NUM_ULTRA_SENSORS - 1);
@@ -106,7 +111,7 @@ bool UltraSonicManager::RunTick()
     /* TO DO: Figure out how to prevent the state machine from getting stuck */
     return false;
   }
-
+    getSensor(LEFT)->setCalcValue(temp);
   /* Check to see if it is time to perform a distance calculation on the previous sensor */
   if(lastSensor->getTimeForCalcFlag() == true) {
     lastSensor->calculateDistance();
@@ -122,7 +127,7 @@ bool UltraSonicManager::RunTick()
   else
     sensorToExec = ultSensor_t((uint8_t)sensorToExec+1);
   }
-
+    getSensor(LEFT)->setCalcValue(temp);
   return true;
 
 }

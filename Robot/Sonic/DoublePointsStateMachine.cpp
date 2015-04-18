@@ -38,6 +38,7 @@ void DpExecMachine::rotateToHeading(bool first) {
   static int lineUpCount = 0;
   static float leftDist = 0 , rightDist = 0;
   float delta = getDeltaHeading(centerPoleHeading);
+  static unsigned long startTime;
 
   arm.commandSwingArm(SA_DOWN);
 
@@ -56,6 +57,15 @@ void DpExecMachine::rotateToHeading(bool first) {
     leftDist = rightDist = 0;
   }
   wheels.updateCommand(0,0,rotationSpeed);
+
+  if (first) startTime = micros();
+
+  if (micros() - startTime > 1500000) {
+    lineUpCount = 0;
+    DirectionToDPRight = leftDist - 3.5 < rightDist;
+    currentState = (state) &DpExecMachine::backUpToWall;
+  }
+
 }
 
 

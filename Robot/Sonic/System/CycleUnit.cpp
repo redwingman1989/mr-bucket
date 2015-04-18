@@ -22,7 +22,7 @@ void CycleUnit::RunTasks(uint16_t time,RobotState state)
           if (tasks[i]->debugLevel) {
             sprintf(dbHead,"%s\nFOM: %ld\n",tasks[i]->nameStr,tasks[i]->getTimer());
             Serial2.print(dbHead);
-            tasks[i]->DebugOutput(&Serial2);
+            tasks[i]->DebugOutput(&Serial);
           }
         }
     }

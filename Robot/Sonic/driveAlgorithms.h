@@ -15,6 +15,8 @@ bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum);
 //Returns true when on the line and centered
 //Returns false when off the line or not centered
 bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations location, bool firstTime);
+bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations location, bool firstTime,bool turning);
+bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum, bool firstTime);
 
 
 bool lineUpOneLine(lineSensorPairs linePairEnum);
