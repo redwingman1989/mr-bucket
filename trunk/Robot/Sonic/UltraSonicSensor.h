@@ -75,7 +75,7 @@ class UltraSonicSensor {
 
     /* Get the last calculated distance */
     float getCalculatedDistanceValue();
-
+    void setCalcValue(float f){ calcDist = f;};
 
     /* OTHER FUNCTIONALITY */
 
@@ -84,6 +84,9 @@ class UltraSonicSensor {
 
     /* Calculate the distance to reflected surface */
     void calculateDistance();
+
+    /* Calculated Distance */
+
 
   private:
     /* Trigger Pin */
@@ -112,9 +115,8 @@ class UltraSonicSensor {
 
     /* Flag indicating that the sensor is invalid due to some issue */
     bool invalidFlag;
-
-    /* Calculated Distance */
     float calcDist;
+
 
 };
 

@@ -69,10 +69,43 @@ float speedBuild(float *integral,float speed){
     return returnfloat;
 }
 
+bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum, bool firstTime){
+    float turnConstant = 8;
+    static float totalAngle = 0;
+    static float totalOff = 0;
+    if(firstTime){
+        totalAngle = 0;
+        totalOff = 0;
+    }
+
+    lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
+    if(linePair.valid){
+        float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
+        adjustedAngleRad = convertRadToPercent(adjustedAngleRad,turnConstant);
+        adjustedAngleRad = speedBuild(&totalAngle,adjustedAngleRad);
+
+        float speed = 0;
+        if(linePairEnum != LSP_BACK){
+            speed = getSpeedHelper(linePair.offset.x ,pairCenters[linePairEnum].x,5);
+            speed = speedBuild(&totalOff,speed);
+            wheels.updateCommand(speedy ,speed ,adjustedAngleRad);
+        } else{
+            speed = getSpeedHelper(linePair.offset.y , pairCenters[linePairEnum].y, 5);
+            speed = speedBuild(&totalOff,speed);
+            wheels.updateCommand(speed , speedx ,adjustedAngleRad);
+        }
+    }else{
+        wheels.updateCommand(0,0,0);
+        return false;
+    }
+    return true;
+}
+
 bool FollowLine(float speedx,float speedy, lineSensorPairs linePairEnum){
     float turnConstant = 8;
     static float totalAngle = 0;
     static float totalOff = 0;
+
     lineDriveCommand_t linePair = lineManager.getLineDriveCommand(linePairEnum);
     if(linePair.valid){
         float adjustedAngleRad = linePair.angle - pairAngleOffset[linePairEnum];
@@ -138,6 +171,50 @@ bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations locati
 
 }
 
+//Returns true when on the line and centered
+//Returns false when off the line or not centered
+bool FollowLineSingle(float speedDirection, bool fwd, lineSensorLocations location, bool firstTime,bool turning){
+    static float totalOff = 0;
+    static float AngleOff = 0;
+    lineDriveCommand_t linePair = lineManager.getSingleCommand(location);
+
+    float center;
+    float offset;
+
+    if(firstTime) {
+      totalOff = 0;
+      AngleOff = 0;
+    }
+
+    if (fwd) {
+      offset = linePair.offset.x;
+      center = sensorCenters[location].x;
+    }
+    else {
+      offset = linePair.offset.y;
+      center = sensorCenters[location].y;
+    }
+
+
+    if(linePair.valid){
+        float speed = 0;
+        float driveAngle = 0;
+        speed = getSpeedHelper(offset ,center);
+        speed = speedBuild(&totalOff,speed,2);
+        if(turning)
+            driveAngle = speedBuild(&AngleOff,speed * .02 * speedDirection);
+        else
+            driveAngle = 0;
+        if (fwd) wheels.updateCommand(speedDirection, speed, driveAngle);
+        else wheels.updateCommand(speed ,speedDirection ,driveAngle);
+    }
+    else{
+        wheels.updateCommand(0,0,0);
+        return false;
+    }
+    return (abs(offset - center) < 0.1);
+
+}
 
 bool lineUpOneLine(lineSensorPairs linePairEnum){
     static float totalAngle = 0;

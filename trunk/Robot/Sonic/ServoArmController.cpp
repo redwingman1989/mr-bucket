@@ -17,20 +17,20 @@ ServoArmController::ServoArmController()
   this->swingArmConstants[SA_DOWN] = 660;
   this->swingArmConstants[SA_UP] = 1575;
 
-  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1520;
+  this->pickupConstants[PU_LEFT][SA_DOWN][PS_LETGO] = 1530;
   this->pickupConstants[PU_LEFT][SA_DOWN][PS_GRAB] = 1670;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1595;
-  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1755;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_LETGO] = 1585;
+  this->pickupConstants[PU_LEFT][SA_UP][PS_GRAB] = 1765;
 
   this->pickupConstants[PU_CENTER][SA_DOWN][PS_LETGO] = 1420;
   this->pickupConstants[PU_CENTER][SA_DOWN][PS_GRAB] = 1595;
   this->pickupConstants[PU_CENTER][SA_UP][PS_LETGO] = 1502;
-  this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1687;
+  this->pickupConstants[PU_CENTER][SA_UP][PS_GRAB] = 1702;
 
   this->pickupConstants[PU_RIGHT][SA_DOWN][PS_LETGO] = 1645;
   this->pickupConstants[PU_RIGHT][SA_DOWN][PS_GRAB] = 1825;
   this->pickupConstants[PU_RIGHT][SA_UP][PS_LETGO] = 1735;
-  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1895;
+  this->pickupConstants[PU_RIGHT][SA_UP][PS_GRAB] = 1905;
 
   this->doublePointConstants[DP_RETRACT] = 1500;
   this->doublePointConstants[DP_DROP] = 1110;
